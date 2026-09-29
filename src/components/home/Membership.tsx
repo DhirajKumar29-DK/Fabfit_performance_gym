@@ -34,7 +34,7 @@ const getFooterIcon = (iconName: string) => {
   }
 };
 
-export function Membership() {
+export function Membership({ isPage = false }: { isPage?: boolean }) {
   const { membership } = homeData;
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-10%" });
@@ -45,7 +45,7 @@ export function Membership() {
     description: membership.subHeader,
   });
   
-  const [plans, setPlans] = useState<any[]>(membership.plans);
+  const [plans, setPlans] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchMembershipData = async () => {
@@ -127,24 +127,45 @@ export function Membership() {
             {sectionData.badge}
           </span>
           
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-4">
-            {(() => {
-              const title = sectionData.title || "";
-              if (title.includes(".")) {
-                const parts = title.split(".");
-                const firstPart = parts[0] + ".";
-                const secondPart = parts.slice(1).join(".").trim();
-                if (!secondPart) return <span className="block text-white mb-1">{title}</span>;
-                return (
-                  <>
-                    <span className="block text-white mb-1">{firstPart}</span>
-                    <span className="block text-primary">{secondPart}</span>
-                  </>
-                );
-              }
-              return <span className="block text-white mb-1">{title}</span>;
-            })()}
-          </h2>
+          {isPage ? (
+            <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-4">
+              {(() => {
+                const title = sectionData.title || "";
+                if (title.includes(".")) {
+                  const parts = title.split(".");
+                  const firstPart = parts[0] + ".";
+                  const secondPart = parts.slice(1).join(".").trim();
+                  if (!secondPart) return <span className="block text-white mb-1">{title}</span>;
+                  return (
+                    <>
+                      <span className="block text-white mb-1">{firstPart}</span>
+                      <span className="block text-primary">{secondPart}</span>
+                    </>
+                  );
+                }
+                return <span className="block text-white mb-1">{title}</span>;
+              })()}
+            </h1>
+          ) : (
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-4">
+              {(() => {
+                const title = sectionData.title || "";
+                if (title.includes(".")) {
+                  const parts = title.split(".");
+                  const firstPart = parts[0] + ".";
+                  const secondPart = parts.slice(1).join(".").trim();
+                  if (!secondPart) return <span className="block text-white mb-1">{title}</span>;
+                  return (
+                    <>
+                      <span className="block text-white mb-1">{firstPart}</span>
+                      <span className="block text-primary">{secondPart}</span>
+                    </>
+                  );
+                }
+                return <span className="block text-white mb-1">{title}</span>;
+              })()}
+            </h2>
+          )}
           
           <p className="text-zinc-400 text-sm font-medium max-w-lg leading-relaxed">
             {sectionData.description.split('full access').map((part, i, arr) => (

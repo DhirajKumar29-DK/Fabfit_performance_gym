@@ -24,7 +24,7 @@ export function CTASection() {
             target="_blank"
             className="group inline-flex items-center justify-center h-14 px-10 bg-primary text-primary-foreground font-bold tracking-wide uppercase transition-all hover:bg-primary-hover"
           >
-            {hero.primaryCTA}
+            {hero?.primaryCTA || "START YOUR JOURNEY"}
             <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

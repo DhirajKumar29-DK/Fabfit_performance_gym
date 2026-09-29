@@ -18,7 +18,7 @@ const IconMap: Record<string, React.ElementType> = {
   MonitorSmartphone,
 };
 
-export function Services() {
+export function Services({ isPage = false }: { isPage?: boolean }) {
   const { services } = homeData;
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: "start", dragFree: true });
 
@@ -52,6 +52,7 @@ export function Services() {
   }, []);
 
   const displayItems = apiServices.length > 0 ? apiServices : services.items;
+  const visibleItems = !isPage ? displayItems.slice(0, 4) : displayItems;
 
   const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
@@ -91,9 +92,15 @@ export function Services() {
             <div className="h-[1px] w-8 bg-white/20"></div>
           </div>
 
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight uppercase mb-3 tracking-tight">
-            {services.headingLine1} <span className="text-primary">{services.headingLine2}</span>
-          </h2>
+          {isPage ? (
+            <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight uppercase mb-3 tracking-tight">
+              {services.headingLine1} <span className="text-primary">{services.headingLine2}</span>
+            </h1>
+          ) : (
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black text-white leading-tight uppercase mb-3 tracking-tight">
+              {services.headingLine1} <span className="text-primary">{services.headingLine2}</span>
+            </h2>
+          )}
 
           <p className="text-zinc-400 max-w-2xl mx-auto font-medium text-base md:text-lg leading-relaxed">
             {services.description}
@@ -104,7 +111,7 @@ export function Services() {
         <div className="relative group mt-6">
           <div className="overflow-hidden px-2 md:px-4 py-2" ref={emblaRef}>
             <div className="flex gap-4">
-              {displayItems.map((item, index) => {
+              {visibleItems.map((item, index) => {
                 const Icon = IconMap[item.icon] || Activity;
                 return (
                   <Link
@@ -191,15 +198,24 @@ export function Services() {
           ))}
         </div>
 
-        {/* Premium Outline CTA */}
-        <div className="flex justify-center">
-          <Link
-            href="/assessment"
-            target="_blank"
-            className="group inline-flex items-center justify-center h-12 px-8 bg-transparent border border-white/20 text-white text-[11px] font-black tracking-widest uppercase transition-all duration-300 hover:bg-primary hover:border-primary hover:text-black hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] rounded-[4px]"
-          >
-            {services.cta} <ArrowRight className="ml-3 h-3 w-3 transition-transform group-hover:translate-x-2" />
-          </Link>
+        {/* Explore More Services CTA */}
+        <div className="flex justify-center mt-6">
+          {!isPage ? (
+            <Link
+              href="/services"
+              className="group inline-flex items-center justify-center h-12 px-8 bg-primary text-black text-[12px] font-black tracking-widest uppercase transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] rounded-[6px]"
+            >
+              EXPLORE MORE SERVICES <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-2 stroke-[3]" />
+            </Link>
+          ) : (
+            <Link
+              href="/assessment"
+              target="_blank"
+              className="group inline-flex items-center justify-center h-12 px-8 bg-transparent border border-white/20 text-white text-[11px] font-black tracking-widest uppercase transition-all duration-300 hover:bg-primary hover:border-primary hover:text-black hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.3)] rounded-[4px]"
+            >
+              {services.cta} <ArrowRight className="ml-3 h-3 w-3 transition-transform group-hover:translate-x-2" />
+            </Link>
+          )}
         </div>
 
       </div>

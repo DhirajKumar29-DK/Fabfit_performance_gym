@@ -114,7 +114,6 @@ export default async function BlogsPage({
                         FabFit Performance
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-transparent to-transparent" />
                     
                     <div className="absolute top-4 left-4">
                       <span className="px-3.5 py-1.5 bg-black/80 backdrop-blur-md text-[#d4af37] border border-[#d4af37]/30 text-[10px] font-black uppercase tracking-widest rounded-lg">

@@ -2,7 +2,6 @@
 
 import { Hero } from "@/components/home/Hero";
 import { Stats } from "@/components/home/Stats";
-import { HomeShowcase } from "@/components/home/HomeShowcase";
 import { About } from "@/components/home/About";
 import { Programs } from "@/components/home/Programs";
 import { Services } from "@/components/home/Services";
@@ -12,7 +11,6 @@ import { Trainers } from "@/components/home/Trainers";
 import { ClientTestimonials } from "@/components/home/ClientTestimonials";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { Membership } from "@/components/home/Membership";
-import { CTASection } from "@/components/home/CTASection";
 import { Contact } from "@/components/home/Contact";
 
 export default function Home() {
@@ -26,40 +24,34 @@ export default function Home() {
         <Stats />
       </div>
 
-      {/* 3. Premium Homepage Showcase Section */}
-      <HomeShowcase />
-
-      {/* 4. About Us Section */}
+      {/* 3. About Us Section */}
       <About />
 
-      {/* 5. Programs Section */}
+      {/* 4. Programs Section */}
       <Programs />
 
-      {/* 6. Services Section */}
+      {/* 5. Services Section */}
       <Services />
 
-      {/* 7. Transformations Section */}
+      {/* 6. Transformations Section */}
       <Transformations />
 
-      {/* 8. Head Coach Section */}
+      {/* 7. Head Coach Section */}
       <Coaches />
 
-      {/* 9. Team Trainers Section */}
+      {/* 8. Team Trainers Section */}
       <Trainers />
 
-      {/* 10. Client Testimonials Section */}
+      {/* 9. Client Testimonials Section */}
       <ClientTestimonials />
 
-      {/* 11. Gallery Preview Section */}
+      {/* 10. Gallery Preview Section */}
       <GalleryPreview />
 
-      {/* 12. Membership Plans Section */}
+      {/* 11. Membership Plans Section */}
       <Membership />
 
-      {/* 13. Call To Action Section */}
-      <CTASection />
-
-      {/* 14. Contact Section */}
+      {/* 12. Contact Section */}
       <Contact />
     </main>
   );

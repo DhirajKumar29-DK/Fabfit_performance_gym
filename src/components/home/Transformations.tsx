@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { homeData } from "@/data/dummy";
 import { motion, useInView, Variants } from "framer-motion";
 import { fixImageUrl } from "@/lib/apiConfig";
@@ -29,7 +31,7 @@ const getIcon = (iconName: string) => {
   }
 };
 
-export function Transformations() {
+export function Transformations({ isPage = false }: { isPage?: boolean }) {
   const { testimonials } = homeData;
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-10%" });
@@ -66,8 +68,10 @@ export function Transformations() {
     fetchCards();
   }, []);
 
-  const featuredTransformations = cardsData.filter(card => card.showInMain);
-  const progressGrid = cardsData.filter(card => !card.showInMain);
+  const rawFeatured = cardsData.filter(card => card.showInMain);
+  const rawCards = rawFeatured;
+  const featuredTransformations = !isPage ? rawCards.slice(0, 4) : rawCards;
+  const progressGrid = !isPage ? cardsData.filter(card => !card.showInMain).slice(0, 4) : cardsData.filter(card => !card.showInMain);
 
   const easePremium = [0.16, 1, 0.3, 1] as const;
 
@@ -120,13 +124,23 @@ export function Transformations() {
                 )}
                 
                 {sectionData?.title && (
-                  <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-8 drop-shadow-[0_4px_12px_rgba(0,0,0,0.95)]">
-                    {sectionData.title.split(/\.\s+/).map((sentence: string, idx: number, arr: string[]) => (
-                      <span key={idx} className={`block ${idx % 2 === 0 ? 'text-white' : 'text-primary'}`}>
-                        {sentence}{idx < arr.length - 1 ? '.' : ''}
-                      </span>
-                    ))}
-                  </h2>
+                  isPage ? (
+                    <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-8 drop-shadow-[0_4px_12px_rgba(0,0,0,0.95)]">
+                      {sectionData.title.split(/\.\s+/).map((sentence: string, idx: number, arr: string[]) => (
+                        <span key={idx} className={`block ${idx % 2 === 0 ? 'text-white' : 'text-primary'}`}>
+                          {sentence}{idx < arr.length - 1 ? '.' : ''}
+                        </span>
+                      ))}
+                    </h1>
+                  ) : (
+                    <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-8 drop-shadow-[0_4px_12px_rgba(0,0,0,0.95)]">
+                      {sectionData.title.split(/\.\s+/).map((sentence: string, idx: number, arr: string[]) => (
+                        <span key={idx} className={`block ${idx % 2 === 0 ? 'text-white' : 'text-primary'}`}>
+                          {sentence}{idx < arr.length - 1 ? '.' : ''}
+                        </span>
+                      ))}
+                    </h2>
+                  )
                 )}
                 
                 {sectionData?.description && (
@@ -302,6 +316,18 @@ export function Transformations() {
 
         </div>
       </div>
+
+      {/* Explore All Transformations CTA for Homepage */}
+      {!isPage && (
+        <div className="flex justify-center mt-10 relative z-20">
+          <Link
+            href="/transformations"
+            className="group inline-flex items-center justify-center h-12 px-8 bg-primary text-black text-[12px] font-black tracking-widest uppercase transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] rounded-[6px]"
+          >
+            EXPLORE ALL TRANSFORMATIONS <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-2 stroke-[3]" />
+          </Link>
+        </div>
+      )}
 
     </section>
   );

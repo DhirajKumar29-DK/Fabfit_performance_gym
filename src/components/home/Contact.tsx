@@ -21,7 +21,7 @@ const PhoneInputIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" 
 const SubjectIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>;
 const EditIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-500"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>;
 
-export function Contact() {
+export function Contact({ isPage = false }: { isPage?: boolean }) {
   const { contact } = homeData;
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-10%" });
@@ -95,11 +95,19 @@ export function Contact() {
                 <span className="w-4 h-[1px] bg-primary"></span>
               </span>
               
-              <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[1] uppercase tracking-tighter mb-6">
-                <span className="block text-white mb-2">{contact.headingLine1}</span>
-                <span className="block text-white mb-2">{contact.headingLine2}</span>
-                <span className="block text-primary">{contact.headingLine3}</span>
-              </h2>
+              {isPage ? (
+                <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[1] uppercase tracking-tighter mb-6">
+                  <span className="block text-white mb-2">{contact.headingLine1}</span>
+                  <span className="block text-white mb-2">{contact.headingLine2}</span>
+                  <span className="block text-primary">{contact.headingLine3}</span>
+                </h1>
+              ) : (
+                <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[1] uppercase tracking-tighter mb-6">
+                  <span className="block text-white mb-2">{contact.headingLine1}</span>
+                  <span className="block text-white mb-2">{contact.headingLine2}</span>
+                  <span className="block text-primary">{contact.headingLine3}</span>
+                </h2>
+              )}
               
               <p className="text-zinc-400 text-sm md:text-base font-medium max-w-md">
                 {contact.subHeader}
@@ -171,22 +179,24 @@ export function Contact() {
                 >
                   <InstaIcon />
                 </a>
-                <button 
-                  type="button"
-                  aria-label="Facebook"
-                  onClick={(e) => e.preventDefault()}
-                  className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:border-primary hover:text-primary transition-colors duration-300 cursor-pointer"
+                <a 
+                  href="https://facebook.com/fabfitperformance" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Follow us on Facebook"
+                  className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:border-primary hover:text-primary transition-colors duration-300"
                 >
                   <FacebookIcon />
-                </button>
-                <button 
-                  type="button"
-                  aria-label="YouTube"
-                  onClick={(e) => e.preventDefault()}
-                  className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:border-primary hover:text-primary transition-colors duration-300 cursor-pointer"
+                </a>
+                <a 
+                  href="https://youtube.com/@fabfitperformance" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  aria-label="Subscribe on YouTube"
+                  className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:border-primary hover:text-primary transition-colors duration-300"
                 >
                   <YouTubeIcon />
-                </button>
+                </a>
                 <a 
                   href="https://wa.me/919220393004" 
                   target="_blank" 

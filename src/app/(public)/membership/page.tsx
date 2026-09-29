@@ -21,7 +21,7 @@ export default function MembershipPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-[72px] pb-12">
       <div className="relative -mt-12 md:-mt-16">
-        <Membership />
+        <Membership isPage={true} />
       </div>
       <div className="relative">
         <MembershipPerks />

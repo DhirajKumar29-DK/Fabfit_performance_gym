@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, useInView, Variants } from "framer-motion";
 import { homeData } from "@/data/dummy";
 import { api } from "@/services/api";
 import { fixImageUrl } from "@/lib/apiConfig";
-import { Dumbbell, Activity, HeartPulse, PersonStanding, Accessibility, Footprints, Bike, Timer, Flame, Target, Trophy, Medal, Award, Star, Zap, CircleDot, BadgeCheck, Users, UserRound, Shield, ShieldCheck, Apple, Utensils, Salad, Waves, Wind, Sparkles, CalendarDays, Clock, TrendingUp } from 'lucide-react';
+import { Dumbbell, Activity, HeartPulse, PersonStanding, Accessibility, Footprints, Bike, Timer, Flame, Target, Trophy, Medal, Award, Star, Zap, CircleDot, BadgeCheck, Users, UserRound, Shield, ShieldCheck, Apple, Utensils, Salad, Waves, Wind, Sparkles, CalendarDays, Clock, TrendingUp, ArrowRight } from 'lucide-react';
 
 const LUCIDE_ICONS: Record<string, React.ElementType> = {
   'dumbbell': Dumbbell,
@@ -84,7 +85,7 @@ const getIcon = (type: string) => {
   }
 };
 
-export function Programs() {
+export function Programs({ isPage = false }: { isPage?: boolean }) {
   const [sectionData, setSectionData] = useState<any>(null);
   const [programsList, setProgramsList] = useState<any[]>([]);
   const [highlights, setHighlights] = useState<any[]>([]);
@@ -146,6 +147,7 @@ export function Programs() {
 
   const featuredProgram = programsList.find(p => p.isFeatured && p.status === 'ACTIVE');
   const regularPrograms = programsList.filter(p => !p.isFeatured && p.status === 'ACTIVE').sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
+  const visiblePrograms = !isPage ? regularPrograms.slice(0, 4) : regularPrograms;
   const activeHighlights = highlights.filter(h => h.status === 'ACTIVE').sort((a, b) => (Number(a.displayOrder) || 0) - (Number(b.displayOrder) || 0));
 
   return (
@@ -172,32 +174,61 @@ export function Programs() {
             <div className="w-12 h-[1px] bg-[#333]"></div>
           </div>
           
-          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[1.1] uppercase tracking-tight mb-6 text-white">
-            {(() => {
-              const title = sectionData.title || "";
-              const parts = title.split('.');
-              if (parts.length >= 2 && parts[0] && parts[1]) {
-                const firstLine = parts[0] + '.';
-                const secondLine = parts.slice(1).join('.').trim();
-                const words = secondLine.split(' ');
-                
-                if (words.length >= 2) {
-                  const normalWords = words.slice(0, words.length - 2).join(' ');
-                  const highlightWords = words.slice(words.length - 2).join(' ');
-                  return (
-                    <>
-                      <div className="text-gray-200 drop-shadow-md">{firstLine}</div>
-                      <div>
-                        <span className="text-gray-200 drop-shadow-md">{normalWords} </span>
-                        <span className="text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]">{highlightWords}</span>
-                      </div>
-                    </>
-                  );
+          {isPage ? (
+            <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[1.1] uppercase tracking-tight mb-6 text-white">
+              {(() => {
+                const title = sectionData.title || "";
+                const parts = title.split('.');
+                if (parts.length >= 2 && parts[0] && parts[1]) {
+                  const firstLine = parts[0] + '.';
+                  const secondLine = parts.slice(1).join('.').trim();
+                  const words = secondLine.split(' ');
+                  
+                  if (words.length >= 2) {
+                    const normalWords = words.slice(0, words.length - 2).join(' ');
+                    const highlightWords = words.slice(words.length - 2).join(' ');
+                    return (
+                      <>
+                        <div className="text-gray-200 drop-shadow-md">{firstLine}</div>
+                        <div>
+                          <span className="text-gray-200 drop-shadow-md">{normalWords} </span>
+                          <span className="text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]">{highlightWords}</span>
+                        </div>
+                      </>
+                    );
+                  }
                 }
-              }
-              return <span className="text-gray-200">{title}</span>;
-            })()}
-          </h2>
+                return <span className="text-gray-200">{title}</span>;
+              })()}
+            </h1>
+          ) : (
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[1.1] uppercase tracking-tight mb-6 text-white">
+              {(() => {
+                const title = sectionData.title || "";
+                const parts = title.split('.');
+                if (parts.length >= 2 && parts[0] && parts[1]) {
+                  const firstLine = parts[0] + '.';
+                  const secondLine = parts.slice(1).join('.').trim();
+                  const words = secondLine.split(' ');
+                  
+                  if (words.length >= 2) {
+                    const normalWords = words.slice(0, words.length - 2).join(' ');
+                    const highlightWords = words.slice(words.length - 2).join(' ');
+                    return (
+                      <>
+                        <div className="text-gray-200 drop-shadow-md">{firstLine}</div>
+                        <div>
+                          <span className="text-gray-200 drop-shadow-md">{normalWords} </span>
+                          <span className="text-primary drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.3)]">{highlightWords}</span>
+                        </div>
+                      </>
+                    );
+                  }
+                }
+                return <span className="text-gray-200">{title}</span>;
+              })()}
+            </h2>
+          )}
           
           <p className="text-[#8ba3b8] font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed whitespace-pre-wrap">
             {sectionData.description}
@@ -205,14 +236,14 @@ export function Programs() {
         </motion.div>
 
         {/* 4-Card Grid Block */}
-        {regularPrograms.length > 0 && (
+        {visiblePrograms.length > 0 && (
           <motion.div 
             variants={staggerContainer}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
           >
-            {regularPrograms.map((card) => (
+            {visiblePrograms.map((card) => (
               <motion.div 
                 key={card.id}
                 variants={itemVariants}
@@ -255,6 +286,18 @@ export function Programs() {
               </motion.div>
             ))}
           </motion.div>
+        )}
+
+        {/* Explore More Programs CTA for Homepage */}
+        {!isPage && (
+          <div className="flex justify-center mb-12">
+            <Link
+              href="/programs"
+              className="group inline-flex items-center justify-center h-12 px-8 bg-primary text-black text-[12px] font-black tracking-widest uppercase transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] rounded-[6px]"
+            >
+              EXPLORE MORE PROGRAMS <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-2 stroke-[3]" />
+            </Link>
+          </div>
         )}
 
         {/* Wide Competition Prep Card Block (Featured Program) */}

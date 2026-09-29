@@ -30,6 +30,12 @@ const YoutubeIcon = () => (
   </svg>
 );
 
+const FacebookIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+);
+
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
@@ -47,6 +53,16 @@ const socialLinks = [
     icon: InstagramIcon,
     label: "Instagram",
     href: "https://instagram.com/fabfitperformance",
+  },
+  {
+    icon: FacebookIcon,
+    label: "Facebook",
+    href: "https://facebook.com/fabfitperformance",
+  },
+  {
+    icon: YoutubeIcon,
+    label: "YouTube",
+    href: "https://youtube.com/@fabfitperformance",
   },
   {
     icon: MessageCircle,
@@ -139,7 +155,7 @@ export function Footer() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="group flex items-center text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-full py-1"
+                    className="group inline-flex items-center text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-fit py-1"
                   >
                     <span className="relative flex items-center">
                       <ChevronRight className="absolute -left-4 w-3 h-3 opacity-0 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 text-primary" />
@@ -164,7 +180,7 @@ export function Footer() {
                 href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex gap-3 text-zinc-500 hover:text-primary text-sm leading-relaxed transition-colors duration-200"
+                className="group inline-flex gap-3 text-zinc-500 hover:text-primary text-sm leading-relaxed transition-colors duration-200 w-fit"
               >
                 <MapPin className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 <span>
@@ -182,11 +198,11 @@ export function Footer() {
               <div className="flex flex-col gap-2 text-sm">
                 <div className="flex items-center gap-3 text-zinc-500">
                   <Clock className="w-4 h-4 text-primary shrink-0" />
-                  <span>Mon – Sat &nbsp;·&nbsp; 6:00 – 22:00</span>
+                  <span>Mon – Sat &nbsp;·&nbsp; 6:00 AM – 11:00 PM</span>
                 </div>
                 <div className="flex items-center gap-3 text-zinc-500">
                   <Clock className="w-4 h-4 text-primary shrink-0" />
-                  <span>Sunday &nbsp;·&nbsp; 7:00 – 12:00</span>
+                  <span>Sunday &nbsp;·&nbsp; 8:00 AM – 2:00 PM</span>
                 </div>
               </div>
             </div>
@@ -201,7 +217,7 @@ export function Footer() {
             <div className="flex flex-col gap-2">
               <a
                 href="tel:+919220393004"
-                className="group flex items-center gap-3 text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-full py-1.5 hover:translate-x-2"
+                className="group inline-flex items-center gap-3 text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-fit py-1.5 hover:translate-x-2"
               >
                 <Phone className="w-4 h-4 text-primary shrink-0 transition-transform duration-300 group-hover:scale-125" />
                 <span>+91 92203 93004</span>
@@ -210,7 +226,7 @@ export function Footer() {
                 href="https://wa.me/919220393004"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-full py-1.5 hover:translate-x-2"
+                className="group inline-flex items-center gap-3 text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-fit py-1.5 hover:translate-x-2"
               >
                 <MessageCircle className="w-4 h-4 text-primary shrink-0 transition-transform duration-300 group-hover:scale-125" />
                 <span>WhatsApp Us</span>
@@ -219,7 +235,7 @@ export function Footer() {
                 href="https://mail.google.com/mail/?view=cm&fs=1&to=fabfitgym04@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-full py-1.5 hover:translate-x-2"
+                className="group inline-flex items-center gap-3 text-zinc-500 hover:text-primary text-sm font-medium transition-all duration-300 cursor-pointer w-fit py-1.5 hover:translate-x-2"
               >
                 <Mail className="w-4 h-4 text-primary shrink-0 transition-transform duration-300 group-hover:scale-125" />
                 <span>fabfitgym04@gmail.com</span>

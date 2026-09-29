@@ -8,7 +8,7 @@ const faqData = [
   {
     question: "1. What are your gym timings?",
     answer:
-      "Our facility and head coaches operate from 6:00 AM to 10:00 PM (Monday through Saturday). For online personal coaching clients, support and query resolution are available 24/7 via WhatsApp and our portal.",
+      "Our facility and head coaches operate from 6:00 AM to 11:00 PM (Monday through Saturday) and 8:00 AM to 2:00 PM on Sundays. For online personal coaching clients, support and query resolution are available 24/7 via WhatsApp and our portal.",
   },
   {
     question: "2. Do you provide personal training?",

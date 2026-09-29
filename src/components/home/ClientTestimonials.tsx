@@ -70,8 +70,8 @@ export function ClientTestimonials() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-10%" });
 
-  // Live data from API; falls back to dummy while loading
-  const [reviews, setReviews] = useState<any[]>(clientTestimonials.reviews);
+  // Live data from API
+  const [reviews, setReviews] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -163,9 +163,9 @@ export function ClientTestimonials() {
               className="w-full bg-[#0a0a0a] border border-zinc-800/60 rounded-2xl flex flex-col md:flex-row items-center justify-between p-5 md:p-7 gap-6 group hover:border-primary/30 transition-colors duration-500 relative"
             >
               
-              {/* Left: Compact Client Photo Box */}
+              {/* Left: Client Photo Box */}
               <div className="flex items-center gap-4 shrink-0 w-full md:w-auto">
-                <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-2xl overflow-hidden border-2 border-primary/40 shrink-0 relative bg-zinc-900 shadow-xl group-hover:border-primary transition-all duration-500">
+                <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-2xl overflow-hidden border-2 border-primary/40 shrink-0 relative bg-zinc-900 shadow-xl group-hover:border-primary transition-all duration-500">
                   <img 
                     src={fixImageUrl(review.image)} 
                     alt={review.name} 

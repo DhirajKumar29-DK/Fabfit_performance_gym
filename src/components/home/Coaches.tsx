@@ -18,7 +18,7 @@ interface HeadCoachData {
   ctaLink: string;
 }
 
-export function Coaches() {
+export function Coaches({ isPage = false }: { isPage?: boolean }) {
   const [expert, setExpert] = useState<HeadCoachData | null>(null);
 
   useEffect(() => {
@@ -97,15 +97,27 @@ export function Coaches() {
                 className="absolute left-0 top-2 bottom-2 w-1.5 bg-primary origin-top rounded-full hidden lg:block"
               />
               <div className="overflow-hidden py-2">
-                <motion.h2
-                  custom={1}
-                  variants={textRevealVariants}
-                  initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
-                  className="font-heading text-4xl md:text-5xl lg:text-[4.5rem] font-black text-white leading-[0.9] uppercase tracking-tighter drop-shadow-lg"
-                >
-                  {expert.coachName}
-                </motion.h2>
+                {isPage ? (
+                  <motion.h1
+                    custom={1}
+                    variants={textRevealVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                    className="font-heading text-4xl md:text-5xl lg:text-[4.5rem] font-black text-white leading-[0.9] uppercase tracking-tighter drop-shadow-lg"
+                  >
+                    {expert.coachName}
+                  </motion.h1>
+                ) : (
+                  <motion.h2
+                    custom={1}
+                    variants={textRevealVariants}
+                    initial="hidden"
+                    animate={isInView ? "visible" : "hidden"}
+                    className="font-heading text-4xl md:text-5xl lg:text-[4.5rem] font-black text-white leading-[0.9] uppercase tracking-tighter drop-shadow-lg"
+                  >
+                    {expert.coachName}
+                  </motion.h2>
+                )}
               </div>
               <div className="overflow-hidden mt-3">
                 <motion.p

@@ -2,9 +2,6 @@ import { Metadata, Viewport } from "next";
 import { Inter, Archivo } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { VisitorTracker } from "@/components/VisitorTracker";
-import { LayoutWrapper } from "@/components/layout/LayoutWrapper";
-import { SmoothScroll } from "@/components/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -141,19 +138,36 @@ const schemaData = {
   ]
 };
 
-export default function PublicLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <VisitorTracker />
-      <SmoothScroll>
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
-      </SmoothScroll>
-    </>
+    <html lang="en" className="dark">
+      <head>
+        {/* Google Tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-18479980189"
+          strategy="afterInteractive"
+        />
+        <Script id="google-gtag" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-18479980189');
+          `}
+        </Script>
+      </head>
+      <body className={`ui-theme ${inter.variable} ${archivo.variable} antialiased flex flex-col min-h-screen bg-[#050505] text-white`}>
+        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      </body>
+    </html>
   );
 }

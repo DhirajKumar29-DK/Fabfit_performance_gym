@@ -28,19 +28,10 @@ export const homeData = {
       headingLine2: "PURE SCIENCE",
       description: "Work with industry-leading coaches who tailor every session to your unique biomechanics and goals.",
       primaryCTA: "Start Your Journey",
+      primaryLink: "/assessment",
       secondaryCTA: "View Programs",
+      secondaryLink: "/programs",
       src: "/fabfit.jpeg",
-      type: "image"
-    },
-    {
-      id: "default-2",
-      badge: "ELITE PERFORMANCE",
-      headingLine1: "UNLEASH YOUR",
-      headingLine2: "TRUE POTENTIAL",
-      description: "Transform your body with data-driven fitness coaching and customized nutrition.",
-      primaryCTA: "Book Assessment",
-      secondaryCTA: "Explore Programs",
-      src: "/coach-dhiraj.png",
       type: "image"
     }
   ],
@@ -209,7 +200,7 @@ export const homeData = {
       { id: 1, type: "phone", title: "CALL US", details: "+91 92203 93004" },
       { id: 2, type: "email", title: "EMAIL US", details: "fabfitgym04@gmail.com" },
       { id: 3, type: "address", title: "VISIT US", details: "62C, 6th Floor, Supermart 1,\nDLF Phase-4, Gurgaon" },
-      { id: 4, type: "hours", title: "OPENING HOURS", details: "Mon - Sun: 6:00 AM - 11:00 PM" }
+      { id: 4, type: "hours", title: "OPENING HOURS", details: "Mon - Sat: 6:00 AM - 11:00 PM\nSun: 8:00 AM - 2:00 PM" }
     ],
     socials: [
       { id: 1, name: "Instagram", url: "#" },

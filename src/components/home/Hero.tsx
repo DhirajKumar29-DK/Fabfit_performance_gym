@@ -22,7 +22,7 @@ const sanitizeInternalLink = (url: string | null | undefined, fallback: string):
 };
 
 export function Hero() {
-  const [heroSlides, setHeroSlides] = useState(homeData.heroSlides);
+  const [heroSlides, setHeroSlides] = useState<any[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
@@ -96,12 +96,12 @@ export function Hero() {
             <img
               src={fixImageUrl(slide.src) || undefined}
               alt="Hero Background"
-              className="w-full h-full object-cover object-center md:object-right opacity-70 brightness-[0.85] transition-all duration-700"
+              className="w-full h-full object-cover object-center md:object-right opacity-80 brightness-[0.90] transition-all duration-700"
             />
 
-            {/* Subtle Gradient Overlays */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/60 to-transparent z-10 md:bg-gradient-to-r md:from-[#070709]/90 md:via-[#070709]/50 md:to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#070709]/60 via-transparent to-[#070709] z-10" />
+            {/* Lightened Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/30 to-transparent z-10 md:bg-gradient-to-r md:from-[#070709]/75 md:via-[#070709]/30 md:to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#070709]/30 via-transparent to-[#070709] z-10" />
           </div>
         </motion.div>
       </AnimatePresence>

@@ -20,7 +20,7 @@ export default function ContactPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-[72px] pb-12">
       <div className="relative -mt-12 md:-mt-16">
-        <Contact />
+        <Contact isPage={true} />
       </div>
     </main>
   );

@@ -44,15 +44,8 @@ interface AboutData {
   images: string[];
 }
 
-export function About() {
-  const [data, setData] = useState<AboutData>({
-    badge: homeData.intro?.badge || "ABOUT US",
-    headingLine1: homeData.intro?.headingLine1 || "BUILD ON PASSION",
-    headingLine2: homeData.intro?.headingLine2 || "DRIVEN BY RESULTS",
-    description: homeData.intro?.description || "We're more than just a training facility.",
-    checklist: homeData.intro?.checklist || [],
-    images: homeData.intro?.images || ["/fabfit.jpeg", "/coach-dhiraj.png"]
-  });
+export function About({ isPage = false }: { isPage?: boolean }) {
+  const [data, setData] = useState<AboutData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -75,6 +68,8 @@ export function About() {
     fetchAboutData();
   }, []);
 
+  if (!data) return null;
+
   return (
     <section id="about" className="py-12 md:py-16 bg-[#050505] relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-12 relative z-10">
@@ -93,15 +88,27 @@ export function About() {
               </motion.div>
             )}
             
-            <motion.h2 variants={itemVariants} className="font-heading text-5xl md:text-6xl lg:text-[72px] font-black text-white leading-[0.95] tracking-tight uppercase mb-8 whitespace-pre-line">
-              {data.headingLine1}
-              {data.headingLine2 && (
-                <>
-                  <br />
-                  <span className="text-[#d4af37]">{data.headingLine2}</span>
-                </>
-              )}
-            </motion.h2>
+            {isPage ? (
+              <motion.h1 variants={itemVariants} className="font-heading text-5xl md:text-6xl lg:text-[72px] font-black text-white leading-[0.95] tracking-tight uppercase mb-8 whitespace-pre-line">
+                {data.headingLine1}
+                {data.headingLine2 && (
+                  <>
+                    <br />
+                    <span className="text-[#d4af37]">{data.headingLine2}</span>
+                  </>
+                )}
+              </motion.h1>
+            ) : (
+              <motion.h2 variants={itemVariants} className="font-heading text-5xl md:text-6xl lg:text-[72px] font-black text-white leading-[0.95] tracking-tight uppercase mb-8 whitespace-pre-line">
+                {data.headingLine1}
+                {data.headingLine2 && (
+                  <>
+                    <br />
+                    <span className="text-[#d4af37]">{data.headingLine2}</span>
+                  </>
+                )}
+              </motion.h2>
+            )}
             
             {data.description && (
               <motion.p variants={itemVariants} className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-medium whitespace-pre-line">
@@ -142,7 +149,7 @@ export function About() {
             />
             
             {(() => {
-              const activeImages = data.images && data.images.length > 0 ? data.images : ["/fabfit.jpeg", "/coach-dhiraj.png"];
+              const activeImages = data.images && data.images.length > 0 ? data.images : [];
               return (
                 <div className={`relative grid gap-4 h-[600px] z-10 ${activeImages.length >= 2 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                   {/* Main Image */}
