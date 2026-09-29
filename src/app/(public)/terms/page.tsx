@@ -122,7 +122,7 @@ export default function TermsOfServicePage() {
               <span className="text-primary font-mono text-base">04.</span> Gym Facility Etiquette
             </h2>
             <p>
-              Members training on-site at our Gurgaon center (62C, 6th Floor, Supermart 1, DLF Phase-4) must follow facility guidelines:
+              Members training on-site at our Gurgaon center (<a href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">62C, 6th Floor, Supermart 1, DLF Phase-4</a>) must follow facility guidelines:
             </p>
             <ul className="space-y-2 text-sm pl-4 list-disc marker:text-primary">
               <li>Re-rack all weights, dumbbells, and plates after set completion.</li>
@@ -153,7 +153,9 @@ export default function TermsOfServicePage() {
             <div className="bg-[#18181c] border border-white/10 rounded-xl p-5 space-y-3 max-w-md text-sm">
               <div className="flex items-center gap-3 text-zinc-300">
                 <MapPin className="w-4 h-4 text-primary shrink-0" />
-                <span>FabFit Performance Gym · 62C, 6th Floor, Supermart 1, DLF Phase-4, Gurgaon</span>
+                <a href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  FabFit Performance Gym · 62C, 6th Floor, Supermart 1, DLF Phase-4, Gurgaon
+                </a>
               </div>
               <div className="flex items-center gap-3 text-zinc-300">
                 <Mail className="w-4 h-4 text-primary shrink-0" />

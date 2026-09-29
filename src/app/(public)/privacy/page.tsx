@@ -151,7 +151,9 @@ export default function PrivacyPolicyPage() {
             <div className="bg-[#18181c] border border-white/10 rounded-xl p-5 space-y-3 max-w-md text-sm">
               <div className="flex items-center gap-3 text-zinc-300">
                 <MapPin className="w-4 h-4 text-primary shrink-0" />
-                <span>FabFit Performance Gym · 62C, 6th Floor, Supermart 1, DLF Phase-4, Gurgaon</span>
+                <a href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  FabFit Performance Gym · 62C, 6th Floor, Supermart 1, DLF Phase-4, Gurgaon
+                </a>
               </div>
               <div className="flex items-center gap-3 text-zinc-300">
                 <Mail className="w-4 h-4 text-primary shrink-0" />

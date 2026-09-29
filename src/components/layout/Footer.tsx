@@ -161,7 +161,7 @@ export function Footer() {
                 Visit Us
               </h4>
               <a
-                href="https://www.google.com/maps/search/?api=1&query=62C,+6th+Floor,+Supermart+1,+DLF+Phase-4,+Gurugram"
+                href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex gap-3 text-zinc-500 hover:text-primary text-sm leading-relaxed transition-colors duration-200"

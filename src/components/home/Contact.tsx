@@ -119,7 +119,7 @@ export function Contact() {
                   : isEmail 
                   ? `https://mail.google.com/mail/?view=cm&fs=1&to=${item.details}` 
                   : isAddress
-                  ? `https://maps.google.com/?q=${encodeURIComponent(item.details)}`
+                  ? "https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"
                   : undefined;
 
                 const InnerContent = (
@@ -348,23 +348,40 @@ export function Contact() {
             </div>
 
             {/* Map Box */}
-            <div className="relative w-full h-[220px] bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden group shadow-2xl">
+            <div className="relative w-full h-[240px] bg-zinc-900 border border-white/10 rounded-3xl overflow-hidden group shadow-2xl">
               <iframe
-                src="https://maps.google.com/maps?q=Supermart+1,+DLF+Phase-4,+Gurgaon&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=Fab+Fit+Performance+Gym,+DLF+Phase-4,+Gurgaon&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen={false}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="opacity-50 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                className="opacity-75 grayscale-[20%] group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
               ></iframe>
-              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-1000 pointer-events-none mix-blend-overlay"></div>
+              <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-1000 pointer-events-none mix-blend-overlay"></div>
+              
               {/* Floating Address Mini-Card */}
-              <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 flex items-center gap-3">
+              <a
+                href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute top-4 left-4 bg-black/85 backdrop-blur-md border border-[#d4af37]/30 hover:border-primary rounded-xl px-4 py-2 flex items-center gap-2.5 transition-all shadow-xl hover:scale-105 z-10"
+              >
                 <MapPinIcon />
-                <span className="text-white text-xs font-bold tracking-widest uppercase">{contact.mapAddress.title}</span>
-              </div>
+                <span className="text-white text-xs font-bold tracking-widest uppercase hover:text-primary transition-colors">{contact.mapAddress.title}</span>
+              </a>
+
+              {/* Get Directions Floating Action Button */}
+              <a
+                href="https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 right-4 bg-[#d4af37] text-black font-extrabold text-[10px] tracking-widest uppercase px-3.5 py-1.5 rounded-lg shadow-xl hover:bg-white transition-all flex items-center gap-1.5 z-10 hover:scale-105"
+              >
+                <span>OPEN IN MAPS</span>
+                <span>↗</span>
+              </a>
             </div>
           </motion.div>
           

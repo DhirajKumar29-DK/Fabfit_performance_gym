@@ -222,7 +222,8 @@ export const homeData = {
     mapAddress: {
       title: "FabFit Performance Gym",
       addressLine1: "62C, 6th Floor, Supermart 1,",
-      addressLine2: "DLF Phase-4, Gurgaon"
+      addressLine2: "DLF Phase-4, Gurgaon",
+      mapUrl: "https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"
     }
   },
   programs: {

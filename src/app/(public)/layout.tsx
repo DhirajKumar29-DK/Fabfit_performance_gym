@@ -111,10 +111,11 @@ const schemaData = {
     "postalCode": "122002",
     "addressCountry": "IN"
   },
+  "hasMap": "https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8",
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "28.4632",
-    "longitude": "77.0858"
+    "latitude": "28.4621527",
+    "longitude": "77.087228"
   },
   "telephone": "+919220393004",
   "url": siteUrl,
