@@ -211,7 +211,7 @@ export const homeData = {
     formHeader: "SEND US A",
     formHeaderHighlight: "MESSAGE",
     mapAddress: {
-      title: "FabFit Performance Gym",
+      title: "Fab Fit Performance Gym",
       addressLine1: "62C, 6th Floor, Supermart 1,",
       addressLine2: "DLF Phase-4, Gurgaon",
       mapUrl: "https://maps.app.goo.gl/oPEMZr8uqCoxkmwq8"

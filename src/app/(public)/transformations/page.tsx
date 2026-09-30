@@ -4,14 +4,14 @@ import { Transformations } from "@/components/home/Transformations";
 import { ClientTestimonials } from "@/components/home/ClientTestimonials";
 
 export const metadata: Metadata = {
-  title: "Client Transformations | FabFit Performance Gym",
-  description: "See real before & after physique transformations and reviews from clients coached by FabFit Performance Gym.",
+  title: "Client Transformations | Fab Fit Performance Gym",
+  description: "See real before & after physique transformations and reviews from clients coached by Fab Fit Performance Gym.",
   alternates: {
     canonical: "https://fabfitperformance.com/transformations",
   },
   openGraph: {
-    title: "Client Transformations | FabFit Performance Gym",
-    description: "See real before & after physique transformations and reviews from clients coached by FabFit Performance Gym.",
+    title: "Client Transformations | Fab Fit Performance Gym",
+    description: "See real before & after physique transformations and reviews from clients coached by Fab Fit Performance Gym.",
     url: "https://fabfitperformance.com/transformations",
     images: ["/fabfit.jpeg"],
   },

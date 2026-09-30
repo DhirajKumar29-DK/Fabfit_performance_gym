@@ -38,7 +38,7 @@ export function Contact({ isPage = false }: { isPage?: boolean }) {
       alert("Please select your goal.");
       return;
     }
-    const message = `Hi FabFit Performance Gym! I'm ${name.trim()} and my goal is: ${goal}. I'd like to book my assessment.`;
+    const message = `Hi Fab Fit Performance Gym! I'm ${name.trim()} and my goal is: ${goal}. I'd like to book my assessment.`;
     window.open(`https://wa.me/919220393004?text=${encodeURIComponent(message)}`, "_blank");
   };
 
@@ -235,7 +235,7 @@ export function Contact({ isPage = false }: { isPage?: boolean }) {
                 const phone = formData.get('phone');
                 const subject = formData.get('subject');
                 const message = formData.get('message');
-                const text = `Hi FabFit Performance Gym!\n\nNew Inquiry Details:\n* Name: ${name}\n* Phone: ${phone}\n* Email: ${email}\n* Subject: ${subject}\n* Message: ${message}`;
+                const text = `Hi Fab Fit Performance Gym!\n\nNew Inquiry Details:\n* Name: ${name}\n* Phone: ${phone}\n* Email: ${email}\n* Subject: ${subject}\n* Message: ${message}`;
                 window.open(`https://wa.me/919220393004?text=${encodeURIComponent(text)}`, '_blank');
               }}>
 

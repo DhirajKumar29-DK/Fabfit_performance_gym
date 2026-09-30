@@ -90,11 +90,11 @@ export function AboutFAQ() {
               </span>
 
               <h2 className="font-heading text-3xl md:text-5xl font-black text-white uppercase tracking-tight leading-[1.05] mb-4">
-                Everything about <span className="text-[#d4af37]">FabFit Performance Gym</span>
+                Everything about <span className="text-[#d4af37]">Fab Fit Performance Gym</span>
               </h2>
 
               <p className="text-zinc-400 text-sm md:text-base leading-relaxed font-medium">
-                We know that starting or maintaining a fitness journey can feel overwhelming. Here are some frequently asked questions to help guide you through your training at FabFit Performance Gym.
+                We know that starting or maintaining a fitness journey can feel overwhelming. Here are some frequently asked questions to help guide you through your training at Fab Fit Performance Gym.
               </p>
             </div>
 

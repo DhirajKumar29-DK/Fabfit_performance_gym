@@ -16,20 +16,20 @@ export async function generateMetadata({
 
   if (!blog) {
     return {
-      title: "Blog Post Not Found | FabFit Performance Gym",
+      title: "Blog Post Not Found | Fab Fit Performance Gym",
     };
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://fabfitperformance.com";
   const postUrl = `${siteUrl}/blogs/${blog.slug}`;
-  const title = blog.metaTitle || `${blog.title} | FabFit Performance Gym`;
+  const title = blog.metaTitle || `${blog.title} | Fab Fit Performance Gym`;
   const description = blog.metaDescription || blog.excerpt || blog.content.substring(0, 160);
   const image = fixImageUrl(blog.ogImage || blog.coverImage || "/fabfit.jpeg");
 
   return {
     title,
     description,
-    keywords: blog.metaKeywords ? blog.metaKeywords.split(",") : [blog.category, "Fitness Gurgaon", "FabFit Performance Gym"],
+    keywords: blog.metaKeywords ? blog.metaKeywords.split(",") : [blog.category, "Fitness Gurgaon", "Fab Fit Performance Gym"],
     authors: [{ name: blog.authorName || "Coach Ankit Baliyan" }],
     alternates: {
       canonical: blog.canonicalUrl || postUrl,
@@ -38,7 +38,7 @@ export async function generateMetadata({
       title,
       description,
       url: postUrl,
-      siteName: "FabFit Performance Gym",
+      siteName: "Fab Fit Performance Gym",
       images: [
         {
           url: image,
@@ -94,7 +94,7 @@ export default async function SingleBlogPage({
     },
     "publisher": {
       "@type": "Organization",
-      "name": "FabFit Performance Gym",
+      "name": "Fab Fit Performance Gym",
       "logo": {
         "@type": "ImageObject",
         "url": `${siteUrl}/logo.png`

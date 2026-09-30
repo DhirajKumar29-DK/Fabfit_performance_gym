@@ -277,7 +277,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                   </div>
                   
                   <a 
-                    href={plan.enquiryLink || `https://wa.me/919220393004?text=${encodeURIComponent(`Hi FabFit Performance Gym! I want to enquire about the ${plan.duration} ${plan.name} plan.`)}`}
+                    href={plan.enquiryLink || `https://wa.me/919220393004?text=${encodeURIComponent(`Hi Fab Fit Performance Gym! I want to enquire about the ${plan.duration} ${plan.name} plan.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`

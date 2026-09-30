@@ -4,14 +4,14 @@ import { Membership } from "@/components/home/Membership";
 import { MembershipPerks } from "@/components/membership/MembershipPerks";
 
 export const metadata: Metadata = {
-  title: "Membership Plans & Pricing | FabFit Performance Gym",
-  description: "View pricing packages, membership options, and custom coaching plans at FabFit Performance Gym.",
+  title: "Membership Plans & Pricing | Fab Fit Performance Gym",
+  description: "View pricing packages, membership options, and custom coaching plans at Fab Fit Performance Gym.",
   alternates: {
     canonical: "https://fabfitperformance.com/membership",
   },
   openGraph: {
-    title: "Membership Plans & Pricing | FabFit Performance Gym",
-    description: "View pricing packages, membership options, and custom coaching plans at FabFit Performance Gym.",
+    title: "Membership Plans & Pricing | Fab Fit Performance Gym",
+    description: "View pricing packages, membership options, and custom coaching plans at Fab Fit Performance Gym.",
     url: "https://fabfitperformance.com/membership",
     images: ["/fabfit.jpeg"],
   },

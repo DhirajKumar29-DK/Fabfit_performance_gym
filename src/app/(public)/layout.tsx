@@ -29,11 +29,12 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "FabFit Performance Gym - Premium Gym & Elite Fitness Coaching in Gurgaon",
-    template: "%s | FabFit Performance Gym",
+    default: "Fab Fit Performance Gym - Premium Gym & Elite Fitness Coaching in Gurgaon",
+    template: "%s | Fab Fit Performance Gym",
   },
-  description: "Join FabFit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs. Start your journey today.",
+  description: "Join Fab Fit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs. Start your journey today.",
   keywords: [
+    "Fab Fit Performance Gym",
     "FabFit Performance Gym",
     "Gym in Gurgaon",
     "Fitness Coaching Gurgaon",
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     "Best Gym DLF Phase 4",
   ],
   authors: [{ name: "Ankit Baliyan", url: siteUrl }],
-  publisher: "FabFit Performance Gym",
+  publisher: "Fab Fit Performance Gym",
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
@@ -66,16 +67,16 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "FabFit Performance Gym - Premium Gym & Elite Fitness Coaching",
-    description: "Join FabFit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs.",
+    title: "Fab Fit Performance Gym - Premium Gym & Elite Fitness Coaching",
+    description: "Join Fab Fit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs.",
     url: siteUrl,
-    siteName: "FabFit Performance Gym",
+    siteName: "Fab Fit Performance Gym",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Coach Ankit Baliyan - FabFit Performance Gym",
+        alt: "Coach Ankit Baliyan - Fab Fit Performance Gym",
       },
       {
         url: "/ankit-baliyan.png",
@@ -89,8 +90,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FabFit Performance Gym - Premium Gym & Elite Fitness Coaching",
-    description: "Join FabFit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs.",
+    title: "Fab Fit Performance Gym - Premium Gym & Elite Fitness Coaching",
+    description: "Join Fab Fit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs.",
     images: ["/og-image.jpg"],
     creator: "@fabfitperformance",
   },
@@ -99,7 +100,7 @@ export const metadata: Metadata = {
 const schemaData = {
   "@context": "https://schema.org",
   "@type": ["ExerciseGym", "SportsActivityLocation", "HealthAndBeautyBusiness"],
-  "name": "FabFit Performance Gym",
+  "name": "Fab Fit Performance Gym",
   "image": `${siteUrl}/og-image.jpg`,
   "logo": `${siteUrl}/logo.png`,
   "description": "Premium destination for elite fitness, personal training, and physique transformation coaching in Gurgaon.",

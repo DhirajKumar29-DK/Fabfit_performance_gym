@@ -32,7 +32,7 @@ export function AssessmentSidebar() {
         {/* Coach Card */}
         <div className="relative rounded-xl overflow-hidden bg-[#18181c] border border-white/5 p-4 flex items-center gap-4">
           <img 
-            src="/coach-dhiraj.png" 
+            src="/fabfit.jpeg" 
             alt="Coach Ankit Baliyan" 
             className="w-14 h-14 rounded-full object-cover border-2 border-primary/50 shrink-0"
           />

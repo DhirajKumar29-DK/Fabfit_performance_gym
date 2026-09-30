@@ -291,7 +291,7 @@ function AssessmentSuccessView() {
 
       {/* Main Headline */}
       <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase mb-3 z-10">
-        WELCOME TO THE <span className="bg-gradient-to-r from-primary via-yellow-200 to-amber-500 bg-clip-text text-transparent">FABFIT FAMILY!</span>
+        WELCOME TO THE <span className="bg-gradient-to-r from-primary via-yellow-200 to-amber-500 bg-clip-text text-transparent">FAB FIT FAMILY!</span>
       </h2>
 
       <p className="text-zinc-300 text-sm sm:text-base max-w-xl mx-auto leading-relaxed mb-8 z-10">

@@ -37,7 +37,7 @@ export function MembershipPerks() {
             <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.8)] group h-[450px] md:h-[520px]">
               <img
                 src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=1000"
-                alt="FabFit Premium Membership Gym"
+                alt="Fab Fit Premium Membership Gym"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -74,7 +74,7 @@ export function MembershipPerks() {
 
             {/* Description */}
             <p className="text-zinc-300 text-base md:text-lg leading-relaxed mb-8 font-medium">
-              When you join FabFit Performance Gym, you gain access to an ecosystem engineered for results. We handle your training programming, macro nutrition architecture, and real-time accountability so you can focus purely on execution.
+              When you join Fab Fit Performance Gym, you gain access to an ecosystem engineered for results. We handle your training programming, macro nutrition architecture, and real-time accountability so you can focus purely on execution.
             </p>
 
             {/* Perks List */}

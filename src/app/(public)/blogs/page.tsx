@@ -6,13 +6,13 @@ import { fixImageUrl } from "@/lib/apiConfig";
 import { Search, Calendar, User, Eye, ArrowRight, Sparkles, BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Fitness & Nutrition Blogs | FabFit Performance Gym Gurgaon",
+  title: "Fitness & Nutrition Blogs | Fab Fit Performance Gym Gurgaon",
   description: "Read expert fitness advice, nutrition guides, fat loss secrets, and workout split guides written by Coach Ankit Baliyan.",
   alternates: {
     canonical: "https://fabfitperformance.com/blogs",
   },
   openGraph: {
-    title: "Fitness & Nutrition Blogs | FabFit Performance Gym Gurgaon",
+    title: "Fitness & Nutrition Blogs | Fab Fit Performance Gym Gurgaon",
     description: "Read expert fitness advice, nutrition guides, fat loss secrets, and workout split guides written by Coach Ankit Baliyan.",
     url: "https://fabfitperformance.com/blogs",
     images: ["/fabfit.jpeg"],

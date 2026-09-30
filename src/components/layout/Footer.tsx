@@ -118,7 +118,7 @@ export function Footer() {
             <Link href="/" className="inline-block">
               <Image
                 src={Logo}
-                alt="FabFit Performance Gym"
+                alt="Fab Fit Performance Gym"
                 width={160}
                 height={160}
                 className="object-contain"
@@ -248,7 +248,7 @@ export function Footer() {
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-400 font-medium md:pr-20">
           <p className="tracking-wide">
             © {new Date().getFullYear()}{" "}
-            <span className="text-white font-bold">FabFit Performance Gym</span>. All rights reserved.
+            <span className="text-white font-bold">Fab Fit Performance Gym</span>. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <Link href="/privacy" className="hover:text-primary transition-colors font-semibold">
