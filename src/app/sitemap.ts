@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { homeData } from '@/data/dummy';
+import { BlogService } from '@/modules/blog/blog.service';
 
-export const dynamic = 'force-static';
+export const revalidate = 3600; // Revalidate sitemap every 1 hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fabfitperformance.com';
@@ -87,6 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Dynamic Service Pages
   let servicePages: MetadataRoute.Sitemap = [];
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -106,7 +108,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     }
   } catch (error) {
-    // Fallback
+    // Fallback to static dummy items
   }
 
   if (servicePages.length === 0) {
@@ -118,26 +120,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
   }
 
+  // Dynamic Blog Pages directly from DB/BlogService
   let blogPages: MetadataRoute.Sitemap = [];
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    if (apiUrl) {
-      const res = await fetch(`${apiUrl}/api/blogs?public=true`, { signal: AbortSignal.timeout(3000) });
-      if (res.ok) {
-        const json = await res.json();
-        const blogs = json.success ? json.data : json;
-        if (Array.isArray(blogs)) {
-          blogPages = blogs.map((b: any) => ({
-            url: `${baseUrl}/blogs/${b.slug}`,
-            lastModified: new Date(b.updatedAt || b.createdAt || Date.now()),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-          }));
-        }
-      }
+    const blogs = await BlogService.getAllBlogs({ isPublic: true });
+    if (Array.isArray(blogs)) {
+      blogPages = blogs.map((b: any) => ({
+        url: `${baseUrl}/blogs/${b.slug}`,
+        lastModified: new Date(b.updatedAt || b.createdAt || Date.now()),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      }));
     }
   } catch (error) {
-    // Ignore error
+    console.error("Sitemap Blog fetch error:", error);
   }
 
   return [...staticPages, ...servicePages, ...blogPages];
