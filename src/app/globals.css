@@ -26,6 +26,19 @@ body.admin-theme {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Fix for light background inputs in admin and light modals */
+main input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.text-white),
+main textarea:not(.text-white),
+main select:not(.text-white),
+.bg-white input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.text-white),
+.bg-white textarea:not(.text-white),
+.bg-white select:not(.text-white),
+.bg-gray-50 input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.text-white),
+.bg-gray-50 textarea:not(.text-white),
+.bg-gray-50 select:not(.text-white) {
+  color: #111827;
+}
+
 /* Fittness_ui Variables & Styles */
 @import "tailwindcss";
 

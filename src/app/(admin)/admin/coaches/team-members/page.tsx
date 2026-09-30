@@ -353,7 +353,7 @@ export default function TeamMembersPage() {
                     <input 
                       type="text" 
                       placeholder="e.g. SARAH JENNINGS"
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium"
+                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium text-gray-900"
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
                     />
@@ -363,7 +363,7 @@ export default function TeamMembersPage() {
                     <input 
                       type="text" 
                       placeholder="e.g. ASHTANGA & VINYASA FLOW"
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium"
+                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium text-gray-900"
                       value={formData.category}
                       onChange={e => setFormData({...formData, category: e.target.value})}
                     />
@@ -373,7 +373,7 @@ export default function TeamMembersPage() {
                     <input 
                       type="text" 
                       placeholder="e.g. YOGA & MOBILITY SPECIALIST"
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium"
+                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium text-gray-900"
                       value={formData.specialization}
                       onChange={e => setFormData({...formData, specialization: e.target.value})}
                     />
@@ -383,7 +383,7 @@ export default function TeamMembersPage() {
                     <textarea 
                       placeholder="Short bio..."
                       rows={5}
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm resize-none"
+                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm resize-none text-gray-900"
                       value={formData.description}
                       onChange={e => setFormData({...formData, description: e.target.value})}
                     ></textarea>
@@ -396,9 +396,9 @@ export default function TeamMembersPage() {
                     <div>
                       <label className="block text-xs font-bold text-gray-900 mb-1.5 uppercase tracking-wider">Status</label>
                       <select 
-                        className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium"
+                        className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium text-gray-900"
                         value={formData.status}
-                        onChange={e => setFormData({...formData, status: e.target.value})}
+                        onChange={e => setFormData({...formData, status: e.target.value as any})}
                       >
                         <option value="ACTIVE">Active</option>
                         <option value="INACTIVE">Inactive</option>
@@ -410,7 +410,7 @@ export default function TeamMembersPage() {
                       <input 
                         type="number" 
                         min="1"
-                        className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium"
+                        className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm font-medium text-gray-900"
                         value={formData.displayOrder}
                         onChange={e => setFormData({...formData, displayOrder: parseInt(e.target.value) || 0})}
                       />
@@ -422,8 +422,8 @@ export default function TeamMembersPage() {
                     <input 
                       type="url" 
                       placeholder="https://instagram.com/..."
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm"
-                      value={formData.instagramUrl}
+                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm text-gray-900"
+                      value={formData.instagramUrl || ''}
                       onChange={e => setFormData({...formData, instagramUrl: e.target.value})}
                     />
                   </div>
@@ -432,8 +432,8 @@ export default function TeamMembersPage() {
                     <input 
                       type="url" 
                       placeholder="https://facebook.com/..."
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm"
-                      value={formData.facebookUrl}
+                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm text-gray-900"
+                      value={formData.facebookUrl || ''}
                       onChange={e => setFormData({...formData, facebookUrl: e.target.value})}
                     />
                   </div>
