@@ -195,14 +195,14 @@ export function Navbar() {
             </button>
 
             {/* Simple Dropdown Menu */}
-            <div className="absolute top-[65px] left-1/2 -translate-x-1/2 w-64 bg-[#0a0a0a] border border-white/10 rounded-xl p-1.5 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+            <div className="absolute top-[65px] left-1/2 -translate-x-1/2 w-max min-w-[310px] bg-[#0a0a0a] border border-white/10 rounded-xl p-2 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
               {MORE_PAGES.map((page) => {
                 const isCurrent = pathname === page.href;
                 return (
                   <Link
                     key={page.href}
                     href={page.href}
-                    className={`block px-3.5 py-2.5 rounded-lg text-[12px] font-bold uppercase tracking-wider transition-colors ${
+                    className={`block px-4 py-2.5 rounded-lg text-[12px] font-bold uppercase tracking-wider whitespace-nowrap transition-colors ${
                       isCurrent 
                         ? "text-[#FFB81C] bg-white/5" 
                         : "text-zinc-300 hover:text-[#FFB81C] hover:bg-white/5"
