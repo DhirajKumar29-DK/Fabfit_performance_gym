@@ -3,13 +3,15 @@ import { Metadata } from "next";
 import { Services } from "@/components/home/Services";
 
 export const metadata: Metadata = {
-  title: "Our Services | Fab Fit Performance Gym",
+  title: {
+    absolute: "Fitness Services in DLF Phase 4| Fab Fit Performance Gym",
+  },
   description: "Explore elite fitness services, personalized training programs, nutrition consulting, and wellness solutions at Fab Fit Performance Gym.",
   alternates: {
     canonical: "https://fabfitperformance.com/services",
   },
   openGraph: {
-    title: "Our Services | Fab Fit Performance Gym",
+    title: "Fitness Services in DLF Phase 4| Fab Fit Performance Gym",
     description: "Explore elite fitness services, personalized training programs, nutrition consulting, and wellness solutions at Fab Fit Performance Gym.",
     url: "https://fabfitperformance.com/services",
     images: ["/fabfit.jpeg"],

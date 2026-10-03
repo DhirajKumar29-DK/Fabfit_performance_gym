@@ -5,6 +5,7 @@ import { Search, Filter, MoreVertical, Eye, RefreshCw, Download, Calendar, X, Ch
 import { api } from '@/services/api';
 import { fixImageUrl } from '@/lib/apiConfig';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 // Interface matching the backend Prisma schema
 interface Assessment {
@@ -65,7 +66,7 @@ export default function AssessmentsPage() {
   const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   
   // Delete Confirmation State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -284,9 +285,9 @@ export default function AssessmentsPage() {
   );
 
   return (
-    <div className="flex flex-col h-full gap-4">
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
       {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+      <div className="shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Assessments</h1>
               <p className="text-gray-500 text-sm mt-1">Manage all form submissions from website</p>
@@ -514,38 +515,13 @@ export default function AssessmentsPage() {
             
             {/* Pagination */}
             {!isLoading && filteredAssessments.length > 0 && (
-              <div className="px-6 py-4 flex items-center justify-between border-t border-zinc-200 bg-white sticky bottom-0">
-                <div className="text-sm font-medium text-slate-700 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
-                  Page {currentPage} of {totalPages}
-                </div>
-                <div className="flex gap-1 items-center">
-                  <button 
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                    className="w-8 h-8 flex items-center justify-center border border-zinc-300 rounded text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >&lt;</button>
-                  
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                    <button 
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`w-8 h-8 flex items-center justify-center border rounded font-medium ${
-                        currentPage === page 
-                          ? 'border-primary bg-primary text-black' 
-                          : 'border-zinc-300 text-gray-500 hover:bg-gray-50'
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  ))}
-
-                  <button 
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                    className="w-8 h-8 flex items-center justify-center border border-zinc-300 rounded text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >&gt;</button>
-                </div>
-              </div>
+              <AdminPagination
+                currentPage={currentPage}
+                totalItems={filteredAssessments.length}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+                onItemsPerPageChange={setItemsPerPage}
+              />
             )}
           </div>
 

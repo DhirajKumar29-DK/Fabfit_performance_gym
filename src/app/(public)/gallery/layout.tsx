@@ -2,14 +2,16 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Photo & Video Gallery | Fab Fit Performance Gym",
-  description: "Explore photos and videos of our facility, client training sessions, and workout culture at Fab Fit Performance Gym Gurgaon.",
+  title: {
+    absolute: "Gym Photos & Workout Videos | Fab Fit Performance Gym",
+  },
+  description: "Explore the Fab Fit Performance gallery for gym photos, workout videos, training sessions and community moments from our fitness centre in Gurgaon.",
   alternates: {
     canonical: "https://fabfitperformance.com/gallery",
   },
   openGraph: {
-    title: "Photo & Video Gallery | Fab Fit Performance Gym",
-    description: "Explore photos and videos of our facility, client training sessions, and workout culture at Fab Fit Performance Gym Gurgaon.",
+    title: "Gym Photos & Workout Videos | Fab Fit Performance Gym",
+    description: "Explore the Fab Fit Performance gallery for gym photos, workout videos, training sessions and community moments from our fitness centre in Gurgaon.",
     url: "https://fabfitperformance.com/gallery",
     images: ["/fabfit.jpeg"],
   },

@@ -1,33 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import AdminLayout from "@/components/layout/AdminLayout";
 
 export const metadata: Metadata = {
-  title: "FabFit Performance Gym",
+  title: "FabFit Performance Gym - Admin",
   description: "FabFit Performance Gym Admin Dashboard",
 };
 
-import AdminLayout from "@/components/layout/AdminLayout";
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <AdminLayout>{children}</AdminLayout>
-      </body>
-    </html>
-  );
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <AdminLayout>{children}</AdminLayout>;
 }
+

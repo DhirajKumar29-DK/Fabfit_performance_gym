@@ -4,12 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Edit3, Trash2, X, Activity, Dumbbell, Flame, Heart, Zap, Crosshair, Users, Trophy } from 'lucide-react';
 import { api } from '@/services/api';
 import { IconSelect } from '@/components/ui/IconSelect';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 export default function MembershipPlansPage() {
   const [plans, setPlans] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   
   // Modal Form State
   const [formData, setFormData] = useState({
@@ -191,120 +194,131 @@ export default function MembershipPlansPage() {
     }
   };
 
-  return (
-    <div className="flex flex-col h-full bg-[#f8f9fa] min-w-0 w-full overflow-hidden">
-      <div className="flex-1 flex flex-col transition-all duration-300">
-        <div className="p-8 flex-1 overflow-y-auto scrollbar-hide w-full">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Membership Plans</h1>
-              <p className="text-sm text-gray-500 mt-1">Manage pricing plans and their dynamic features.</p>
-            </div>
-            
-            <div className="flex gap-2">
-              {selectedIds.length > 0 && (
-                <button 
-                  onClick={triggerBulkDelete}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
-                >
-                  <Trash2 size={16} />
-                  Delete Selected ({selectedIds.length})
-                </button>
-              )}
-              <button 
-                onClick={openAddModal}
-                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
-              >
-                <Plus size={16} />
-                Add Plan
-              </button>
-            </div>
-          </div>
+  const sortedPlans = [...plans].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  const totalPages = Math.ceil(sortedPlans.length / itemsPerPage) || 1;
+  const paginatedPlans = sortedPlans.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-          {/* Table */}
-          <div className="bg-white rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-zinc-200 overflow-hidden">
-            <div className="overflow-x-auto w-full">
-            <table className="w-full text-left border-collapse min-w-[800px]">
-              <thead>
-                <tr className="border-b border-zinc-200 bg-zinc-50">
-                  <th className="py-4 px-6 w-12">
+  return (
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
+      {/* Header */}
+      <div className="shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Membership Plans</h1>
+          <p className="text-sm text-gray-500 mt-1">Manage pricing plans and their dynamic features.</p>
+        </div>
+        
+        <div className="flex gap-2">
+          {selectedIds.length > 0 && (
+            <button 
+              onClick={triggerBulkDelete}
+              className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
+            >
+              <Trash2 size={16} />
+              Delete Selected ({selectedIds.length})
+            </button>
+          )}
+          <button 
+            onClick={openAddModal}
+            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
+          >
+            <Plus size={16} />
+            Add Plan
+          </button>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="flex-1 min-h-0 flex flex-col bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-auto w-full">
+        <table className="w-full text-left border-collapse min-w-[800px]">
+          <thead className="sticky top-0 bg-zinc-50 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+            <tr className="border-b border-zinc-200">
+              <th className="py-4 px-6 w-12">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                  checked={sortedPlans.length > 0 && selectedIds.length === sortedPlans.length}
+                  onChange={handleSelectAll}
+                />
+              </th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Order</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Name</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Price</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Features</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Status</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm w-24">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr><td colSpan={7} className="py-12 text-center text-gray-500">Loading...</td></tr>
+            ) : sortedPlans.length === 0 ? (
+              <tr><td colSpan={7} className="py-12 text-center text-gray-500">No plans found. Click 'Add Plan' to create one.</td></tr>
+            ) : (
+              paginatedPlans.map((plan) => (
+                <tr key={plan.id} className={`border-b border-zinc-200 hover:bg-zinc-50 transition-colors ${selectedIds.includes(plan.id) ? 'bg-primary/5' : ''}`}>
+                  <td className="py-4 px-6">
                     <input 
                       type="checkbox" 
                       className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                      checked={plans.length > 0 && selectedIds.length === plans.length}
-                      onChange={handleSelectAll}
+                      checked={selectedIds.includes(plan.id)}
+                      onChange={() => handleSelectOne(plan.id)}
                     />
-                  </th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Order</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Name</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Price</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Features</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Status</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm w-24">Action</th>
+                  </td>
+                  <td className="py-4 px-6 text-sm text-gray-500 font-medium">{plan.displayOrder}</td>
+                  <td className="py-4 px-6">
+                    <div className="text-sm text-gray-900 font-bold flex items-center gap-2">
+                      {plan.name}
+                      {plan.isPopular && <span className="bg-amber-100 text-amber-700 text-[9px] px-2 py-0.5 rounded uppercase tracking-wider">Popular</span>}
+                    </div>
+                    <div className="text-[11px] text-gray-500 mt-0.5">{plan.duration} Month(s)</div>
+                  </td>
+                  <td className="py-4 px-6">
+                    <div className="text-sm font-bold text-gray-900">₹{plan.price}</div>
+                    <div className="text-[10px] text-gray-500 uppercase">/ {plan.pricePeriod}</div>
+                  </td>
+                  <td className="py-4 px-6 text-sm text-gray-600">
+                    {plan.features?.length || 0} features
+                  </td>
+                  <td className="py-4 px-6">
+                    {getStatusBadge(plan.status)}
+                  </td>
+                  <td className="py-4 px-6">
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => openEditModal(plan)}
+                        className="p-1.5 text-blue-600 hover:bg-primary/10 border border-blue-200 rounded transition-colors"
+                        title="Edit"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button 
+                        onClick={() => triggerDelete(plan.id)}
+                        className="p-1.5 text-red-600 hover:bg-red-50 border border-red-200 rounded transition-colors"
+                        title="Delete"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <tr><td colSpan={6} className="py-12 text-center text-gray-500">Loading...</td></tr>
-                ) : plans.length === 0 ? (
-                  <tr><td colSpan={6} className="py-12 text-center text-gray-500">No plans found. Click 'Add Plan' to create one.</td></tr>
-                ) : (
-                  plans.map((plan) => (
-                    <tr key={plan.id} className={`border-b border-zinc-200 hover:bg-zinc-50 transition-colors ${selectedIds.includes(plan.id) ? 'bg-primary/5' : ''}`}>
-                      <td className="py-4 px-6">
-                        <input 
-                          type="checkbox" 
-                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                          checked={selectedIds.includes(plan.id)}
-                          onChange={() => handleSelectOne(plan.id)}
-                        />
-                      </td>
-                      <td className="py-4 px-6 text-sm text-gray-500 font-medium">{plan.displayOrder}</td>
-                      <td className="py-4 px-6">
-                        <div className="text-sm text-gray-900 font-bold flex items-center gap-2">
-                          {plan.name}
-                          {plan.isPopular && <span className="bg-amber-100 text-amber-700 text-[9px] px-2 py-0.5 rounded uppercase tracking-wider">Popular</span>}
-                        </div>
-                        <div className="text-[11px] text-gray-500 mt-0.5">{plan.duration} Month(s)</div>
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="text-sm font-bold text-gray-900">₹{plan.price}</div>
-                        <div className="text-[10px] text-gray-500 uppercase">/ {plan.pricePeriod}</div>
-                      </td>
-                      <td className="py-4 px-6 text-sm text-gray-600">
-                        {plan.features?.length || 0} features
-                      </td>
-                      <td className="py-4 px-6">
-                        {getStatusBadge(plan.status)}
-                      </td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center gap-2">
-                          <button 
-                            onClick={() => openEditModal(plan)}
-                            className="p-1.5 text-blue-600 hover:bg-primary/10 border border-blue-200 rounded transition-colors"
-                            title="Edit"
-                          >
-                            <Edit3 size={16} />
-                          </button>
-                          <button 
-                            onClick={() => triggerDelete(plan.id)}
-                            className="p-1.5 text-red-600 hover:bg-red-50 border border-red-200 rounded transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-          </div>
-        </div>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
+      <AdminPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={sortedPlans.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+        onItemsPerPageChange={(val) => {
+          setItemsPerPage(val);
+          setCurrentPage(1);
+        }}
+      />
+    </div>
 
       {/* Modal */}
       {isModalOpen && (

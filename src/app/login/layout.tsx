@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import '../globals.css';
 
 export const metadata: Metadata = {
   title: 'FabFit Admin Login',
@@ -12,10 +11,9 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full bg-gray-50">
-      <body className="h-full">
-        {children}
-      </body>
-    </html>
+    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col">
+      {children}
+    </div>
   );
 }
+

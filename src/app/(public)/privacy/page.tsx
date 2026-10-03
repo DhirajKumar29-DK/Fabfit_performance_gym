@@ -3,15 +3,18 @@ import Link from "next/link";
 import { ShieldCheck, ArrowLeft, Lock, Eye, FileText, CheckCircle2, Mail, Phone, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | FabFit Performance Gym",
-  description: "Read the Privacy Policy of FabFit Performance Gym. Learn how we collect, store, and protect your personal health, fitness, and assessment data.",
+  title: {
+    absolute: "Privacy Policy | Fab Fit Performance Gym",
+  },
+  description: "Read the Fab Fit Performance Gym privacy policy to understand how personal, fitness and health information is collected, used and protected.",
   alternates: {
     canonical: "https://fabfitperformance.com/privacy",
   },
   openGraph: {
-    title: "Privacy Policy | FabFit Performance Gym",
-    description: "Your health data privacy matters to us. Read how FabFit Performance Gym protects your personal information.",
+    title: "Privacy Policy | Fab Fit Performance Gym",
+    description: "Read the Fab Fit Performance Gym privacy policy to understand how personal, fitness and health information is collected, used and protected.",
     url: "https://fabfitperformance.com/privacy",
+    images: ["/fabfit.jpeg"],
   },
 };
 

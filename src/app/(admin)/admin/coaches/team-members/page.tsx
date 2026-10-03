@@ -4,6 +4,7 @@ import { api } from '@/services/api';
 import { fixImageUrl } from '@/lib/apiConfig';
 import { Plus, Edit3, Trash2, X, UploadCloud, Eye } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface TeamMember {
   id: string;
@@ -33,6 +34,8 @@ export default function TeamMembersPage() {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | string[] | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -214,122 +217,136 @@ export default function TeamMembersPage() {
     }
   };
 
-  return (
-    <div className="flex flex-col h-full bg-[#f8f9fa] min-w-0 w-full overflow-hidden">
-      <div className="flex-1 flex flex-col transition-all duration-300">
-        <div className="p-8 flex-1 overflow-y-auto">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Team Members</h1>
-              <p className="text-gray-500 text-sm mt-1">Manage individual trainers and guides</p>
-            </div>
-            {!isLoading && (
-              <div className="flex items-center gap-2">
-                {selectedIds.length > 0 && (
-                  <button 
-                    onClick={triggerBulkDelete}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
-                  >
-                    <Trash2 size={16} />
-                    Delete Selected ({selectedIds.length})
-                  </button>
-                )}
-                <button 
-                  onClick={openAddModal}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
-                >
-                  <Plus size={16} />
-                  Add Team Member
-                </button>
-              </div>
-            )}
-          </div>
+  const sortedMembers = [...teamMembers].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  const totalPages = Math.ceil(sortedMembers.length / itemsPerPage) || 1;
+  const paginatedMembers = sortedMembers.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-          {/* Table Content */}
-          <div className="bg-white rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-zinc-200 overflow-hidden">
-            {isLoading ? (
-              <div className="flex justify-center items-center h-64 text-gray-500">Loading...</div>
-            ) : teamMembers.length === 0 ? (
-              <div className="flex flex-col justify-center items-center h-64 text-gray-500">
-                <p className="text-lg font-medium">No Team Members found.</p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto w-full">
-                <table className="w-full min-w-[800px] text-left text-sm text-gray-500">
-                  <thead className="bg-zinc-50 text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-zinc-200">
-                    <tr>
-                      <th className="px-6 py-4 w-12">
-                        <input 
-                          type="checkbox" 
-                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                          checked={teamMembers.length > 0 && selectedIds.length === teamMembers.length}
-                          onChange={handleSelectAll}
-                        />
-                      </th>
-                      <th className="px-6 py-4">Image</th>
-                      <th className="px-6 py-4">Details</th>
-                      <th className="px-6 py-4">Order</th>
-                      <th className="px-6 py-4">Status</th>
-                      <th className="px-6 py-4 text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100 bg-white">
-                    {teamMembers.map((member) => (
-                      <tr key={member.id} className={`hover:bg-zinc-50 transition-colors ${selectedIds.includes(member.id) ? 'bg-primary/5' : ''}`}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <input 
-                            type="checkbox" 
-                            className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                            checked={selectedIds.includes(member.id)}
-                            onChange={() => handleSelectOne(member.id)}
-                          />
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="w-12 h-12 rounded-full overflow-hidden border border-zinc-300 bg-gray-100 cursor-pointer" onClick={() => setPreviewImage(member.image)}>
-                            {member.image ? (
-                              <img src={fixImageUrl(member.image)} alt={member.name} className="w-full h-full object-cover" />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400">N/A</div>
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="font-bold text-gray-900 text-base">{member.name}</div>
-                          <div className="text-gray-500 font-medium text-xs mt-0.5 uppercase tracking-wider">{member.category} • {member.specialization}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">
-                          {member.displayOrder}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {getStatusBadge(member.status)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right font-medium">
-                          <div className="flex items-center justify-end gap-3">
-                            <button
-                              onClick={() => openEditModal(member)}
-                              className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
-                              title="Edit"
-                            >
-                              <Edit3 size={18} />
-                            </button>
-                            <button
-                              onClick={() => triggerDelete(member.id)}
-                              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                              title="Delete"
-                            >
-                              <Trash2 size={18} />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
+  return (
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
+      {/* Header */}
+      <div className="shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Team Members</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage individual trainers and guides</p>
         </div>
+        {!isLoading && (
+          <div className="flex items-center gap-2">
+            {selectedIds.length > 0 && (
+              <button 
+                onClick={triggerBulkDelete}
+                className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
+              >
+                <Trash2 size={16} />
+                Delete Selected ({selectedIds.length})
+              </button>
+            )}
+            <button 
+              onClick={openAddModal}
+              className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
+            >
+              <Plus size={16} />
+              Add Team Member
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Table Content */}
+      <div className="flex-1 min-h-0 flex flex-col bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+        {isLoading ? (
+          <div className="flex justify-center items-center flex-1 text-gray-500">Loading...</div>
+        ) : sortedMembers.length === 0 ? (
+          <div className="flex flex-col justify-center items-center flex-1 text-gray-500">
+            <p className="text-lg font-medium">No Team Members found.</p>
+          </div>
+        ) : (
+          <div className="flex-1 min-h-0 overflow-auto w-full">
+            <table className="w-full min-w-[800px] text-left text-sm text-gray-500">
+              <thead className="sticky top-0 bg-zinc-50 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-zinc-200 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+                <tr>
+                  <th className="px-6 py-4 w-12">
+                    <input 
+                      type="checkbox" 
+                      className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                      checked={sortedMembers.length > 0 && selectedIds.length === sortedMembers.length}
+                      onChange={handleSelectAll}
+                    />
+                  </th>
+                  <th className="px-6 py-4">Image</th>
+                  <th className="px-6 py-4">Details</th>
+                  <th className="px-6 py-4">Order</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 bg-white">
+                {paginatedMembers.map((member) => (
+                  <tr key={member.id} className={`hover:bg-zinc-50 transition-colors ${selectedIds.includes(member.id) ? 'bg-primary/5' : ''}`}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                        checked={selectedIds.includes(member.id)}
+                        onChange={() => handleSelectOne(member.id)}
+                      />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="w-12 h-12 rounded-full overflow-hidden border border-zinc-300 bg-gray-100 cursor-pointer" onClick={() => setPreviewImage(member.image)}>
+                        {member.image ? (
+                          <img src={fixImageUrl(member.image)} alt={member.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400">N/A</div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="font-bold text-gray-900 text-base">{member.name}</div>
+                      <div className="text-gray-500 font-medium text-xs mt-0.5 uppercase tracking-wider">{member.category} • {member.specialization}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-gray-900 font-medium">
+                      {member.displayOrder}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {getStatusBadge(member.status)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right font-medium">
+                      <div className="flex items-center justify-end gap-3">
+                        <button
+                          onClick={() => openEditModal(member)}
+                          className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                          title="Edit"
+                        >
+                          <Edit3 size={18} />
+                        </button>
+                        <button
+                          onClick={() => triggerDelete(member.id)}
+                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {!isLoading && sortedMembers.length > 0 && (
+          <AdminPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={sortedMembers.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={(val) => {
+              setItemsPerPage(val);
+              setCurrentPage(1);
+            }}
+          />
+        )}
       </div>
 
       {/* Form Modal */}

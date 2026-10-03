@@ -5,6 +5,7 @@ import { fixImageUrl } from '@/lib/apiConfig';
 import { Plus, Edit3, Trash2, X, UploadCloud, Eye, Image as ImageIcon } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 import { IconSelect } from '@/components/ui/IconSelect';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface TransformationCard {
   id: string;
@@ -36,6 +37,8 @@ export default function TransformationCardsPage() {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | string[] | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(9);
 
   const initialFormState = {
     title: '',
@@ -282,9 +285,13 @@ export default function TransformationCardsPage() {
     setFormData({ ...formData, highlights: newHighlights });
   };
 
+  const sortedCards = [...cards].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  const totalPages = Math.ceil(sortedCards.length / itemsPerPage) || 1;
+  const paginatedCards = sortedCards.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
+      <div className="shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-slate-800">Transformation Cards</h1>
           <p className="text-sm text-slate-500 mt-1">Manage both Main Transformations and Real People cards.</p>
@@ -318,11 +325,11 @@ export default function TransformationCardsPage() {
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center items-center py-20">
+        <div className="flex-1 flex items-center justify-center bg-white rounded-xl border border-slate-200">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
-      ) : cards.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col items-center justify-center p-16 text-center">
+      ) : sortedCards.length === 0 ? (
+        <div className="flex-1 flex flex-col items-center justify-center bg-white rounded-xl shadow-sm border border-slate-200 p-16 text-center">
           <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
             <Eye className="w-8 h-8 text-slate-400" />
           </div>
@@ -337,94 +344,112 @@ export default function TransformationCardsPage() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cards.map((card) => (
-            <div key={card.id} className={`bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col relative ${selectedIds.includes(card.id) ? 'border-primary ring-1 ring-primary' : 'border-slate-200'}`}>
-              <div className="absolute top-2 left-2 z-20">
-                <input 
-                  type="checkbox" 
-                  className="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary/20 shadow-sm"
-                  checked={selectedIds.includes(card.id)}
-                  onChange={() => handleSelectOne(card.id)}
-                />
-              </div>
-              <div className="flex h-32 w-full relative">
-                <div className="w-1/2 h-full relative">
-                  <img src={fixImageUrl(card.beforeImage)} alt="Before" className="w-full h-full object-cover" />
-                  <div className="absolute top-2 left-9 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Before</div>
-                </div>
-                <div className="w-1/2 h-full relative">
-                  <img src={fixImageUrl(card.afterImage)} alt="After" className="w-full h-full object-cover" />
-                  <div className="absolute top-2 left-2 bg-primary/90 text-black text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">After</div>
-                </div>
-                <div className="absolute top-2 right-2 flex gap-1 z-10">
-                  <span className={`px-2 py-0.5 text-[10px] font-bold rounded shadow-sm ${
-                    card.showInMain ? 'bg-primary text-black' : 'bg-slate-700 text-white'
-                  }`}>
-                    {card.showInMain ? 'MAIN' : 'REAL PEOPLE'}
-                  </span>
-                  <span className={`px-2 py-0.5 text-[10px] font-bold rounded shadow-sm ${
-                    card.status === 'ACTIVE' ? 'bg-primarymerald-500 text-white' :
-                    card.status === 'INACTIVE' ? 'bg-red-500 text-white' :
-                    'bg-amber-500 text-white'
-                  }`}>
-                    {card.status}
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-5 flex-1 flex flex-col justify-between border-t border-slate-100">
-                <div>
-                  <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-1">{card.title}</h3>
-                  {card.subtitle && <p className="text-sm text-slate-500 font-medium mb-3">{card.subtitle}</p>}
-                  
-                  <div className="text-xs text-slate-400 mb-2">Order: {card.displayOrder} • Icon: {card.icon || 'hexagon'}</div>
-                  
-                  {card.showInMain && card.highlights && card.highlights.length > 0 && (
-                    <div className="mt-3 bg-slate-50 p-2 rounded border border-slate-100">
-                      <p className="text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-wider">Highlights</p>
-                      <ul className="text-xs text-slate-700 space-y-1">
-                        {card.highlights.slice(0, 2).map((h, i) => (
-                          <li key={i}>• {h}</li>
-                        ))}
-                        {card.highlights.length > 2 && <li className="text-slate-400">+{card.highlights.length - 2} more</li>}
-                      </ul>
+        <div className="flex-1 min-h-0 flex flex-col space-y-4">
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {paginatedCards.map((card) => (
+                <div key={card.id} className={`bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col relative ${selectedIds.includes(card.id) ? 'border-primary ring-1 ring-primary' : 'border-slate-200'}`}>
+                  <div className="absolute top-2 left-2 z-20">
+                    <input 
+                      type="checkbox" 
+                      className="w-5 h-5 text-primary border-gray-300 rounded focus:ring-primary/20 shadow-sm"
+                      checked={selectedIds.includes(card.id)}
+                      onChange={() => handleSelectOne(card.id)}
+                    />
+                  </div>
+                  <div className="flex h-32 w-full relative">
+                    <div className="w-1/2 h-full relative">
+                      <img src={fixImageUrl(card.beforeImage)} alt="Before" className="w-full h-full object-cover" />
+                      <div className="absolute top-2 left-9 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Before</div>
                     </div>
-                  )}
+                    <div className="w-1/2 h-full relative">
+                      <img src={fixImageUrl(card.afterImage)} alt="After" className="w-full h-full object-cover" />
+                      <div className="absolute top-2 left-2 bg-primary/90 text-black text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">After</div>
+                    </div>
+                    <div className="absolute top-2 right-2 flex gap-1 z-10">
+                      <span className={`px-2 py-0.5 text-[10px] font-bold rounded shadow-sm ${
+                        card.showInMain ? 'bg-primary text-black' : 'bg-slate-700 text-white'
+                      }`}>
+                        {card.showInMain ? 'MAIN' : 'REAL PEOPLE'}
+                      </span>
+                      <span className={`px-2 py-0.5 text-[10px] font-bold rounded shadow-sm ${
+                        card.status === 'ACTIVE' ? 'bg-emerald-500 text-white' :
+                        card.status === 'INACTIVE' ? 'bg-red-500 text-white' :
+                        'bg-amber-500 text-white'
+                      }`}>
+                        {card.status}
+                      </span>
+                    </div>
+                  </div>
 
-                  {!card.showInMain && card.stat1Value && (
-                    <div className="mt-3 flex gap-4 bg-slate-50 p-2 rounded border border-slate-100">
-                      <div>
-                        <div className="text-sm font-bold text-slate-800">{card.stat1Value}</div>
-                        <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{card.stat1Label}</div>
-                      </div>
-                      {card.stat2Value && (
-                        <div>
-                          <div className="text-sm font-bold text-slate-800">{card.stat2Value}</div>
-                          <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{card.stat2Label}</div>
+                  <div className="p-5 flex-1 flex flex-col justify-between border-t border-slate-100">
+                    <div>
+                      <h3 className="text-lg font-black text-slate-800 uppercase tracking-tight mb-1">{card.title}</h3>
+                      {card.subtitle && <p className="text-sm text-slate-500 font-medium mb-3">{card.subtitle}</p>}
+                      
+                      <div className="text-xs text-slate-400 mb-2">Order: {card.displayOrder} • Icon: {card.icon || 'hexagon'}</div>
+                      
+                      {card.showInMain && card.highlights && card.highlights.length > 0 && (
+                        <div className="mt-3 bg-slate-50 p-2 rounded border border-slate-100">
+                          <p className="text-[10px] font-bold text-slate-500 mb-1 uppercase tracking-wider">Highlights</p>
+                          <ul className="text-xs text-slate-700 space-y-1">
+                            {card.highlights.slice(0, 2).map((h, i) => (
+                              <li key={i}>• {h}</li>
+                            ))}
+                            {card.highlights.length > 2 && <li className="text-slate-400">+{card.highlights.length - 2} more</li>}
+                          </ul>
+                        </div>
+                      )}
+
+                      {!card.showInMain && card.stat1Value && (
+                        <div className="mt-3 flex gap-4 bg-slate-50 p-2 rounded border border-slate-100">
+                          <div>
+                            <div className="text-sm font-bold text-slate-800">{card.stat1Value}</div>
+                            <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{card.stat1Label}</div>
+                          </div>
+                          {card.stat2Value && (
+                            <div>
+                              <div className="text-sm font-bold text-slate-800">{card.stat2Value}</div>
+                              <div className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{card.stat2Label}</div>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
-                  )}
+                    
+                    <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-slate-100">
+                      <button 
+                        onClick={() => openEditModal(card)}
+                        className="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                      >
+                        <Edit3 size={16} />
+                      </button>
+                      <button 
+                        onClick={() => confirmDelete(card.id)}
+                        className="p-1.5 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                
-                <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-slate-100">
-                  <button 
-                    onClick={() => openEditModal(card)}
-                    className="p-1.5 text-slate-500 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
-                  >
-                    <Edit3 size={16} />
-                  </button>
-                  <button 
-                    onClick={() => confirmDelete(card.id)}
-                    className="p-1.5 text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="shrink-0 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <AdminPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalItems={sortedCards.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={(val) => {
+                setItemsPerPage(val);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
         </div>
       )}
 

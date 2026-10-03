@@ -5,6 +5,7 @@ import { Plus, Edit2, Trash2, TrendingUp, AlertCircle, CheckSquare, Trash } from
 import { api } from '@/services/api';
 import CounterFormModal from './CounterFormModal';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface Counter {
   id: string;
@@ -24,6 +25,8 @@ export default function CountersPage() {
   
   // Bulk Selection State
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   
   // Delete Confirmation State
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -105,9 +108,13 @@ export default function CountersPage() {
     }
   };
 
+  const sortedCounters = [...counters].sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+  const totalPages = Math.ceil(sortedCounters.length / itemsPerPage) || 1;
+  const paginatedCounters = sortedCounters.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
+      <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
             <TrendingUp className="text-primary" />
@@ -136,19 +143,19 @@ export default function CountersPage() {
         </div>
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="flex-1 min-h-0 flex flex-col bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-auto">
           <table className="w-full text-left text-sm whitespace-nowrap min-w-[800px]">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-medium">
+            <thead className="sticky top-0 bg-slate-50 border-b border-slate-200 text-slate-600 font-medium z-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
               <tr>
                 <th className="px-6 py-4 w-12">
                   <div className="flex items-center justify-center">
                     <input 
                       type="checkbox" 
                       className="w-4 h-4 rounded border-slate-300 text-primary focus:ring-violet-600"
-                      checked={counters.length > 0 && selectedIds.length === counters.length}
+                      checked={sortedCounters.length > 0 && selectedIds.length === sortedCounters.length}
                       onChange={toggleSelectAll}
-                      disabled={counters.length === 0}
+                      disabled={sortedCounters.length === 0}
                     />
                   </div>
                 </th>
@@ -169,7 +176,7 @@ export default function CountersPage() {
                     Loading counters...
                   </td>
                 </tr>
-              ) : counters.length === 0 ? (
+              ) : sortedCounters.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
                     <AlertCircle className="w-8 h-8 text-slate-400 mx-auto mb-3" />
@@ -177,7 +184,7 @@ export default function CountersPage() {
                   </td>
                 </tr>
               ) : (
-                counters.map((counter, index) => {
+                paginatedCounters.map((counter, index) => {
                   const isSelected = selectedIds.includes(counter.id);
                   return (
                     <tr key={counter.id} className={`hover:bg-slate-50/50 transition-colors ${isSelected ? 'bg-primary/10/30' : ''}`}>
@@ -196,7 +203,7 @@ export default function CountersPage() {
                       <td className="px-6 py-4 text-slate-500">{counter.suffix || '-'}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border
-                          ${counter.status === 'ACTIVE' ? 'bg-primarymerald-50 text-emerald-700 border-emerald-200' : 
+                          ${counter.status === 'ACTIVE' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 
                             counter.status === 'DRAFT' ? 'bg-amber-50 text-amber-700 border-amber-200' : 
                             'bg-slate-100 text-slate-700 border-slate-200'}`}
                         >
@@ -228,6 +235,17 @@ export default function CountersPage() {
             </tbody>
           </table>
         </div>
+        <AdminPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={sortedCounters.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={(val) => {
+            setItemsPerPage(val);
+            setCurrentPage(1);
+          }}
+        />
       </div>
 
       <CounterFormModal 

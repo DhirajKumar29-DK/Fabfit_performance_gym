@@ -6,6 +6,7 @@ import { Plus, Edit3, Trash2, X, UploadCloud, Eye } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 import * as LucideIcons from 'lucide-react';
 import { IconSelect } from '@/components/ui/IconSelect';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface Service {
   id: string;
@@ -54,6 +55,8 @@ export default function ServicesPage() {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | string[] | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
   const defaultForm = {
     title: '', slug: '', badge: '', shortDescription: '', description: '',
@@ -225,114 +228,127 @@ export default function ServicesPage() {
     }
   };
 
+  const paginatedServices = services.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
-    <div className="flex flex-col h-full bg-[#f8f9fa] min-w-0 w-full overflow-hidden">
-      <div className="flex-1 flex flex-col transition-all duration-300">
-        <div className="p-4 md:p-8 flex-1 overflow-y-auto">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Services / Training</h1>
-              <p className="text-gray-500 text-sm mt-1">Manage all public training services</p>
-            </div>
-            {!isLoading && (
-              <div className="flex items-center gap-2">
-                {selectedIds.length > 0 && (
-                  <button 
-                    onClick={triggerBulkDelete}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Delete Selected ({selectedIds.length})
-                  </button>
-                )}
-                <button 
-                  onClick={openAddModal}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
-                >
-                  <Plus className="h-4 w-4" />
-                  Add Service
-                </button>
-              </div>
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
+      {/* Header */}
+      <div className="shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Services / Training</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage all public training services</p>
+        </div>
+        {!isLoading && (
+          <div className="flex items-center gap-2">
+            {selectedIds.length > 0 && (
+              <button 
+                onClick={triggerBulkDelete}
+                className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete Selected ({selectedIds.length})
+              </button>
             )}
+            <button 
+              onClick={openAddModal}
+              className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
+            >
+              <Plus className="h-4 w-4" />
+              Add Service
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Table */}
+      {isLoading ? (
+        <div className="flex items-center justify-center flex-1 bg-white rounded-xl border border-zinc-300">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      ) : services.length === 0 ? (
+        <div className="bg-white rounded-xl border border-zinc-300 p-12 text-center shadow-sm flex-1 flex flex-col items-center justify-center">
+          <div className="bg-[#f8f9ff] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <UploadCloud className="h-8 w-8 text-primary" />
+          </div>
+          <h3 className="text-lg font-bold text-gray-900 mb-1">No Services Yet</h3>
+          <p className="text-gray-500 text-sm">Add your first service to show on the public page.</p>
+        </div>
+      ) : (
+        <div className="flex-1 min-h-0 flex flex-col bg-white rounded-xl border border-zinc-300 shadow-sm overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-auto w-full">
+            <table className="w-full text-left border-collapse min-w-[800px]">
+              <thead className="sticky top-0 bg-gray-50 border-b border-zinc-200 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+                <tr className="bg-gray-50 border-b border-zinc-200">
+                  <th className="py-4 px-6 w-12">
+                    <input 
+                      type="checkbox" 
+                      className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                      checked={services.length > 0 && selectedIds.length === services.length}
+                      onChange={handleSelectAll}
+                    />
+                  </th>
+                  <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Service Name</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Badge</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">Status</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">Display Order</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100">
+                {paginatedServices.map((service) => (
+                  <tr key={service.id} className={`hover:bg-zinc-50 transition-colors ${selectedIds.includes(service.id) ? 'bg-primary/5' : ''}`}>
+                    <td className="py-4 px-6">
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                        checked={selectedIds.includes(service.id)}
+                        onChange={() => handleSelectOne(service.id)}
+                      />
+                    </td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center gap-4">
+                        <img src={fixImageUrl(service.cardImage) || 'https://via.placeholder.com/150'} alt={service.title} className="w-12 h-12 rounded-lg object-cover bg-gray-100" />
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm">{service.title}</p>
+                          <p className="text-xs text-gray-500 mt-0.5">{service.slug}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-600">{service.badge}</td>
+                    <td className="py-4 px-6 text-center">{getStatusBadge(service.status)}</td>
+                    <td className="py-4 px-6 text-center text-sm font-medium text-gray-600">{service.displayOrder}</td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center justify-end gap-2">
+                        <button onClick={() => openEditModal(service)} className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors">
+                          <Edit3 className="w-4 h-4" />
+                        </button>
+                        <button onClick={() => triggerDelete(service.id)} className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
-          {/* Table */}
-          {isLoading ? (
-            <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6320ee]"></div>
-            </div>
-          ) : services.length === 0 ? (
-            <div className="bg-white rounded-xl border border-zinc-300 p-12 text-center shadow-sm">
-              <div className="bg-[#f8f9ff] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <UploadCloud className="h-8 w-8 text-[#6320ee]" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">No Services Yet</h3>
-              <p className="text-gray-500 text-sm">Add your first service to show on the public page.</p>
-            </div>
-          ) : (
-            <div className="bg-white rounded-xl border border-zinc-300 shadow-sm overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse min-w-[800px]">
-                  <thead>
-                    <tr className="bg-gray-50 border-b border-zinc-200">
-                      <th className="py-4 px-6 w-12">
-                        <input 
-                          type="checkbox" 
-                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                          checked={services.length > 0 && selectedIds.length === services.length}
-                          onChange={handleSelectAll}
-                        />
-                      </th>
-                      <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Service Name</th>
-                      <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider">Badge</th>
-                      <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">Status</th>
-                      <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-center">Display Order</th>
-                      <th className="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {services.map((service) => (
-                      <tr key={service.id} className={`hover:bg-zinc-50 transition-colors ${selectedIds.includes(service.id) ? 'bg-primary/5' : ''}`}>
-                        <td className="py-4 px-6">
-                          <input 
-                            type="checkbox" 
-                            className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                            checked={selectedIds.includes(service.id)}
-                            onChange={() => handleSelectOne(service.id)}
-                          />
-                        </td>
-                        <td className="py-4 px-6">
-                          <div className="flex items-center gap-4">
-                            <img src={fixImageUrl(service.cardImage) || 'https://via.placeholder.com/150'} alt={service.title} className="w-12 h-12 rounded-lg object-cover bg-gray-100" />
-                            <div>
-                              <p className="font-semibold text-gray-900 text-sm">{service.title}</p>
-                              <p className="text-xs text-gray-500 mt-0.5">{service.slug}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-4 px-6 text-sm text-gray-600">{service.badge}</td>
-                        <td className="py-4 px-6 text-center">{getStatusBadge(service.status)}</td>
-                        <td className="py-4 px-6 text-center text-sm font-medium text-gray-600">{service.displayOrder}</td>
-                        <td className="py-4 px-6">
-                          <div className="flex items-center justify-end gap-2">
-                            <button onClick={() => openEditModal(service)} className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-lg transition-colors">
-                              <Edit3 className="w-4 h-4" />
-                            </button>
-                            <button onClick={() => triggerDelete(service.id)} className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          {/* Pagination */}
+          {!isLoading && services.length > 0 && (
+            <AdminPagination
+              currentPage={currentPage}
+              totalItems={services.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={setItemsPerPage}
+              pageSizeOptions={[5, 8, 15, 30]}
+            />
           )}
         </div>
-      </div>
+      )}
 
       {/* Add / Edit Modal */}
       {isModalOpen && (

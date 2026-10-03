@@ -19,6 +19,7 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface BlogPost {
   id: string;
@@ -52,6 +53,8 @@ export default function AdminBlogsPage() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(9);
   
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -254,12 +257,17 @@ export default function AdminBlogsPage() {
     return matchesSearch && matchesCategory;
   });
 
+  const paginatedBlogs = filteredBlogs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   const categories = ['ALL', ...Array.from(new Set(blogs.map(b => b.category)))];
 
   return (
-    <div className="space-[#18181b] space-y-6">
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+      <div className="shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
         <div>
           <h1 className="text-2xl font-black text-gray-900 tracking-tight flex items-center gap-2">
             <FileText className="w-6 h-6 text-yellow-600" />
@@ -277,14 +285,17 @@ export default function AdminBlogsPage() {
       </div>
 
       {/* Filters & Search */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="shrink-0 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative w-full sm:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
             placeholder="Search by title or category..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
             className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500/20 text-gray-800"
           />
         </div>
@@ -294,7 +305,10 @@ export default function AdminBlogsPage() {
           {categories.map(cat => (
             <button
               key={cat}
-              onClick={() => setCategoryFilter(cat)}
+              onClick={() => {
+                setCategoryFilter(cat);
+                setCurrentPage(1);
+              }}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap ${
                 categoryFilter === cat 
                   ? 'bg-black text-yellow-500 shadow-sm' 
@@ -309,100 +323,116 @@ export default function AdminBlogsPage() {
 
       {/* Blog Cards Grid / Table */}
       {loading ? (
-        <div className="py-20 flex flex-col items-center justify-center text-gray-400">
+        <div className="flex-1 flex flex-col items-center justify-center text-gray-400 bg-white rounded-2xl border border-gray-200">
           <Loader2 className="w-8 h-8 animate-spin text-black mb-3" />
           <span className="text-sm font-medium">Loading articles...</span>
         </div>
       ) : filteredBlogs.length === 0 ? (
-        <div className="bg-white border border-gray-200 rounded-2xl p-12 text-center">
+        <div className="flex-1 flex flex-col items-center justify-center bg-white border border-gray-200 rounded-2xl p-12 text-center">
           <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
           <h3 className="text-lg font-bold text-gray-800">No blog posts found</h3>
           <p className="text-gray-500 text-sm mt-1">Get started by creating your first article.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredBlogs.map(blog => (
-            <div 
-              key={blog.id} 
-              className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col group"
-            >
-              {/* Cover Image */}
-              <div className="relative h-48 w-full bg-gray-100 overflow-hidden">
-                {blog.coverImage ? (
-                  <img
-                    src={fixImageUrl(blog.coverImage)}
-                    alt={blog.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium text-xs">
-                    No Cover Image
-                  </div>
-                )}
-                <div className="absolute top-3 left-3 flex gap-2">
-                  <span className="px-3 py-1 bg-black/80 backdrop-blur-md text-yellow-500 text-[10px] font-black uppercase tracking-wider rounded-md">
-                    {blog.category}
-                  </span>
-                  <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-md ${
-                    blog.status === 'PUBLISHED' 
-                      ? 'bg-emerald-500 text-white' 
-                      : 'bg-amber-500 text-white'
-                  }`}>
-                    {blog.status}
-                  </span>
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="p-5 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="font-bold text-gray-900 text-lg line-clamp-2 mb-2 group-hover:text-yellow-600 transition-colors">
-                    {blog.title}
-                  </h3>
-                  <p className="text-gray-500 text-xs line-clamp-2 mb-4 leading-relaxed">
-                    {blog.excerpt || blog.content.substring(0, 100)}
-                  </p>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-100 text-xs text-gray-400 mb-4">
-                    <span className="flex items-center gap-1 font-semibold text-gray-600">
-                      👤 {blog.authorName}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Eye className="w-3.5 h-3.5" /> {blog.views || 0} views
-                    </span>
+        <div className="flex-1 min-h-0 flex flex-col space-y-4">
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {paginatedBlogs.map(blog => (
+                <div 
+                  key={blog.id} 
+                  className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col group"
+                >
+                  {/* Cover Image */}
+                  <div className="relative h-48 w-full bg-gray-100 overflow-hidden">
+                    {blog.coverImage ? (
+                      <img
+                        src={fixImageUrl(blog.coverImage)}
+                        alt={blog.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 font-medium text-xs">
+                        No Cover Image
+                      </div>
+                    )}
+                    <div className="absolute top-3 left-3 flex gap-2">
+                      <span className="px-3 py-1 bg-black/80 backdrop-blur-md text-yellow-500 text-[10px] font-black uppercase tracking-wider rounded-md">
+                        {blog.category}
+                      </span>
+                      <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-wider rounded-md ${
+                        blog.status === 'PUBLISHED' 
+                          ? 'bg-emerald-500 text-white' 
+                          : 'bg-amber-500 text-white'
+                      }`}>
+                        {blog.status}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Actions */}
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleOpenModal(blog)}
-                      className="flex-1 py-2 bg-gray-100 hover:bg-black hover:text-white font-bold text-xs rounded-lg transition-colors flex items-center justify-center gap-1.5 text-gray-700"
-                    >
-                      <Edit3 className="w-3.5 h-3.5" /> Edit
-                    </button>
-                    <a
-                      href={`/blogs/${blog.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 border border-gray-200 text-gray-500 hover:text-black hover:border-black rounded-lg transition-colors"
-                      title="View Article Live"
-                    >
-                      <Globe className="w-4 h-4" />
-                    </a>
-                    <button
-                      onClick={() => handleDelete(blog.id)}
-                      className="p-2 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-lg transition-colors"
-                      title="Delete Article"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                  {/* Body */}
+                  <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-bold text-gray-900 text-lg line-clamp-2 mb-2 group-hover:text-yellow-600 transition-colors">
+                        {blog.title}
+                      </h3>
+                      <p className="text-gray-500 text-xs line-clamp-2 mb-4 leading-relaxed">
+                        {blog.excerpt || blog.content.substring(0, 100)}
+                      </p>
+                    </div>
+
+                    <div>
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-100 text-xs text-gray-400 mb-4">
+                        <span className="flex items-center gap-1 font-semibold text-gray-600">
+                          👤 {blog.authorName}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-3.5 h-3.5" /> {blog.views || 0} views
+                        </span>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => handleOpenModal(blog)}
+                          className="flex-1 py-2 bg-gray-100 hover:bg-black hover:text-white font-bold text-xs rounded-lg transition-colors flex items-center justify-center gap-1.5 text-gray-700"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" /> Edit
+                        </button>
+                        <a
+                          href={`/blogs/${blog.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2 border border-gray-200 text-gray-500 hover:text-black hover:border-black rounded-lg transition-colors"
+                          title="View Article Live"
+                        >
+                          <Globe className="w-4 h-4" />
+                        </a>
+                        <button
+                          onClick={() => handleDelete(blog.id)}
+                          className="p-2 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-lg transition-colors"
+                          title="Delete Article"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="shrink-0 bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+            <AdminPagination
+              currentPage={currentPage}
+              totalItems={filteredBlogs.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={setItemsPerPage}
+              pageSizeOptions={[6, 9, 18, 36]}
+            />
+          </div>
         </div>
       )}
 

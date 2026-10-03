@@ -5,6 +5,7 @@ import { api } from '@/services/api';
 import { fixImageUrl } from '@/lib/apiConfig';
 import { Plus, Edit3, Trash2, X, UploadCloud, ImageIcon, Film, Eye, Link as LinkIcon } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface GalleryItem {
   id: string;
@@ -30,6 +31,8 @@ export default function GalleryPanel({ type }: GalleryPanelProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
   
   // Bulk Delete state
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -238,10 +241,15 @@ export default function GalleryPanel({ type }: GalleryPanelProps) {
     }
   };
 
+  const paginatedItems = items.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
       {/* Header */}
-      <div className="flex justify-between items-start mb-8">
+      <div className="shrink-0 flex justify-between items-start">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 capitalize">{type.toLowerCase()} Gallery</h1>
           <p className="text-gray-500 text-sm mt-1">Manage your {type.toLowerCase()}s here.</p>
@@ -258,7 +266,7 @@ export default function GalleryPanel({ type }: GalleryPanelProps) {
           )}
           <button 
             onClick={openAddModal}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#6320ee] text-white rounded-lg hover:bg-[#521ac6] font-medium text-sm shadow-sm transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
           >
             <Plus size={16} />
             Add {type === 'IMAGE' ? 'Image' : 'Video'}
@@ -268,9 +276,9 @@ export default function GalleryPanel({ type }: GalleryPanelProps) {
 
       {/* Grid View */}
       {isLoading ? (
-        <div className="py-12 text-center text-gray-500">Loading...</div>
+        <div className="flex-1 flex items-center justify-center text-gray-500 bg-white rounded-xl border border-gray-100">Loading...</div>
       ) : items.length === 0 ? (
-        <div className="py-24 text-center bg-white rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-gray-100">
+        <div className="flex-1 flex flex-col items-center justify-center py-16 text-center bg-white rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-gray-100">
           <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
             {type === 'IMAGE' ? <ImageIcon size={28} className="text-gray-400" /> : <Film size={28} className="text-gray-400" />}
           </div>
@@ -278,66 +286,84 @@ export default function GalleryPanel({ type }: GalleryPanelProps) {
           <p className="text-gray-500 text-sm">Add your first {type.toLowerCase()} to the gallery.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {items.map((item) => (
-            <div key={item.id} className={`bg-white rounded-xl shadow-sm border ${selectedIds.includes(item.id) ? 'border-[#6320ee] ring-1 ring-[#6320ee]/20' : 'border-gray-200'} overflow-hidden group hover:shadow-md transition-all`}>
-              <div className="relative aspect-video bg-gray-100 overflow-hidden">
-                {/* Checkbox */}
-                <div className="absolute top-3 left-3 z-10 bg-white/80 backdrop-blur-sm rounded p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                  <input 
-                    type="checkbox" 
-                    className="w-4 h-4 rounded border-gray-300 text-[#6320ee] focus:ring-[#6320ee] cursor-pointer block"
-                    checked={selectedIds.includes(item.id)}
-                    onChange={() => toggleSelectOne(item.id)}
-                  />
-                </div>
+        <div className="flex-1 min-h-0 flex flex-col space-y-4">
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {paginatedItems.map((item) => (
+                <div key={item.id} className={`bg-white rounded-xl shadow-sm border ${selectedIds.includes(item.id) ? 'border-primary ring-1 ring-primary/20' : 'border-gray-200'} overflow-hidden group hover:shadow-md transition-all flex flex-col`}>
+                  <div className="relative aspect-video bg-gray-100 overflow-hidden">
+                    {/* Checkbox */}
+                    <div className="absolute top-3 left-3 z-10 bg-white/80 backdrop-blur-sm rounded p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer block"
+                        checked={selectedIds.includes(item.id)}
+                        onChange={() => toggleSelectOne(item.id)}
+                      />
+                    </div>
 
-                {type === 'IMAGE' ? (
-                  <img src={fixImageUrl(item.mediaUrl)} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                ) : (
-                  <>
-                    {item.thumbnailUrl ? (
-                      <img src={fixImageUrl(item.thumbnailUrl)} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    {type === 'IMAGE' ? (
+                      <img src={fixImageUrl(item.mediaUrl)} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400"><Film size={32} /></div>
+                      <>
+                        {item.thumbnailUrl ? (
+                          <img src={fixImageUrl(item.thumbnailUrl)} alt={item.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400"><Film size={32} /></div>
+                        )}
+                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                          <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-900 shadow-lg">
+                            <svg className="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                          </div>
+                        </div>
+                      </>
                     )}
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                      <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-900 shadow-lg">
-                        <svg className="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                      </div>
+                    
+                    {/* Actions */}
+                    <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => openEditModal(item)} className="p-1.5 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-primary rounded-md shadow-sm transition-colors">
+                        <Edit3 size={14} />
+                      </button>
+                      <button onClick={() => triggerSingleDelete(item.id)} className="p-1.5 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-red-600 rounded-md shadow-sm transition-colors">
+                        <Trash2 size={14} />
+                      </button>
                     </div>
-                  </>
-                )}
-                
-                {/* Actions */}
-                <div className="absolute top-3 right-3 z-10 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={() => openEditModal(item)} className="p-1.5 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-violet-600 rounded-md shadow-sm transition-colors">
-                    <Edit3 size={14} />
-                  </button>
-                  <button onClick={() => triggerSingleDelete(item.id)} className="p-1.5 bg-white/90 backdrop-blur-sm text-gray-700 hover:text-red-600 rounded-md shadow-sm transition-colors">
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-              </div>
-              
-              <div className="p-4">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-bold text-gray-900 truncate">{item.title}</h3>
-                      {item.isFeatured && <span className="text-[9px] bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded font-bold border border-yellow-200">HOME</span>}
-                    </div>
-                    <span className="text-xs font-semibold text-violet-600 mt-0.5 uppercase tracking-wider">{item.category}</span>
                   </div>
-                  {getStatusBadge(item.status)}
+                  
+                  <div className="p-4 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-bold text-gray-900 truncate">{item.title}</h3>
+                            {item.isFeatured && <span className="text-[9px] bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded font-bold border border-yellow-200">HOME</span>}
+                          </div>
+                          <span className="text-xs font-semibold text-primary mt-0.5 uppercase tracking-wider">{item.category}</span>
+                        </div>
+                        {getStatusBadge(item.status)}
+                      </div>
+                      {item.description && <p className="text-sm text-gray-500 line-clamp-2 mb-3">{item.description}</p>}
+                    </div>
+                    <div className="text-xs text-gray-400 font-medium mt-2 pt-2 border-t border-gray-100">
+                      Order: {item.displayOrder}
+                    </div>
+                  </div>
                 </div>
-                {item.description && <p className="text-sm text-gray-500 line-clamp-2 mb-3">{item.description}</p>}
-                <div className="text-xs text-gray-400 font-medium mt-auto">
-                  Order: {item.displayOrder}
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Pagination */}
+          <div className="shrink-0 bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+            <AdminPagination
+              currentPage={currentPage}
+              totalItems={items.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+              onItemsPerPageChange={setItemsPerPage}
+              pageSizeOptions={[8, 12, 24, 48]}
+            />
+          </div>
         </div>
       )}
 

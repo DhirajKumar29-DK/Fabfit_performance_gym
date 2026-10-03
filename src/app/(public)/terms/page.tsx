@@ -3,15 +3,18 @@ import Link from "next/link";
 import { FileText, ArrowLeft, Scale, AlertTriangle, CheckCircle2, Mail, Phone, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | FabFit Performance Gym",
-  description: "Review the Terms of Service for FabFit Performance Gym memberships, online coaching programs, personal training, and website usage.",
+  title: {
+    absolute: "Terms of Service | Fab Fit Performance Gym",
+  },
+  description: "Read Fab Fit Performance gym terms of service covering gym memberships, online coaching, payments, cancellations, assessment accuracy and facility rules.",
   alternates: {
     canonical: "https://fabfitperformance.com/terms",
   },
   openGraph: {
-    title: "Terms of Service | FabFit Performance Gym",
-    description: "Read the rules, policies, and health disclaimers for FabFit Performance Gym coaching and gym facilities.",
+    title: "Terms of Service | Fab Fit Performance Gym",
+    description: "Read Fab Fit Performance gym terms of service covering gym memberships, online coaching, payments, cancellations, assessment accuracy and facility rules.",
     url: "https://fabfitperformance.com/terms",
+    images: ["/fabfit.jpeg"],
   },
 };
 

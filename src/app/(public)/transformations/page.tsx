@@ -4,7 +4,9 @@ import { Transformations } from "@/components/home/Transformations";
 import { ClientTestimonials } from "@/components/home/ClientTestimonials";
 
 export const metadata: Metadata = {
-  title: "Client Transformations | Fab Fit Performance Gym",
+  title: {
+    absolute: "Client Transformations | Fab Fit Performance Gym",
+  },
   description: "See real before & after physique transformations and reviews from clients coached by Fab Fit Performance Gym.",
   alternates: {
     canonical: "https://fabfitperformance.com/transformations",

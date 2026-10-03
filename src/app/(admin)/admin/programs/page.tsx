@@ -6,6 +6,7 @@ import * as LucideIcons from 'lucide-react';
 import { Plus, Eye, ImageIcon, X, Edit3, Trash2, UploadCloud } from 'lucide-react';
 import { IconSelect } from '@/components/ui/IconSelect';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { AdminPagination } from '@/components/ui/AdminPagination';
 
 interface Program {
   id: string;
@@ -36,6 +37,8 @@ export default function ProgramsPage() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
@@ -238,128 +241,142 @@ export default function ProgramsPage() {
       : <span className="px-2 py-1 rounded bg-gray-100 text-gray-600 border border-zinc-300 text-[10px] font-bold tracking-wider">{status}</span>;
   };
 
-  return (
-    <div className="flex flex-col h-full bg-[#f8f9fa] min-w-0 w-full overflow-hidden">
-      <div className="flex-1 flex flex-col transition-all duration-300">
-        <div className="p-8 flex-1 overflow-y-auto scrollbar-hide">
-          {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Programs</h1>
-              <p className="text-gray-500 text-sm mt-1">Manage public program cards (Featured & Regular)</p>
-            </div>
-            <div className="flex gap-2">
-              {selectedIds.length > 0 && (
-                <button 
-                  onClick={triggerBulkDelete}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
-                >
-                  <Trash2 size={16} />
-                  Delete Selected ({selectedIds.length})
-                </button>
-              )}
-              <button 
-                onClick={openAddModal}
-                className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
-              >
-                <Plus size={16} />
-                Add Program
-              </button>
-            </div>
-          </div>
+  const sortedPrograms = [...programs].sort((a, b) => a.displayOrder - b.displayOrder);
+  const totalPages = Math.ceil(sortedPrograms.length / itemsPerPage) || 1;
+  const paginatedPrograms = sortedPrograms.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-          {/* Table */}
-          <div className="bg-white rounded-xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] border border-zinc-200 overflow-hidden">
-            <div className="overflow-x-auto w-full">
-            <table className="w-full text-left border-collapse min-w-[800px]">
-              <thead>
-                <tr className="border-b border-zinc-200 bg-zinc-50">
-                  <th className="py-4 px-6 w-12">
-                    <input 
-                      type="checkbox" 
-                      className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                      checked={programs.length > 0 && selectedIds.length === programs.length}
-                      onChange={handleSelectAll}
-                    />
-                  </th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm w-16">#</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Program</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Featured</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Status</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Order</th>
-                  <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <tr><td colSpan={6} className="py-12 text-center text-gray-500">Loading...</td></tr>
-                ) : programs.length === 0 ? (
-                  <tr><td colSpan={6} className="py-12 text-center text-gray-500">No programs found.</td></tr>
-                ) : (
-                  programs.sort((a, b) => a.displayOrder - b.displayOrder).map((program, index) => (
-                    <tr key={program.id} className={`border-b border-zinc-200 hover:bg-zinc-50 transition-colors ${selectedIds.includes(program.id) ? 'bg-primary/5' : ''}`}>
-                      <td className="py-4 px-6">
-                        <input 
-                          type="checkbox" 
-                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
-                          checked={selectedIds.includes(program.id)}
-                          onChange={() => handleSelectOne(program.id)}
-                        />
-                      </td>
-                      <td className="py-4 px-6 text-sm text-gray-500">{index + 1}</td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center gap-4">
-                          {program.image ? (
-                            <button onClick={() => setPreviewImage(program.image)} className="block hover:opacity-80 transition-opacity relative group">
-                              <img src={fixImageUrl(program.image)} alt={program.title} className="w-12 h-12 object-cover rounded-md bg-gray-100 shadow-sm" />
-                            </button>
-                          ) : (
-                            <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center text-gray-400">
-                              <ImageIcon size={16} />
-                            </div>
-                          )}
-                          <div>
-                            <div className="text-sm text-gray-900 font-bold">{program.title}</div>
-                            <div className="text-[11px] text-gray-500 mt-0.5 truncate max-w-[200px]">{program.shortDescription}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-6">
-                        {program.isFeatured ? (
-                          <span className="px-2 py-1 rounded bg-amber-50 text-amber-600 border border-amber-200 text-[10px] font-bold tracking-wider">FEATURED</span>
-                        ) : (
-                          <span className="text-gray-400 text-sm">-</span>
-                        )}
-                      </td>
-                      <td className="py-4 px-6">{getStatusBadge(program.status)}</td>
-                      <td className="py-4 px-6 text-sm text-gray-900">{program.displayOrder}</td>
-                      <td className="py-4 px-6">
-                        <div className="flex items-center gap-2">
-                          <button 
-                            onClick={() => openEditModal(program)}
-                            className="p-1.5 text-primary hover:bg-primary/10 border border-violet-200 rounded transition-colors"
-                            title="Edit"
-                          >
-                            <Edit3 size={16} />
-                          </button>
-                          <button 
-                            onClick={() => triggerDelete(program.id)}
-                            className="p-1.5 text-red-600 hover:bg-red-50 border border-red-200 rounded transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-          </div>
+  return (
+    <div className="flex-1 min-h-0 flex flex-col space-y-4">
+      {/* Header */}
+      <div className="shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Programs</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage public program cards (Featured & Regular)</p>
+        </div>
+        <div className="flex gap-2">
+          {selectedIds.length > 0 && (
+            <button 
+              onClick={triggerBulkDelete}
+              className="flex items-center gap-2 px-5 py-2.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium text-sm shadow-sm transition-colors border border-red-200"
+            >
+              <Trash2 size={16} />
+              Delete Selected ({selectedIds.length})
+            </button>
+          )}
+          <button 
+            onClick={openAddModal}
+            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-black rounded-lg hover:bg-primary-hover font-medium text-sm shadow-sm transition-colors"
+          >
+            <Plus size={16} />
+            Add Program
+          </button>
         </div>
       </div>
+
+      {/* Table */}
+      <div className="flex-1 min-h-0 flex flex-col bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-auto w-full">
+        <table className="w-full text-left border-collapse min-w-[800px]">
+          <thead className="sticky top-0 bg-zinc-50 z-10 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+            <tr className="border-b border-zinc-200">
+              <th className="py-4 px-6 w-12">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                  checked={programs.length > 0 && selectedIds.length === programs.length}
+                  onChange={handleSelectAll}
+                />
+              </th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm w-16">#</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Program</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Featured</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Status</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Order</th>
+              <th className="py-4 px-6 font-semibold text-gray-900 text-sm">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              <tr><td colSpan={7} className="py-12 text-center text-gray-500">Loading...</td></tr>
+            ) : sortedPrograms.length === 0 ? (
+              <tr><td colSpan={7} className="py-12 text-center text-gray-500">No programs found.</td></tr>
+            ) : (
+              paginatedPrograms.map((program, index) => {
+                const globalIndex = (currentPage - 1) * itemsPerPage + index + 1;
+                return (
+                  <tr key={program.id} className={`border-b border-zinc-200 hover:bg-zinc-50 transition-colors ${selectedIds.includes(program.id) ? 'bg-primary/5' : ''}`}>
+                    <td className="py-4 px-6">
+                      <input 
+                        type="checkbox" 
+                        className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/20"
+                        checked={selectedIds.includes(program.id)}
+                        onChange={() => handleSelectOne(program.id)}
+                      />
+                    </td>
+                    <td className="py-4 px-6 text-sm text-gray-500">{globalIndex}</td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center gap-4">
+                        {program.image ? (
+                          <button onClick={() => setPreviewImage(program.image)} className="block hover:opacity-80 transition-opacity relative group">
+                            <img src={fixImageUrl(program.image)} alt={program.title} className="w-12 h-12 object-cover rounded-md bg-gray-100 shadow-sm" />
+                          </button>
+                        ) : (
+                          <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center text-gray-400">
+                            <ImageIcon size={16} />
+                          </div>
+                        )}
+                        <div>
+                          <div className="text-sm text-gray-900 font-bold">{program.title}</div>
+                          <div className="text-[11px] text-gray-500 mt-0.5 truncate max-w-[200px]">{program.shortDescription}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 px-6">
+                      {program.isFeatured ? (
+                        <span className="px-2 py-1 rounded bg-amber-50 text-amber-600 border border-amber-200 text-[10px] font-bold tracking-wider">FEATURED</span>
+                      ) : (
+                        <span className="text-gray-400 text-sm">-</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-6">{getStatusBadge(program.status)}</td>
+                    <td className="py-4 px-6 text-sm text-gray-900">{program.displayOrder}</td>
+                    <td className="py-4 px-6">
+                      <div className="flex items-center gap-2">
+                        <button 
+                          onClick={() => openEditModal(program)}
+                          className="p-1.5 text-primary hover:bg-primary/10 border border-violet-200 rounded transition-colors"
+                          title="Edit"
+                        >
+                          <Edit3 size={16} />
+                        </button>
+                        <button 
+                          onClick={() => triggerDelete(program.id)}
+                          className="p-1.5 text-red-600 hover:bg-red-50 border border-red-200 rounded transition-colors"
+                          title="Delete"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+      <AdminPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={sortedPrograms.length}
+        itemsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+        onItemsPerPageChange={(val) => {
+          setItemsPerPage(val);
+          setCurrentPage(1);
+        }}
+      />
+    </div>
 
       {/* Modal */}
       {isModalOpen && (

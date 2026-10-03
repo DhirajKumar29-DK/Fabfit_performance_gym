@@ -4,7 +4,9 @@ import { Membership } from "@/components/home/Membership";
 import { MembershipPerks } from "@/components/membership/MembershipPerks";
 
 export const metadata: Metadata = {
-  title: "Membership Plans & Pricing | Fab Fit Performance Gym",
+  title: {
+    absolute: "Membership Plans & Pricing | Fab Fit Performance Gym",
+  },
   description: "View pricing packages, membership options, and custom coaching plans at Fab Fit Performance Gym.",
   alternates: {
     canonical: "https://fabfitperformance.com/membership",

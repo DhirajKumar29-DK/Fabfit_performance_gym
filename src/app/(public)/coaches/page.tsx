@@ -4,14 +4,16 @@ import { Coaches } from "@/components/home/Coaches";
 import { Trainers } from "@/components/home/Trainers";
 
 export const metadata: Metadata = {
-  title: "Coaches & Trainers | Fab Fit Performance Gym",
-  description: "Meet our certified head coaches and personal trainers dedicated to guiding your physique and health transformation at Fab Fit Performance Gym.",
+  title: {
+    absolute: "Fitness Coaches in Gurgaon | Fab Fit Performance Gym",
+  },
+  description: "Meet the coaching team at FabFit Performance in Gurgaon. Explore our trainers and find guidance for your fitness goals, workouts and progress.",
   alternates: {
     canonical: "https://fabfitperformance.com/coaches",
   },
   openGraph: {
-    title: "Coaches & Trainers | Fab Fit Performance Gym",
-    description: "Meet our certified head coaches and personal trainers dedicated to guiding your physique and health transformation at Fab Fit Performance Gym.",
+    title: "Fitness Coaches in Gurgaon | Fab Fit Performance Gym",
+    description: "Meet the coaching team at FabFit Performance in Gurgaon. Explore our trainers and find guidance for your fitness goals, workouts and progress.",
     url: "https://fabfitperformance.com/coaches",
     images: ["/fabfit.jpeg"],
   },

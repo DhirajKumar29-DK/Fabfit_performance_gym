@@ -4,14 +4,16 @@ import { Programs } from "@/components/home/Programs";
 import { ProgramFeatures } from "@/components/programs/ProgramFeatures";
 
 export const metadata: Metadata = {
-  title: "Programs | Fab Fit Performance Gym",
-  description: "Explore elite physique transformation, lifestyle coaching, contest prep, and custom workout programs at Fab Fit Performance Gym.",
+  title: {
+    absolute: "Fitness Programs in Gurgaon | Fab Fit Performance Gym",
+  },
+  description: "Explore Fab Fit Performance Gym fitness programs in Gurgaon, with body assessments, nutrition planning, resistance training and regular progress reviews.",
   alternates: {
     canonical: "https://fabfitperformance.com/programs",
   },
   openGraph: {
-    title: "Programs | Fab Fit Performance Gym",
-    description: "Explore elite physique transformation, lifestyle coaching, contest prep, and custom workout programs at Fab Fit Performance Gym.",
+    title: "Fitness Programs in Gurgaon | Fab Fit Performance Gym",
+    description: "Explore Fab Fit Performance Gym fitness programs in Gurgaon, with body assessments, nutrition planning, resistance training and regular progress reviews.",
     url: "https://fabfitperformance.com/programs",
     images: ["/fabfit.jpeg"],
   },

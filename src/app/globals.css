@@ -136,18 +136,36 @@ main select:not(.text-white),
   }
 
   .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
   }
 
   .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
   }
 
   /* Fix flexbox overflow issues for admin tables */
   .flex-1 {
     min-width: 0;
   }
+}
+
+/* Global Invisible Scrollbar: keeps scrolling active without displaying scrollbar */
+html,
+body,
+*,
+*::before,
+*::after {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Edge, Opera */
+  width: 0px !important;
+  height: 0px !important;
 }
 
 html {

@@ -4,13 +4,15 @@ import { About } from "@/components/home/About";
 import { AboutFAQ } from "@/components/about/AboutFAQ";
 
 export const metadata: Metadata = {
-  title: "About Us | Fab Fit Performance Gym",
+  title: {
+    absolute: "About Us Gurgaon Gym | Fab Fit Performance Gym",
+  },
   description: "Learn about Fab Fit Performance Gym, our mission, expert coaches, and elite fitness transformation methodology.",
   alternates: {
     canonical: "https://fabfitperformance.com/about",
   },
   openGraph: {
-    title: "About Us | Fab Fit Performance Gym",
+    title: "About Us Gurgaon Gym | Fab Fit Performance Gym",
     description: "Learn about Fab Fit Performance Gym, our mission, expert coaches, and elite fitness transformation methodology.",
     url: "https://fabfitperformance.com/about",
     images: ["/fabfit.jpeg"],
