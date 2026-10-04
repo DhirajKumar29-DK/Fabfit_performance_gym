@@ -21,17 +21,17 @@ import PersonalTrainerForm from "@/components/landing/PersonalTrainerForm";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Gym in DLF Phase 4 Gurgaon | Fab Fit Performance gym",
+    absolute: "Premium Gym in DLF Phase 4 | Fitness Studio in DLF Phase 4",
   },
   description:
-    "Visit Fab Fit Performance gym in DLF Phase 4 Gurgaon for personal training and fitness workouts. Book your free trial session today.",
+    "Explore Fab Fit Performance gym, a premium gym in DLF Phase 4, Gurgaon, for structured training and personalized fitness coaching. Book your trial session today.",
   alternates: {
     canonical: "https://fabfitperformance.com/gym-in-dlf-phase-4",
   },
   openGraph: {
-    title: "Gym in DLF Phase 4 Gurgaon | Fab Fit Performance gym",
+    title: "Premium Gym in DLF Phase 4 | Fitness Studio in DLF Phase 4",
     description:
-      "Visit Fab Fit Performance gym in DLF Phase 4 Gurgaon for personal training and fitness workouts. Book your free trial session today.",
+      "Explore Fab Fit Performance gym, a premium gym in DLF Phase 4, Gurgaon, for structured training and personalized fitness coaching. Book your trial session today.",
     url: "https://fabfitperformance.com/gym-in-dlf-phase-4",
     images: ["/fabfit.jpeg"],
   },
