@@ -64,8 +64,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Fab Fit Performance Gym - Premium Gym & Elite Fitness Coaching",
-    description: "Join Fab Fit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs.",
+    title: "Gym in DLF Phase 4, Gurgaon | Fab Fit Performance gym",
+    description: "Train at FabFit Performance gym in DLF Phase 4, Gurgaon. Explore personal coaching, fitness programs and gym memberships. Book your assessment.",
     url: siteUrl,
     siteName: "Fab Fit Performance Gym",
     images: [
@@ -87,8 +87,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fab Fit Performance Gym - Premium Gym & Elite Fitness Coaching",
-    description: "Join Fab Fit Performance Gym, Gurgaon's premium destination for elite fitness, personalized coaching, and transformative workout programs.",
+    title: "Gym in DLF Phase 4, Gurgaon | Fab Fit Performance gym",
+    description: "Train at FabFit Performance gym in DLF Phase 4, Gurgaon. Explore personal coaching, fitness programs and gym memberships. Book your assessment.",
     images: ["/og-image.jpg"],
     creator: "@fabfitperformance",
   },
