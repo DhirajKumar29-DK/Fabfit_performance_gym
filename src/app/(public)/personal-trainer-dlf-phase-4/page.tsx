@@ -1,24 +1,25 @@
 import React from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { 
-  MapPin, 
-  Phone, 
-  MessageCircle, 
-  CheckCircle2, 
-  Star, 
-  ArrowRight, 
-  ShieldCheck, 
-  Award, 
-  Sparkles, 
-  ChevronDown, 
-  Dumbbell, 
-  Users, 
-  Laptop, 
-  Clock, 
+import {
+  MapPin,
+  Phone,
+  MessageCircle,
+  CheckCircle2,
+  Star,
+  ArrowRight,
+  ShieldCheck,
+  Award,
+  Sparkles,
+  ChevronDown,
+  Dumbbell,
+  Users,
+  Laptop,
+  Clock,
   Check
 } from "lucide-react";
 import PersonalTrainerForm from "@/components/landing/PersonalTrainerForm";
+import LandingFaqAccordion from "@/components/landing/LandingFaqAccordion";
 
 export const metadata: Metadata = {
   title: {
@@ -173,7 +174,7 @@ export default function PersonalTrainerDLFPhase4Page() {
   };
 
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-24 pb-16 selection:bg-[#FFB81C] selection:text-black">
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#FFB81C] selection:text-black">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
@@ -181,66 +182,91 @@ export default function PersonalTrainerDLFPhase4Page() {
       />
 
       {/* SECTION 1: HERO */}
-      <section className="relative overflow-hidden py-12 md:py-20 border-b border-zinc-800">
+      <section className="relative overflow-hidden min-h-[calc(100vh-80px)] flex flex-col justify-center py-10 md:py-14 border-b border-zinc-800">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#FFB81C]/10 blur-[130px] rounded-full" />
           <div className="absolute top-1/2 right-0 w-80 h-80 bg-zinc-800/20 blur-[100px] rounded-full" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Top Location Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-[#FFB81C]/30 text-[#FFB81C] text-xs font-bold uppercase tracking-wider mb-6">
-              <MapPin size={14} />
-              <span>DLF Phase 4, Gurgaon • Dedicated 1:1 Personal Training</span>
-            </div>
-
-            {/* Main H1 */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
-              Personal Trainer in <span className="text-[#FFB81C]">DLF Phase 4</span>
-            </h1>
-
-            {/* Subheading */}
-            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed mb-8 max-w-2xl mx-auto">
-              Looking for a personal trainer in DLF Phase 4? Get personalized 1:1 fitness, strength and transformation coaching at Fab Fit Performance with custom Indian nutrition and guaranteed results.
-            </p>
-
-            {/* Value Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto mb-10 text-left">
-              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-200 text-xs sm:text-sm font-medium">
-                <CheckCircle2 size={16} className="text-[#FFB81C] shrink-0" />
-                <span>100% 1:1 Dedicated Coach</span>
-              </div>
-              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-200 text-xs sm:text-sm font-medium">
-                <CheckCircle2 size={16} className="text-[#FFB81C] shrink-0" />
-                <span>Bi-Weekly InBody Scans</span>
-              </div>
-              <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-200 text-xs sm:text-sm font-medium">
-                <CheckCircle2 size={16} className="text-[#FFB81C] shrink-0" />
-                <span>Custom Indian Nutrition</span>
+            {/* Left Column: Hero Workout Image */}
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <div className="relative group rounded-3xl overflow-hidden border border-zinc-800 shadow-[0_0_40px_rgba(255,184,28,0.12)]">
+                <img
+                  src="/landing/pt_dlf_hero.jpg"
+                  alt="Personal Training in DLF Phase 4"
+                  className="w-full h-[320px] sm:h-[400px] lg:h-[460px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-zinc-950/85 backdrop-blur-md border border-zinc-800 flex items-center justify-between">
+                  <div>
+                    <div className="text-xs font-bold text-[#FFB81C]">1:1 Dedicated Training</div>
+                    <div className="text-[11px] text-zinc-400">Private Training Floor • DLF Phase 4</div>
+                  </div>
+                  <div className="px-2.5 py-1 rounded-full bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-[10px] font-extrabold uppercase">
+                    Certified
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Primary CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a
-                href="#booking-section"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#FFB81C] text-black font-extrabold text-sm sm:text-base hover:bg-[#A8861E] hover:text-white transition-all duration-300 shadow-[0_0_25px_rgba(255,184,28,0.35)] flex items-center justify-center gap-2"
-              >
-                <span>Claim Free 1:1 Trial Session</span>
-                <ArrowRight size={18} />
-              </a>
-              <a
-                href="https://wa.me/919899179911?text=Hi%20Coach!%20I%20am%20looking%20for%20a%20personal%20trainer%20in%20DLF%20Phase%204.%20Please%20guide%20me."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-sm sm:text-base hover:border-[#25D366] hover:text-[#25D366] transition-colors flex items-center justify-center gap-2"
-              >
-                <MessageCircle size={18} className="text-[#25D366]" />
-                <span>Chat on WhatsApp</span>
-              </a>
+            {/* Right Column: Hero Content */}
+            <div className="lg:col-span-7 order-1 lg:order-2 text-center lg:text-left">
+              {/* Top Location Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900 border border-[#FFB81C]/30 text-[#FFB81C] text-xs font-bold uppercase tracking-wider mb-4">
+                <MapPin size={14} />
+                <span>DLF Phase 4, Gurgaon • Dedicated 1:1 Personal Training</span>
+              </div>
+
+              {/* Main H1 */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-[1.15] mb-4">
+                Personal Trainer in <span className="text-[#FFB81C]">DLF Phase 4</span>
+              </h1>
+
+              {/* Subheading */}
+              <p className="text-sm sm:text-base md:text-lg text-zinc-300 leading-relaxed mb-6 max-w-2xl">
+                Looking for a personal trainer in DLF Phase 4? Get personalized 1:1 fitness, strength and transformation coaching at Fab Fit Performance with custom Indian nutrition and guaranteed results.
+              </p>
+
+              {/* Value Highlights */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-left">
+                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-200 text-xs sm:text-sm font-medium">
+                  <CheckCircle2 size={16} className="text-[#FFB81C] shrink-0" />
+                  <span>100% 1:1 Dedicated Coach</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-200 text-xs sm:text-sm font-medium">
+                  <CheckCircle2 size={16} className="text-[#FFB81C] shrink-0" />
+                  <span>Bi-Weekly InBody Scans</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-200 text-xs sm:text-sm font-medium">
+                  <CheckCircle2 size={16} className="text-[#FFB81C] shrink-0" />
+                  <span>Custom Indian Nutrition</span>
+                </div>
+              </div>
+
+              {/* Primary CTAs */}
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <a
+                  href="#booking-section"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#FFB81C] text-black font-extrabold text-sm sm:text-base hover:bg-[#A8861E] hover:text-white transition-all duration-300 shadow-[0_0_25px_rgba(255,184,28,0.35)] flex items-center justify-center gap-2"
+                >
+                  <span>Claim Free 1:1 Trial Session</span>
+                  <ArrowRight size={18} />
+                </a>
+                <a
+                  href="https://wa.me/919899179911?text=Hi%20Coach!%20I%20am%20looking%20for%20a%20personal%20trainer%20in%20DLF%20Phase%204.%20Please%20guide%20me."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-sm sm:text-base hover:border-[#25D366] hover:text-[#25D366] transition-colors flex items-center justify-center gap-2"
+                >
+                  <MessageCircle size={18} className="text-[#25D366]" />
+                  <span>Chat on WhatsApp</span>
+                </a>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -248,57 +274,72 @@ export default function PersonalTrainerDLFPhase4Page() {
       {/* SECTION 2: COACHING PROGRAMS & CREDENTIALS */}
       <section className="py-16 md:py-20 border-b border-zinc-800 bg-zinc-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-xs font-bold uppercase tracking-wider mb-3">
-              <Sparkles size={14} />
-              <span>Tailored Coaching Formats</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white mb-4">
-              Personalized Training Programs in DLF Phase 4
-            </h2>
-            <p className="text-sm sm:text-base text-zinc-400">
-              Evidence-based biomechanics, joint-safe progressive overload, and custom nutrition blueprints.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-12">
+            
+            {/* Left Column: Programs Content */}
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-xs font-bold uppercase tracking-wider mb-3">
+                <Sparkles size={14} />
+                <span>Tailored Coaching Formats</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white mb-4">
+                Personalized Training Programs in DLF Phase 4
+              </h2>
+              <p className="text-sm sm:text-base text-zinc-400 mb-8">
+                Evidence-based biomechanics, joint-safe progressive overload, and custom nutrition blueprints designed for corporate professionals and fitness enthusiasts.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {SERVICES.map((srv, idx) => {
-              const Icon = srv.icon;
-              return (
-                <div
-                  key={idx}
-                  className="p-8 rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-[#FFB81C]/50 transition-all duration-300 flex flex-col justify-between group shadow-xl"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-[#FFB81C]/10 border border-[#FFB81C]/30 flex items-center justify-center text-[#FFB81C] group-hover:scale-110 transition-transform">
-                        <Icon size={24} />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {SERVICES.map((srv, idx) => {
+                  const Icon = srv.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className="p-5 rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-[#FFB81C]/50 transition-all duration-300 flex flex-col justify-between group shadow-xl"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="w-10 h-10 rounded-xl bg-[#FFB81C]/10 border border-[#FFB81C]/30 flex items-center justify-center text-[#FFB81C] group-hover:scale-110 transition-transform">
+                            <Icon size={20} />
+                          </div>
+                          <span className="px-2 py-0.5 rounded-full bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-[10px] font-bold">
+                            {srv.highlight}
+                          </span>
+                        </div>
+                        <h3 className="text-base font-bold text-white mb-1.5">
+                          {srv.title}
+                        </h3>
+                        <p className="text-xs text-zinc-400 leading-relaxed">
+                          {srv.desc}
+                        </p>
                       </div>
-                      <span className="px-3 py-1 rounded-full bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-[11px] font-bold">
-                        {srv.highlight}
-                      </span>
                     </div>
-                    <span className="text-[11px] font-bold text-zinc-400 uppercase tracking-wider block mb-1">
-                      {srv.subtitle}
-                    </span>
-                    <h3 className="text-xl font-bold text-white mb-3">
-                      {srv.title}
-                    </h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed mb-6">
-                      {srv.desc}
-                    </p>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right Column: Section 2 Workout Image */}
+            <div className="lg:col-span-5">
+              <div className="relative group rounded-3xl overflow-hidden border border-zinc-800 shadow-[0_0_40px_rgba(255,184,28,0.12)]">
+                <img
+                  src="/landing/pt_dlf_section2.jpg"
+                  alt="1:1 Strength Coaching in DLF Phase 4"
+                  className="w-full h-[360px] sm:h-[440px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-zinc-950/85 backdrop-blur-md border border-zinc-800">
+                  <div className="text-xs font-bold text-[#FFB81C] flex items-center gap-1.5 mb-1">
+                    <Award size={14} />
+                    <span>Progressive Overload & Form Mastery</span>
                   </div>
-                  <ul className="space-y-2 border-t border-zinc-800/80 pt-4">
-                    {srv.features.map((feat, fIdx) => (
-                      <li key={fIdx} className="flex items-center gap-2 text-xs text-zinc-300">
-                        <Check size={14} className="text-[#FFB81C] shrink-0" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="text-[11px] text-zinc-400">
+                    Safe biomechanics guided 1:1 by Head Coach Ankit Baliyan
+                  </div>
                 </div>
-              );
-            })}
+              </div>
+            </div>
+
           </div>
 
           {/* Coach Certifications Strip */}
@@ -371,7 +412,7 @@ export default function PersonalTrainerDLFPhase4Page() {
       <section id="booking-section" className="py-16 md:py-20 bg-zinc-950/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
+
             {/* Left: Quick Booking Form */}
             <div className="lg:col-span-6 bg-zinc-950 p-6 sm:p-8 rounded-3xl border border-zinc-800 shadow-2xl relative">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-xs font-bold uppercase tracking-wider mb-4">
@@ -385,7 +426,7 @@ export default function PersonalTrainerDLFPhase4Page() {
                 Meet our Head Coach in DLF Phase 4, evaluate your movement, and get a customized transformation plan.
               </p>
 
-              <PersonalTrainerForm 
+              <PersonalTrainerForm
                 sourcePage="Personal Trainer DLF Phase 4"
                 buttonText="Claim Free 1:1 Trial Session"
               />
@@ -419,22 +460,7 @@ export default function PersonalTrainerDLFPhase4Page() {
                 <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                   <span>Frequently Asked Questions</span>
                 </h4>
-                <div className="space-y-3">
-                  {FAQS.map((faq, idx) => (
-                    <details
-                      key={idx}
-                      className="group p-4 rounded-xl bg-zinc-900/70 border border-zinc-800 open:border-[#FFB81C]/40 transition-colors cursor-pointer"
-                    >
-                      <summary className="flex items-center justify-between cursor-pointer font-semibold text-sm text-zinc-200 list-none">
-                        <span>{faq.q}</span>
-                        <ChevronDown size={16} className="text-zinc-500 group-open:rotate-180 transition-transform shrink-0 ml-2" />
-                      </summary>
-                      <p className="text-xs sm:text-sm text-zinc-400 mt-3 leading-relaxed pt-2 border-t border-zinc-800/80">
-                        {faq.a}
-                      </p>
-                    </details>
-                  ))}
-                </div>
+                <LandingFaqAccordion faqs={FAQS} />
               </div>
 
             </div>
@@ -442,6 +468,6 @@ export default function PersonalTrainerDLFPhase4Page() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
