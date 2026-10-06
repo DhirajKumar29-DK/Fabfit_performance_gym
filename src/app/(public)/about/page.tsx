@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description: "Learn about Fab Fit Performance Gym, our mission, expert coaches, and elite fitness transformation methodology.",
     url: "https://fabfitperformance.com/about",
     images: ["/fabfit.jpeg"],
-  },
+  }, 
 };
 
 export default function AboutPage() {

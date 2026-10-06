@@ -25,10 +25,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: "Gym in DLF Phase 4, Gurgaon | Fab Fit Performance gym",
-    template: "%s | Fab Fit Performance Gym",
-  },
+  title: "Gym in DLF Phase 4, Gurgaon | Fab Fit Performance gym",
   description: "Train at FabFit Performance gym in DLF Phase 4, Gurgaon. Explore personal coaching, fitness programs and gym memberships. Book your assessment.",
   keywords: [
     "Fab Fit Performance Gym",
