@@ -4,13 +4,15 @@ let backendHostname = 'localhost';
 let backendPort = '5000';
 let backendProtocol = 'http';
 
-try {
-  const url = new URL(backendUrl);
-  backendHostname = url.hostname;
-  backendPort = url.port || '';
-  backendProtocol = url.protocol.replace(':', '');
-} catch (e) {
-  console.error("Invalid NEXT_PUBLIC_API_URL:", backendUrl);
+if (backendUrl) {
+  try {
+    const url = new URL(backendUrl);
+    backendHostname = url.hostname;
+    backendPort = url.port || '';
+    backendProtocol = url.protocol.replace(':', '');
+  } catch (e) {
+    // fallback default
+  }
 }
 
 const nextConfig = {
