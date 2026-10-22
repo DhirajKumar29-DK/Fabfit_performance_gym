@@ -7,14 +7,14 @@ import { api } from "@/services/api";
 import { Activity, Dumbbell, Flame, Heart, Zap, Crosshair, Users, Trophy } from 'lucide-react';
 
 // Reusing Icons from previous sections
-const CalendarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="14" x2="15" y2="14"/><line x1="12" y1="11" x2="12" y2="17"/></svg>;
-const StarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>;
-const UserIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
-const UsersIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
-const ShieldIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
-const DumbbellIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M14.4 14.4l-4.8-4.8"/><path d="M22.5 1.5l-6 6"/><path d="M1.5 22.5l6-6"/><path d="M6 10l-4-4 2-2 4 4"/><path d="M18 14l4 4-2 2-4-4"/></svg>;
-const CheckCircleIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
-const HeartIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>;
+const CalendarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /><line x1="9" y1="14" x2="15" y2="14" /><line x1="12" y1="11" x2="12" y2="17" /></svg>;
+const StarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>;
+const UserIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>;
+const UsersIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>;
+const ShieldIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>;
+const DumbbellIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M14.4 14.4l-4.8-4.8" /><path d="M22.5 1.5l-6 6" /><path d="M1.5 22.5l6-6" /><path d="M6 10l-4-4 2-2 4 4" /><path d="M18 14l4 4-2 2-4-4" /></svg>;
+const CheckCircleIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>;
+const HeartIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>;
 
 const CheckIconSmall = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-primary mt-1 shrink-0">
@@ -38,13 +38,13 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
   const { membership } = homeData;
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-10%" });
-  
+
   const [sectionData, setSectionData] = useState({
     badge: membership.badge,
     title: membership.headingLine1 + "." + membership.headingLine2,
     description: membership.subHeader,
   });
-  
+
   const [plans, setPlans] = useState<any[]>([]);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
         console.error('Error fetching membership data:', error);
       }
     };
-    
+
     fetchMembershipData();
   }, []);
 
@@ -101,7 +101,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
 
   return (
     <section ref={sectionRef} id="pricing" className="bg-[#050505] relative overflow-hidden flex flex-col py-12 md:py-16">
-      
+
       {/* Background Elements */}
       <div className="absolute top-0 right-0 w-full md:w-1/2 lg:w-1/3 h-full z-0 opacity-40 mix-blend-luminosity pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#050505] z-10"></div>
@@ -115,9 +115,9 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
       </div>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10 max-w-[1200px]">
-        
+
         {/* Header Section */}
-        <motion.div 
+        <motion.div
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -126,7 +126,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
           <span className="text-primary font-bold text-[10px] tracking-widest uppercase mb-2">
             {sectionData.badge}
           </span>
-          
+
           {isPage ? (
             <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-black leading-[0.9] uppercase tracking-tighter mb-4">
               {(() => {
@@ -166,7 +166,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
               })()}
             </h2>
           )}
-          
+
           <p className="text-zinc-400 text-sm font-medium max-w-lg leading-relaxed">
             {sectionData.description.split('full access').map((part, i, arr) => (
               <React.Fragment key={i}>
@@ -181,7 +181,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
         <div className="flex flex-col gap-4 mb-10">
           {plans.map((plan: any, index: number) => {
             const isHighlighted = plan.isPopular;
-            
+
             return (
               <motion.div
                 key={plan.id}
@@ -208,7 +208,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                 <div className={`w-full md:w-[240px] p-6 md:p-8 flex items-center gap-5 border-b md:border-b-0 md:border-r border-zinc-800/60 ${isHighlighted ? 'pl-16 md:pl-10' : 'pl-6 md:pl-8'} relative overflow-hidden group-hover:border-primary/30 transition-colors duration-300`}>
                   {/* Subtle highlight behind icon */}
                   <div className="absolute -left-10 top-1/2 -translate-y-1/2 w-32 h-32 bg-primary/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
+
                   <div className={`w-12 h-14 relative flex items-center justify-center shrink-0 text-primary opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 group-hover:drop-shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]`}>
                     {/* Hexagon Shape */}
                     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 115" fill="none" stroke="currentColor" strokeWidth="2">
@@ -234,7 +234,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                     {plan.features.map((feature: any, i: number) => {
                       const featureTitle = typeof feature === 'string' ? feature : feature.title;
                       const featureIconName = typeof feature === 'string' ? 'check' : feature.icon;
-                      
+
                       const renderIcon = () => {
                         const className = "text-primary mt-1 shrink-0";
                         switch (featureIconName) {
@@ -253,8 +253,8 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                       };
 
                       return (
-                        <div 
-                          key={i} 
+                        <div
+                          key={i}
                           className="flex items-start gap-3 cursor-default"
                         >
                           <div className="mt-0.5">
@@ -275,8 +275,8 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                     </span>
                     <span className="text-primary font-black text-[9px] tracking-widest uppercase">/ {plan.pricePeriod || 'MONTH'}</span>
                   </div>
-                  
-                  <a 
+
+                  <a
                     href={plan.enquiryLink || `https://wa.me/919220393004?text=${encodeURIComponent(`Hi Fab Fit Performance Gym! I want to enquire about the ${plan.duration} ${plan.name} plan.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -290,7 +290,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                     </span>
                   </a>
                 </div>
-                
+
               </motion.div>
             );
           })}
@@ -312,7 +312,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
               <UserIcon />
             </div>
           </div>
-          
+
           <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-4 text-center md:text-left">
             <div>
               <p className="text-zinc-300 text-sm font-medium mb-1">
@@ -328,10 +328,10 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
                   <React.Fragment key={i}>
                     {part}
                     {i === 0 && (
-                      <a 
-                        href={`https://wa.me/919220393004?text=${encodeURIComponent('Hi Fab Fit! I am interested in Personal Training. Can you share more details?')}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                      <a
+                        href={`https://wa.me/919220393004?text=${encodeURIComponent('Hi Fab Fit! I am interested in Personal Training. Can you share more details?')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-primary cursor-pointer hover:text-white transition-colors"
                       >
                         Contact for PT →

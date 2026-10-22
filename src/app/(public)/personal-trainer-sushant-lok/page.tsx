@@ -116,7 +116,7 @@ export default function PersonalTrainerSushantLokPage() {
         "name": "FabFit Performance - Personal Trainer in Sushant Lok 1, Gurgaon",
         "description": "FabFit Performance provides 1:1 personal training and fitness coaching at Supermart 1, DLF Phase 4, near Sushant Lok 1, Gurgaon.",
         "url": "https://fabfitperformance.com/personal-trainer-sushant-lok",
-        "telephone": "+919899179911",
+        "telephone": "+919220393004",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Supermart 1, DLF Phase 4 (Near Galleria Market & Sushant Lok 1)",
@@ -163,7 +163,7 @@ export default function PersonalTrainerSushantLokPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
+
             {/* Left Column: Hero Workout Image */}
             <div className="lg:col-span-5 order-2 lg:order-1">
               <div className="relative group rounded-3xl overflow-hidden border border-zinc-800 shadow-[0_0_40px_rgba(255,184,28,0.12)]">
@@ -237,7 +237,7 @@ export default function PersonalTrainerSushantLokPage() {
       <section className="py-16 md:py-20 border-b border-zinc-800 bg-zinc-950/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            
+
             {/* Left Column: Personalized Training */}
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#FFB81C]/10 border border-[#FFB81C]/30 text-[#FFB81C] text-xs font-bold uppercase tracking-wider mb-3">
@@ -322,7 +322,7 @@ export default function PersonalTrainerSushantLokPage() {
       {/* SECTION 3: NEAR GALLERIA MARKET & WHAT TO LOOK FOR IN A TRAINER */}
       <section className="py-16 md:py-20 border-b border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           {/* Hyperlocal Connectivity Card */}
           <div className="bg-zinc-950 p-8 sm:p-10 rounded-3xl border border-zinc-800 shadow-xl mb-14 max-w-5xl mx-auto">
             <div className="max-w-3xl mx-auto text-center mb-8">
@@ -440,7 +440,7 @@ export default function PersonalTrainerSushantLokPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone size={14} className="text-[#FFB81C]" />
-                    <span>+91 98991 79911</span>
+                    <span>+91 92203 93004</span>
                   </div>
                 </div>
               </div>

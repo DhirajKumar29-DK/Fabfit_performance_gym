@@ -8,7 +8,7 @@ interface Props {
   buttonText?: string;
 }
 
-export default function PersonalTrainerForm({ 
+export default function PersonalTrainerForm({
   sourcePage = "Personal Trainer DLF Phase 4",
   buttonText = "Claim Free Trial & Assessment Session"
 }: Props) {
@@ -51,7 +51,19 @@ export default function PersonalTrainerForm({
 
     setIsSubmitting(true);
 
-    const waMessage = `Hi Coach! I just submitted an assessment request on your website for *${formData.goal}*.\n\n* Name: ${formData.name}\n* Phone: ${formData.phone}\n* Preferred Slot: ${formData.slot}\n* Source: ${sourcePage}${formData.notes ? `\n* Notes: ${formData.notes}` : ""}`;
+    const waLines = [
+      "Hi Coach! I just submitted an assessment request on your website.",
+      "",
+      `• Goal: ${formData.goal}`,
+      `• Name: ${formData.name.trim()}`,
+      `• Phone: ${formData.phone.trim()}`,
+      `• Preferred Slot: ${formData.slot}`,
+      `• Source: ${sourcePage}`,
+    ];
+    if (formData.notes && formData.notes.trim()) {
+      waLines.push(`• Notes: ${formData.notes.trim()}`);
+    }
+    const waMessage = waLines.join("\n");
     const waUrl = `https://wa.me/919220393004?text=${encodeURIComponent(waMessage)}`;
 
     try {
@@ -91,7 +103,19 @@ export default function PersonalTrainerForm({
   };
 
   if (isSubmitted) {
-    const waMessage = `Hi Coach! I just submitted an assessment request on your website for *${formData.goal}*.\n\n* Name: ${formData.name}\n* Phone: ${formData.phone}\n* Preferred Slot: ${formData.slot}\n* Source: ${sourcePage}${formData.notes ? `\n* Notes: ${formData.notes}` : ""}`;
+    const waLines = [
+      "Hi Coach! I just submitted an assessment request on your website.",
+      "",
+      `• Goal: ${formData.goal}`,
+      `• Name: ${formData.name.trim()}`,
+      `• Phone: ${formData.phone.trim()}`,
+      `• Preferred Slot: ${formData.slot}`,
+      `• Source: ${sourcePage}`,
+    ];
+    if (formData.notes && formData.notes.trim()) {
+      waLines.push(`• Notes: ${formData.notes.trim()}`);
+    }
+    const waMessage = waLines.join("\n");
     const waUrl = `https://wa.me/919220393004?text=${encodeURIComponent(waMessage)}`;
 
     return (
@@ -154,7 +178,7 @@ export default function PersonalTrainerForm({
           <input
             type="tel"
             required
-            placeholder="e.g. +91 98991 00000"
+            placeholder="e.g. +91 98765 43210"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             className="w-full pl-10 pr-4 py-3 bg-zinc-900 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-[#FFB81C] focus:ring-1 focus:ring-[#FFB81C]/30 transition-all font-medium placeholder:text-zinc-400"

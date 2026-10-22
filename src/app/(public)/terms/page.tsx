@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
   return (
     <div className="bg-[#09090b] text-white min-h-screen py-10 md:py-16">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Top Breadcrumb / Back Button */}
         <div className="mb-8">
           <Link
@@ -38,7 +38,7 @@ export default function TermsOfServicePage() {
         {/* Hero Header */}
         <div className="bg-[#121215] border border-white/10 rounded-2xl p-6 sm:p-10 mb-10 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-          
+
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-black uppercase tracking-widest mb-4">
             <Scale className="w-4 h-4" /> Legal Agreement & Policies
           </div>
@@ -59,13 +59,13 @@ export default function TermsOfServicePage() {
 
         {/* Content Body */}
         <div className="bg-[#121215] border border-white/10 rounded-2xl p-6 sm:p-10 shadow-2xl space-y-10 text-zinc-300 text-sm sm:text-base leading-relaxed">
-          
+
           {/* Section 1: Health & Medical Disclaimer */}
           <section className="space-y-4">
             <h2 className="text-white font-bold text-xl sm:text-2xl uppercase tracking-wide flex items-center gap-3">
               <span className="text-primary font-mono text-base">01.</span> Health & Exercise Medical Disclaimer
             </h2>
-            
+
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 sm:p-5 flex items-start gap-4">
               <AlertTriangle className="w-6 h-6 text-amber-400 shrink-0 mt-0.5" />
               <p className="text-xs sm:text-sm text-amber-200/90 leading-relaxed">

@@ -88,7 +88,7 @@ export default function PersonalTrainerDLFPhase4Page() {
         "name": "FabFit Performance Gym - Best Personal Trainer in DLF Phase 4, Gurgaon",
         "description": "Searching for the Best Personal Trainer in DLF Phase 4? FabFit Performance provides personalized fitness coaching at Supermart 1, DLF Phase 4.",
         "url": "https://fabfitperformance.com/personal-trainer-dlf-phase-4",
-        "telephone": "+919899179911",
+        "telephone": "+919220393004",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Supermart 1, DLF Phase 4 (Near Galleria Market & Sushant Lok 1)",
@@ -135,7 +135,7 @@ export default function PersonalTrainerDLFPhase4Page() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
+
             {/* Left Column: Hero Workout Image */}
             <div className="lg:col-span-5 order-2 lg:order-1">
               <div className="relative group rounded-3xl overflow-hidden border border-zinc-800 shadow-[0_0_40px_rgba(255,184,28,0.12)]">
@@ -270,7 +270,7 @@ export default function PersonalTrainerDLFPhase4Page() {
       <section className="py-16 md:py-20 border-b border-zinc-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            
+
             {/* Left Column: One to One Coaching */}
             <div className="lg:col-span-7 space-y-6">
               <div>
@@ -387,7 +387,7 @@ export default function PersonalTrainerDLFPhase4Page() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone size={14} className="text-[#FFB81C]" />
-                    <span>+91 98991 79911</span>
+                    <span>+91 92203 93004</span>
                   </div>
                 </div>
               </div>
