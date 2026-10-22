@@ -67,6 +67,46 @@ export async function POST(request: NextRequest) {
       data = await request.json();
     }
 
+    // Support landing page quick lead / trial booking forms
+    if (data.fullName || (!data.firstName && data.name)) {
+      const rawName = (data.fullName || data.name || '').trim();
+      const nameParts = rawName.split(/\s+/);
+      const firstName = nameParts[0] || 'Member';
+      const lastName = nameParts.slice(1).join(' ') || '-';
+      
+      data = {
+        firstName,
+        lastName,
+        age: Number(data.age) || 25,
+        gender: data.gender || 'Not specified',
+        height: data.height || '-',
+        weight: data.weight || '-',
+        email: data.email || `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '') || 'client'}.${Date.now().toString().slice(-4)}@fabfitguest.com`,
+        phone: data.phone || '',
+        activityLevel: data.activityLevel || 'Moderate',
+        primaryGoal: data.primaryGoal || data.fitnessGoal || data.goal || 'General Fitness',
+        experience: data.experience || 'Beginner',
+        frequency: data.frequency || '3-4 sessions/week',
+        equipment: data.equipment || 'Full Gym',
+        cardio: data.cardio || 'Moderate',
+        occupation: data.occupation || 'Working Professional',
+        steps: data.steps || '-',
+        sleep: data.sleep || '7-8 hrs',
+        stress: data.stress || 'Moderate',
+        diet: data.diet || 'Balanced',
+        meals: data.meals || '3 meals',
+        alcohol: data.alcohol || 'No',
+        tobacco: data.tobacco || 'No',
+        conditions: data.conditions || 'None',
+        medications: data.medications || 'None',
+        injuries: data.injuries || data.notes || 'None',
+        allergies: data.allergies || 'None',
+        waist: data.waist || '-',
+        commitmentLevel: Number(data.commitmentLevel) || 10,
+        notes: `[Lead Source: ${data.source || 'Landing Page'}] Slot: ${data.preferredTime || data.slot || 'Flexible'}. ${data.notes || ''}`.trim()
+      };
+    }
+
     const validatedData = createAssessmentSchema.parse(data);
     const newAssessment = await AssessmentService.createAssessment(validatedData);
 

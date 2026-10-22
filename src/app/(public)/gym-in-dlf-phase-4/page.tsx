@@ -182,22 +182,22 @@ export default function GymInDLFPhase4Page() {
               </p>
 
               {/* Primary CTAs */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 sm:gap-4">
                 <a
                   href="#booking-section"
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#FFB81C] text-black font-extrabold text-sm sm:text-base hover:bg-[#A8861E] hover:text-white transition-all duration-300 shadow-[0_0_25px_rgba(255,184,28,0.35)] flex items-center justify-center gap-2"
+                  className="w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-[#FFB81C] text-black font-extrabold text-xs sm:text-sm md:text-base whitespace-nowrap hover:bg-[#A8861E] hover:text-white transition-all duration-300 shadow-[0_0_25px_rgba(255,184,28,0.35)] flex items-center justify-center gap-2 shrink-0"
                 >
-                  <span>Book Your Trial Session at FabFit Performance</span>
-                  <ArrowRight size={18} />
+                  <span className="whitespace-nowrap">Book Your Trial Session at FabFit Performance</span>
+                  <ArrowRight size={18} className="shrink-0" />
                 </a>
                 <a
-                  href="https://wa.me/919899179911?text=Hi%20FabFit!%20I%20am%20looking%20for%20a%20Gym%20and%20Fitness%20Studio%20in%20DLF%20Phase%204.%20Please%20guide%20me."
+                  href="https://wa.me/919220393004?text=Hi%20FabFit!%20I%20am%20looking%20for%20a%20Gym%20and%20Fitness%20Studio%20in%20DLF%20Phase%204.%20Please%20guide%20me."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-sm sm:text-base hover:border-[#25D366] hover:text-[#25D366] transition-colors flex items-center justify-center gap-2"
+                  className="w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-zinc-900 border border-zinc-700 text-white font-bold text-xs sm:text-sm md:text-base whitespace-nowrap hover:border-[#25D366] hover:text-[#25D366] transition-colors flex items-center justify-center gap-2 shrink-0"
                 >
-                  <MessageCircle size={18} className="text-[#25D366]" />
-                  <span>Chat on WhatsApp</span>
+                  <MessageCircle size={18} className="text-[#25D366] shrink-0" />
+                  <span className="whitespace-nowrap">Chat on WhatsApp</span>
                 </a>
               </div>
             </div>
