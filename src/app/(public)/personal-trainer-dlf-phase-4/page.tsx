@@ -292,18 +292,33 @@ export default function PersonalTrainerDLFPhase4Page() {
                 </p>
               </div>
 
-              {/* Hyperlocal Near Galleria */}
-              <div className="p-6 rounded-2xl bg-zinc-950 border border-zinc-800">
-                <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-                  <MapPin size={18} className="text-[#FFB81C]" />
-                  <span>Personal Trainer Near Galleria Market</span>
-                </h3>
-                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-3">
-                  If you live or work near Galleria Market, DLF Phase 4 or Sushant Lok 1, picking a nearby fitness studio can make it much easier to remain consistent.
-                </p>
-                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                  FabFit Performance located at Supermart 1 in DLF Phase 4, making it practical for nearby residents and professionals looking for a Personal Trainer near Galleria Market. A close-by personal training studio can decrease traveling time and make regular training much easier to keep. The objective should certainly not simply be to work out even more harder. It should be to train with much better structure, technique and consistency.
-                </p>
+              {/* Hyperlocal Near Galleria & Why Choose Local */}
+              <div className="p-6 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-5">
+                <div>
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <MapPin size={18} className="text-[#FFB81C]" />
+                    <span>Personal Trainer Near Galleria Market</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-2">
+                    If you live or work near Galleria Market, DLF Phase 4 or Sushant Lok 1, picking a nearby fitness studio can make it much easier to remain consistent.
+                  </p>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                    FabFit Performance located at Supermart 1 in DLF Phase 4, making it practical for nearby residents and professionals looking for a Personal Trainer near Galleria Market.
+                  </p>
+                </div>
+
+                <div className="border-t border-zinc-800/80 pt-4">
+                  <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <Sparkles size={18} className="text-[#FFB81C]" />
+                    <span>Why Choose a Local Personal Trainer?</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-2">
+                    A close-by personal training studio can decrease traveling time and make regular training much easier to keep.
+                  </p>
+                  <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                    The objective should certainly not simply be to work out even more harder. It should be to train with much better structure, technique and consistency.
+                  </p>
+                </div>
               </div>
             </div>
 
