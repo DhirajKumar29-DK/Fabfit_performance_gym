@@ -15,17 +15,17 @@ import LandingFaqAccordion from "@/components/landing/LandingFaqAccordion";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Gym & Fitness Studio in DLF Phase 4, Gurgaon | FabFit Performance",
+    absolute: "Premium Gym in DLF Phase 4 | Fitness Studio in DLF Phase 4",
   },
   description:
-    "Looking for a Gym in DLF Phase 4? FabFit Performance offers a structured fitness environment focused on coaching, personal attention & goal-based training.",
+    "Explore a premium gym in DLF Phase 4, Gurgaon, for structured training and personalized fitness coaching. Book your trial session today.",
   alternates: {
     canonical: "https://fabfitperformance.com/gym-in-dlf-phase-4",
   },
   openGraph: {
-    title: "Gym & Fitness Studio in DLF Phase 4, Gurgaon | FabFit Performance",
+    title: "Premium Gym in DLF Phase 4 | Fitness Studio in DLF Phase 4",
     description:
-      "Looking for a Gym in DLF Phase 4? FabFit Performance offers a structured fitness environment focused on coaching, personal attention & goal-based training.",
+      "Explore a premium gym in DLF Phase 4, Gurgaon, for structured training and personalized fitness coaching. Book your trial session today.",
     url: "https://fabfitperformance.com/gym-in-dlf-phase-4",
     images: ["/fabfit.jpeg"],
   },

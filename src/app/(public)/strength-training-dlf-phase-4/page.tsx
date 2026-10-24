@@ -17,17 +17,17 @@ import LandingFaqAccordion from "@/components/landing/LandingFaqAccordion";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Strength Training in DLF Phase 4, Gurgaon | FabFit Performance",
+    absolute: "Strength Training in DLF Phase 4 Gurgaon | FabFit",
   },
   description:
-    "Looking for Strength Training in DLF Phase 4? FabFit Performance offers structured strength training, functional movements & coaching at Supermart 1, Gurgaon.",
+    "Build strength and improve movement with structured strength training in DLF Phase 4, Gurgaon, at FabFit Performance. Book your trial session today.",
   alternates: {
     canonical: "https://fabfitperformance.com/strength-training-dlf-phase-4",
   },
   openGraph: {
-    title: "Strength Training in DLF Phase 4, Gurgaon | FabFit Performance",
+    title: "Strength Training in DLF Phase 4 Gurgaon | FabFit",
     description:
-      "Looking for Strength Training in DLF Phase 4? FabFit Performance offers structured strength training, functional movements & coaching at Supermart 1, Gurgaon.",
+      "Build strength and improve movement with structured strength training in DLF Phase 4, Gurgaon, at FabFit Performance. Book your trial session today.",
     url: "https://fabfitperformance.com/strength-training-dlf-phase-4",
     images: ["/fabfit.jpeg"],
   },

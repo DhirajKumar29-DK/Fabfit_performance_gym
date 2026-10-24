@@ -19,17 +19,17 @@ import LandingFaqAccordion from "@/components/landing/LandingFaqAccordion";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Personal Trainer in Sushant Lok 1, Gurgaon | FabFit Performance",
+    absolute: "Personal Trainer in Sushant Lok 1 Gurgaon | FabFit",
   },
   description:
-    "Looking for a Personal Trainer in Sushant Lok 1? FabFit Performance provides structured fitness coaching from its studio at Supermart 1, DLF Phase 4.",
+    "Looking for a personal trainer in Sushant Lok 1? Visit FabFit Performance in DLF Phase 4 for personalized 1:1 fitness and strength training.",
   alternates: {
     canonical: "https://fabfitperformance.com/personal-trainer-sushant-lok",
   },
   openGraph: {
-    title: "Personal Trainer in Sushant Lok 1, Gurgaon | FabFit Performance",
+    title: "Personal Trainer in Sushant Lok 1 Gurgaon | FabFit",
     description:
-      "Looking for a Personal Trainer in Sushant Lok 1? FabFit Performance provides structured fitness coaching from its studio at Supermart 1, DLF Phase 4.",
+      "Looking for a personal trainer in Sushant Lok 1? Visit FabFit Performance in DLF Phase 4 for personalized 1:1 fitness and strength training.",
     url: "https://fabfitperformance.com/personal-trainer-sushant-lok",
     images: ["/fabfit.jpeg"],
   },

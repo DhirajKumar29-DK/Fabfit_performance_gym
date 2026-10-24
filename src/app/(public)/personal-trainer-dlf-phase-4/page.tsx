@@ -23,17 +23,17 @@ import LandingFaqAccordion from "@/components/landing/LandingFaqAccordion";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Best Personal Trainer in DLF Phase 4, Gurgaon | FabFit Performance",
+    absolute: "Personal Trainer in DLF Phase 4 | FabFit",
   },
   description:
-    "Searching for the Best Personal Trainer in DLF Phase 4? FabFit Performance provides personalized fitness coaching, structured workouts & accountability at Supermart 1.",
+    "Looking for a personal trainer in DLF Phase 4? Get personalized 1:1 fitness, strength and transformation coaching at FabFit Performance.",
   alternates: {
     canonical: "https://fabfitperformance.com/personal-trainer-dlf-phase-4",
   },
   openGraph: {
-    title: "Best Personal Trainer in DLF Phase 4, Gurgaon | FabFit Performance",
+    title: "Personal Trainer in DLF Phase 4 | FabFit",
     description:
-      "Searching for the Best Personal Trainer in DLF Phase 4? FabFit Performance provides personalized fitness coaching, structured workouts & accountability at Supermart 1.",
+      "Looking for a personal trainer in DLF Phase 4? Get personalized 1:1 fitness, strength and transformation coaching at FabFit Performance.",
     url: "https://fabfitperformance.com/personal-trainer-dlf-phase-4",
     images: ["/fabfit.jpeg"],
   },

@@ -18,17 +18,17 @@ import LandingFaqAccordion from "@/components/landing/LandingFaqAccordion";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Weight Loss Trainer in DLF Phase 4, Gurgaon | FabFit Performance",
+    absolute: "Weight Loss Trainer in DLF Phase 4 | FabFit",
   },
   description:
-    "Looking for a Weight Loss Trainer in DLF Phase 4? FabFit Performance provides structured fitness coaching focused on sustainable exercise habits, strength & progress.",
+    "Work towards your fitness goals with a weight loss trainer in DLF Phase 4 at FabFit Performance. Contact us to discuss your gym training needs.",
   alternates: {
     canonical: "https://fabfitperformance.com/weight-loss-training-dlf-phase-4",
   },
   openGraph: {
-    title: "Weight Loss Trainer in DLF Phase 4, Gurgaon | FabFit Performance",
+    title: "Weight Loss Trainer in DLF Phase 4 | FabFit",
     description:
-      "Looking for a Weight Loss Trainer in DLF Phase 4? FabFit Performance provides structured fitness coaching focused on sustainable exercise habits, strength & progress.",
+      "Work towards your fitness goals with a weight loss trainer in DLF Phase 4 at FabFit Performance. Contact us to discuss your gym training needs.",
     url: "https://fabfitperformance.com/weight-loss-training-dlf-phase-4",
     images: ["/fabfit.jpeg"],
   },
