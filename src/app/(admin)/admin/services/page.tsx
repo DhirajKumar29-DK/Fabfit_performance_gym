@@ -7,6 +7,7 @@ import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 import * as LucideIcons from 'lucide-react';
 import { IconSelect } from '@/components/ui/IconSelect';
 import { AdminPagination } from '@/components/ui/AdminPagination';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 interface Service {
   id: string;
@@ -383,11 +384,21 @@ export default function ServicesPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Short Description (Card) *</label>
-                    <textarea value={formData.shortDescription} onChange={e => setFormData({...formData, shortDescription: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-zinc-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#6320ee] text-sm h-24" placeholder="Brief summary for the service card..." />
+                    <RichTextEditor
+                      value={formData.shortDescription}
+                      onChange={val => setFormData({ ...formData, shortDescription: val })}
+                      placeholder="Brief summary for the service card..."
+                      minHeight="140px"
+                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Full Description (Detail Page) *</label>
-                    <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-zinc-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#6320ee] text-sm h-32" placeholder="Detailed description for the main service page..." />
+                    <RichTextEditor
+                      value={formData.description}
+                      onChange={val => setFormData({ ...formData, description: val })}
+                      placeholder="Detailed description for the main service page with rich formatting..."
+                      minHeight="180px"
+                    />
                   </div>
                 </div>
 
@@ -514,11 +525,16 @@ export default function ServicesPage() {
                           </div>
                           <div>
                             <label className="block text-xs font-semibold text-gray-700 mb-1">Description *</label>
-                            <textarea value={feature.description} onChange={e => {
-                              const newFeatures = [...formData.features];
-                              newFeatures[index].description = e.target.value;
-                              setFormData({...formData, features: newFeatures});
-                            }} className="w-full px-3 py-2 bg-white border border-zinc-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-[#6320ee] h-20" placeholder="Feature description..." />
+                            <RichTextEditor
+                              value={feature.description || ''}
+                              onChange={(val) => {
+                                const newFeatures = [...formData.features];
+                                newFeatures[index].description = val;
+                                setFormData({ ...formData, features: newFeatures });
+                              }}
+                              placeholder="Feature description with rich formatting..."
+                              minHeight="120px"
+                            />
                           </div>
                         </div>
                       ))}
@@ -531,7 +547,12 @@ export default function ServicesPage() {
                   <h3 className="text-lg font-semibold text-[#0f172a] border-b pb-2">About This Program</h3>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Methodology Description</label>
-                    <textarea value={formData.methodologyDescription} onChange={e => setFormData({...formData, methodologyDescription: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-zinc-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#6320ee] text-sm h-32" placeholder="Explain the methodology of this program..." />
+                    <RichTextEditor
+                      value={formData.methodologyDescription || ''}
+                      onChange={val => setFormData({ ...formData, methodologyDescription: val })}
+                      placeholder="Explain the methodology of this program..."
+                      minHeight="160px"
+                    />
                   </div>
                 </div>
 
@@ -615,7 +636,12 @@ export default function ServicesPage() {
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                      <textarea value={formData.ctaDescription} onChange={e => setFormData({...formData, ctaDescription: e.target.value})} className="w-full px-4 py-2 bg-gray-50 border border-zinc-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-[#6320ee] text-sm h-24" placeholder="Brief CTA description..." />
+                      <RichTextEditor
+                        value={formData.ctaDescription || ''}
+                        onChange={val => setFormData({ ...formData, ctaDescription: val })}
+                        placeholder="Brief CTA description..."
+                        minHeight="140px"
+                      />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Button Text</label>

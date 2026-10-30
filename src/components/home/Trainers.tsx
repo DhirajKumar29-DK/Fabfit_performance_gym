@@ -96,9 +96,10 @@ export function Trainers({ isPage = false }: { isPage?: boolean }) {
             ))}
           </h2>
           
-          <p className="text-zinc-400 text-base md:text-lg font-medium leading-relaxed whitespace-pre-line max-w-2xl mx-auto">
-            {displayDesc}
-          </p>
+          <div
+            className="text-zinc-400 text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+            dangerouslySetInnerHTML={{ __html: displayDesc }}
+          />
         </div>
 
         {/* Interactive Gym Cards Grid */}
@@ -202,9 +203,10 @@ export function Trainers({ isPage = false }: { isPage?: boolean }) {
 
                     {/* Bio Description */}
                     {trainerDesc && (
-                      <p className="text-zinc-400 text-xs md:text-sm leading-relaxed font-medium line-clamp-3 group-hover:text-zinc-300 transition-colors">
-                        {trainerDesc}
-                      </p>
+                      <div
+                        className="text-zinc-400 text-xs md:text-sm leading-relaxed font-medium line-clamp-3 group-hover:text-zinc-300 transition-colors [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                        dangerouslySetInnerHTML={{ __html: trainerDesc }}
+                      />
                     )}
                   </div>
 

@@ -413,7 +413,12 @@ export default function GalleryPage() {
                 <h2 className="text-white font-black text-2xl tracking-tighter uppercase mb-2">{lightboxVideo.title}</h2>
                 <div className="flex items-center gap-4">
                   <span className="text-primary font-bold text-[10px] tracking-widest uppercase">{lightboxVideo.category}</span>
-                  {lightboxVideo.description && <span className="text-zinc-400 font-medium text-sm">{lightboxVideo.description}</span>}
+                  {lightboxVideo.description && (
+                    <span
+                      className="text-zinc-400 font-medium text-sm [&_a]:text-[#d4af37] [&_strong]:text-white"
+                      dangerouslySetInnerHTML={{ __html: lightboxVideo.description }}
+                    />
+                  )}
                 </div>
               </div>
             </div>

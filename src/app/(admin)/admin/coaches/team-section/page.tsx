@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { api } from '@/services/api';
 import { Plus, Edit3, Trash2, X, Eye } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 interface TeamSection {
   id: string;
@@ -294,14 +295,13 @@ export default function TeamSectionPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-gray-900 mb-1.5 uppercase tracking-wider">Description</label>
-                  <textarea 
-                    placeholder="Enter the paragraph text below the heading..."
-                    rows={4}
-                    className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm leading-relaxed resize-none"
+                  <label className="block text-xs font-bold text-gray-900 mb-1.5 uppercase tracking-wider">Description (Rich Text)</label>
+                  <RichTextEditor
                     value={formData.description}
-                    onChange={e => setFormData({...formData, description: e.target.value})}
-                  ></textarea>
+                    onChange={val => setFormData({ ...formData, description: val })}
+                    placeholder="Enter the paragraph text below the heading..."
+                    minHeight="160px"
+                  />
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-gray-900 mb-1.5 uppercase tracking-wider">Status</label>

@@ -185,12 +185,14 @@ function ServiceDetailContent() {
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-100 to-[#d4af37] leading-[1.1] uppercase mb-6 tracking-tighter drop-shadow-sm">
               {service.title}
             </h1>
-            <p className="text-lg md:text-xl font-medium text-white/90 mb-6 max-w-lg leading-snug drop-shadow-md">
-              {service.shortDescription}
-            </p>
-            <p className="text-zinc-300 text-sm mb-10 max-w-md leading-relaxed font-medium whitespace-pre-line">
-              {service.description}
-            </p>
+            <div
+              className="text-lg md:text-xl font-medium text-white/90 mb-6 max-w-lg leading-snug drop-shadow-md [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+              dangerouslySetInnerHTML={{ __html: service.shortDescription }}
+            />
+            <div
+              className="text-zinc-300 text-sm mb-10 max-w-md leading-relaxed font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+              dangerouslySetInnerHTML={{ __html: service.description }}
+            />
             
             <div className="flex flex-wrap gap-4 items-center">
               {service.ctaPrimaryText && service.ctaPrimaryLink && (
@@ -271,7 +273,10 @@ function ServiceDetailContent() {
                     <IconComp className="w-7 h-7" />
                   </div>
                   <h3 className="relative z-10 text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-300 group-hover:from-[#d4af37] group-hover:to-[#f3e5ab] transition-all duration-500 mb-3 tracking-wide">{item.title}</h3>
-                  <p className="relative z-10 text-zinc-400 text-sm leading-relaxed font-medium group-hover:text-zinc-300 transition-colors">{item.desc}</p>
+                  <div
+                    className="relative z-10 text-zinc-400 text-sm leading-relaxed font-medium group-hover:text-zinc-300 transition-colors [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                    dangerouslySetInnerHTML={{ __html: item.desc }}
+                  />
                 </div>
               );
             })}
@@ -301,9 +306,10 @@ function ServiceDetailContent() {
               </h2>
               
               {service.methodologyDescription && (
-                <p className="text-zinc-300 text-base leading-relaxed mb-8 font-medium whitespace-pre-line">
-                  {service.methodologyDescription}
-                </p>
+                <div
+                  className="text-zinc-300 text-base leading-relaxed mb-8 font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                  dangerouslySetInnerHTML={{ __html: service.methodologyDescription }}
+                />
               )}
               
               {benefits.length > 0 && (

@@ -186,9 +186,10 @@ export function ClientTestimonials() {
                   <QuoteIcon />
                 </div>
                 
-                <p className="text-zinc-300 text-xs md:text-sm leading-relaxed font-medium z-10 pl-2">
-                  "{review.quote}"
-                </p>
+                <div
+                  className="text-zinc-300 text-xs md:text-sm leading-relaxed font-medium z-10 pl-2 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                  dangerouslySetInnerHTML={{ __html: review.quote?.includes('<') ? review.quote : `"${review.quote}"` }}
+                />
                 
                 <div className="hidden md:block z-10 pl-2">
                   <h4 className="text-primary font-black text-sm tracking-wider uppercase">{review.name}</h4>

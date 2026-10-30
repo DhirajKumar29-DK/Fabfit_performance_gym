@@ -42,7 +42,7 @@ export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-clip">
       <Navbar />
       <main className="flex-1 pt-20">
         {children}

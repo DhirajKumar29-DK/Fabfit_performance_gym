@@ -30,6 +30,10 @@ export async function POST(request: NextRequest) {
     return successResponse('Blog post created successfully', created, 201);
   } catch (error: any) {
     console.error('POST /api/blogs error:', error);
+    if (error?.errors && Array.isArray(error.errors)) {
+      const msg = error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ');
+      return errorResponse(msg, 400);
+    }
     return errorResponse(error.message || 'Failed to create blog post', 400);
   }
 }

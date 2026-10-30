@@ -102,9 +102,10 @@ export function Services({ isPage = false }: { isPage?: boolean }) {
             </h2>
           )}
 
-          <p className="text-zinc-400 max-w-2xl mx-auto font-medium text-base md:text-lg leading-relaxed">
-            {services.description}
-          </p>
+          <div
+            className="text-zinc-400 max-w-2xl mx-auto font-medium text-base md:text-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+            dangerouslySetInnerHTML={{ __html: services.description }}
+          />
         </div>
 
         {/* Carousel Section */}
@@ -152,9 +153,10 @@ export function Services({ isPage = false }: { isPage?: boolean }) {
                           {item.title}
                         </h3>
 
-                        <p className="text-zinc-300 text-xs text-center leading-relaxed font-medium max-w-[95%] mx-auto line-clamp-2 mb-4">
-                          {item.shortDescription || item.description}
-                        </p>
+                        <div
+                          className="text-zinc-300 text-xs text-center leading-relaxed font-medium max-w-[95%] mx-auto line-clamp-2 mb-4 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                          dangerouslySetInnerHTML={{ __html: item.shortDescription || item.description }}
+                        />
 
                         {/* Know More Button */}
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded bg-primary/10 border border-primary/40 text-primary group-hover/card:bg-primary group-hover/card:text-black group-hover/card:border-primary font-bold text-[10px] tracking-widest uppercase transition-all duration-300 shadow-[0_0_15px_rgba(var(--primary-rgb),0.15)]">

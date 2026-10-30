@@ -4,6 +4,7 @@ import { api } from '@/services/api';
 import { fixImageUrl } from '@/lib/apiConfig';
 import { Plus, Edit3, Trash2, X, UploadCloud, Eye, Image as ImageIcon } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 interface TransformationSection {
   id: string;
@@ -341,12 +342,12 @@ export default function TransformationSectionPage() {
                   </div>
                   
                   <div>
-                    <label className="block text-xs font-bold text-slate-900 mb-1.5">Description <span className="text-red-500">*</span></label>
-                    <textarea 
-                      value={formData.description} 
-                      onChange={e => setFormData({...formData, description: e.target.value})} 
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm min-h-[120px] resize-y" 
-                      placeholder="Enter description..." 
+                    <label className="block text-xs font-bold text-slate-900 mb-1.5">Description (Rich Text) <span className="text-red-500">*</span></label>
+                    <RichTextEditor
+                      value={formData.description}
+                      onChange={val => setFormData({ ...formData, description: val })}
+                      placeholder="Enter description with rich formatting..."
+                      minHeight="160px"
                     />
                   </div>
                 </div>

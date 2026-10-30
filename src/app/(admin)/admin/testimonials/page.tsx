@@ -6,6 +6,7 @@ import { api } from '@/services/api';
 import { fixImageUrl } from '@/lib/apiConfig';
 import { IconSelect } from '@/components/ui/IconSelect';
 import { AdminPagination } from '@/components/ui/AdminPagination';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 const EMPTY_FORM = {
   name: '',
@@ -323,12 +324,12 @@ export default function TestimonialsAdminPage() {
                 </div>
 
                 <div className="mt-4">
-                  <label className="block text-xs font-bold text-gray-900 mb-1.5">Quote / Testimonial</label>
-                  <textarea
-                    rows={4} placeholder="Client's testimonial text..."
-                    className="w-full px-4 py-2.5 border border-zinc-300 rounded-lg focus:outline-none focus:border-primary text-sm font-medium resize-none"
+                  <label className="block text-xs font-bold text-gray-900 mb-1.5">Quote / Testimonial (Rich Text)</label>
+                  <RichTextEditor
                     value={formData.quote}
-                    onChange={e => setFormData({ ...formData, quote: e.target.value })}
+                    onChange={val => setFormData({ ...formData, quote: val })}
+                    placeholder="Client's testimonial text with formatting..."
+                    minHeight="150px"
                   />
                 </div>
 

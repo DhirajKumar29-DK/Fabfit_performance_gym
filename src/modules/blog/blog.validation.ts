@@ -12,7 +12,11 @@ export const createBlogPostSchema = z.object({
   authorRole: z.string().optional().nullable(),
   authorImage: z.string().optional().nullable(),
   readTime: z.string().optional().nullable(),
-  isFeatured: z.boolean().optional(),
+  isFeatured: z.union([
+    z.boolean(),
+    z.number().transform((v) => v === 1),
+    z.string().transform((v) => v === 'true' || v === '1')
+  ]).optional(),
   
   // SEO fields
   metaTitle: z.string().optional().nullable(),

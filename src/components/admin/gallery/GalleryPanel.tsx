@@ -6,6 +6,7 @@ import { fixImageUrl } from '@/lib/apiConfig';
 import { Plus, Edit3, Trash2, X, UploadCloud, ImageIcon, Film, Eye, Link as LinkIcon } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 import { AdminPagination } from '@/components/ui/AdminPagination';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 interface GalleryItem {
   id: string;
@@ -404,14 +405,13 @@ export default function GalleryPanel({ type }: GalleryPanelProps) {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-gray-900 mb-1.5">Description (Optional)</label>
-                <textarea 
-                  placeholder="Enter brief description"
-                  rows={3}
-                  className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 text-sm resize-none"
-                  value={formData.description}
-                  onChange={e => setFormData({...formData, description: e.target.value})}
-                ></textarea>
+                <label className="block text-xs font-bold text-gray-900 mb-1.5">Description (Optional - Rich Text)</label>
+                <RichTextEditor
+                  value={formData.description || ''}
+                  onChange={val => setFormData({ ...formData, description: val })}
+                  placeholder="Enter brief description..."
+                  minHeight="140px"
+                />
               </div>
 
               {type === 'VIDEO' && (

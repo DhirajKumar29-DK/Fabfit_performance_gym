@@ -34,6 +34,10 @@ export async function PUT(
     const updated = await BlogService.updateBlog(id, validatedData);
     return successResponse('Blog post updated successfully', updated);
   } catch (error: any) {
+    if (error?.errors && Array.isArray(error.errors)) {
+      const msg = error.errors.map((e: any) => `${e.path.join('.')}: ${e.message}`).join(', ');
+      return errorResponse(msg, 400);
+    }
     return errorResponse(error.message, 400);
   }
 }

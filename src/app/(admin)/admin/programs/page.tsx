@@ -7,6 +7,7 @@ import { Plus, Eye, ImageIcon, X, Edit3, Trash2, UploadCloud } from 'lucide-reac
 import { IconSelect } from '@/components/ui/IconSelect';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 import { AdminPagination } from '@/components/ui/AdminPagination';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 interface Program {
   id: string;
@@ -406,14 +407,13 @@ export default function ProgramsPage() {
                   </div>
                   
                   <div>
-                    <label className="block text-xs font-bold text-gray-900 mb-1.5">Short Description</label>
-                    <textarea 
-                      placeholder="Enter description here..."
-                      rows={3}
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm resize-none"
+                    <label className="block text-xs font-bold text-gray-900 mb-1.5">Short Description (Rich Text)</label>
+                    <RichTextEditor
                       value={formData.shortDescription}
-                      onChange={e => setFormData({...formData, shortDescription: e.target.value})}
-                    ></textarea>
+                      onChange={val => setFormData({ ...formData, shortDescription: val })}
+                      placeholder="Enter description with rich formatting..."
+                      minHeight="140px"
+                    />
                   </div>
                   
                   <div>

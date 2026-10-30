@@ -4,6 +4,7 @@ import { api } from '@/services/api';
 import { fixImageUrl } from '@/lib/apiConfig';
 import { Plus, Edit3, Trash2, X, UploadCloud, ImageIcon, Eye, Minus } from 'lucide-react';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 
 interface About {
   id: string;
@@ -429,14 +430,13 @@ export default function AboutPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-gray-900 mb-1.5">Description</label>
-                    <textarea 
-                      placeholder="Enter description here..."
-                      rows={5}
-                      className="w-full px-4 py-2.5 bg-white border border-zinc-300 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 text-sm resize-none"
+                    <label className="block text-xs font-bold text-gray-900 mb-1.5">Description (Rich Text)</label>
+                    <RichTextEditor
                       value={formData.description}
-                      onChange={e => setFormData({...formData, description: e.target.value})}
-                    ></textarea>
+                      onChange={val => setFormData({ ...formData, description: val })}
+                      placeholder="Enter description here..."
+                      minHeight="180px"
+                    />
                   </div>
                   
                   <div>

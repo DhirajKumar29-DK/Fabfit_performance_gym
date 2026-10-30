@@ -20,6 +20,7 @@ import {
   ChevronUp
 } from 'lucide-react';
 import { AdminPagination } from '@/components/ui/AdminPagination';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 interface BlogPost {
   id: string;
@@ -119,7 +120,7 @@ export default function AdminBlogsPage() {
         authorName: blog.authorName || 'Coach Ankit Baliyan',
         authorRole: blog.authorRole || 'Head Performance Coach',
         readTime: blog.readTime || '5 min read',
-        isFeatured: blog.isFeatured || false,
+        isFeatured: Boolean(blog.isFeatured),
         status: blog.status || 'PUBLISHED',
         metaTitle: blog.metaTitle || '',
         metaDescription: blog.metaDescription || '',
@@ -211,8 +212,13 @@ export default function AdminBlogsPage() {
 
     try {
       setSubmitting(true);
+      const payload = {
+        ...formData,
+        isFeatured: Boolean(formData.isFeatured),
+      };
+
       if (editingBlog) {
-        const res = await api.put(`/blogs/${editingBlog.id}`, formData);
+        const res = await api.put(`/blogs/${editingBlog.id}`, payload);
         if (res.ok) {
           fetchBlogs();
           setIsModalOpen(false);
@@ -221,7 +227,7 @@ export default function AdminBlogsPage() {
           alert(err.message || 'Failed to update blog post');
         }
       } else {
-        const res = await api.post('/blogs', formData);
+        const res = await api.post('/blogs', payload);
         if (res.ok) {
           fetchBlogs();
           setIsModalOpen(false);
@@ -577,18 +583,19 @@ export default function AdminBlogsPage() {
                 />
               </div>
 
-              {/* Content */}
+              {/* Content with Rich Text Editor */}
               <div>
-                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-                  Article Full Content * (Markdown or Standard Text)
+                <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2 flex items-center justify-between">
+                  <span>Article Full Content * (Rich Text Editor)</span>
+                  <span className="text-[11px] font-normal text-gray-500 lowercase">
+                    (Supports H1, H2, H3, Links, Lists, Bold, Highlights)
+                  </span>
                 </label>
-                <textarea
-                  rows={10}
-                  required
+                <RichTextEditor
                   value={formData.content}
-                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                  placeholder="Write full article here..."
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-black text-gray-900 font-sans"
+                  onChange={(val) => setFormData(prev => ({ ...prev, content: val }))}
+                  placeholder="Start writing your article... Highlight text to apply H2, H3, bold, lists or links."
+                  minHeight="350px"
                 />
               </div>
 

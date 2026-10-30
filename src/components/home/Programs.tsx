@@ -230,9 +230,10 @@ export function Programs({ isPage = false }: { isPage?: boolean }) {
             </h2>
           )}
           
-          <p className="text-[#8ba3b8] font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed whitespace-pre-wrap">
-            {sectionData.description}
-          </p>
+          <div
+            className="text-[#8ba3b8] font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+            dangerouslySetInnerHTML={{ __html: sectionData.description }}
+          />
         </motion.div>
 
         {/* 4-Card Grid Block */}
@@ -279,9 +280,10 @@ export function Programs({ isPage = false }: { isPage?: boolean }) {
                       return <span className="text-white">{title}</span>;
                     })()}
                   </h3>
-                  <p className="text-slate-300 text-sm font-medium leading-relaxed flex-1">
-                    {card.shortDescription}
-                  </p>
+                  <div
+                    className="text-slate-300 text-sm font-medium leading-relaxed flex-1 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                    dangerouslySetInnerHTML={{ __html: card.shortDescription }}
+                  />
                 </div>
               </motion.div>
             ))}
@@ -339,9 +341,10 @@ export function Programs({ isPage = false }: { isPage?: boolean }) {
                   return title;
                 })()}
               </h3>
-              <p className="text-zinc-300 text-[15px] md:text-base font-medium leading-relaxed max-w-2xl mb-8">
-                {featuredProgram.shortDescription}
-              </p>
+              <div
+                className="text-zinc-300 text-[15px] md:text-base font-medium leading-relaxed max-w-2xl mb-8 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                dangerouslySetInnerHTML={{ __html: featuredProgram.shortDescription }}
+              />
               
               {/* Featured Items */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -382,9 +385,10 @@ export function Programs({ isPage = false }: { isPage?: boolean }) {
                   </div>
                   <div>
                     <h4 className="text-white font-black text-xs tracking-widest uppercase mb-1.5 group-hover:text-primary transition-colors">{feat.title}</h4>
-                    <p className="text-zinc-400 text-[11px] font-medium leading-relaxed max-w-[180px] mx-auto xl:mx-0">
-                      {feat.description}
-                    </p>
+                    <div
+                      className="text-zinc-400 text-[11px] font-medium leading-relaxed max-w-[180px] mx-auto xl:mx-0 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                      dangerouslySetInnerHTML={{ __html: feat.description }}
+                    />
                   </div>
                 </div>
               ))}
