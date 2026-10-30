@@ -381,35 +381,81 @@ html {
   color: #ffffff !important;
 }
 
-/* Highlights (Yellow, Pastel Green, etc.): default text inside highlight is dark for readability */
+/* Highlights (Yellow, Pastel Green, etc.): default text inside highlight is DARK BLACK (#09090b) */
 .rich-text-content mark,
 .prose mark,
 [data-rich-text="true"] mark,
 .rich-text-content [style*="background-color"],
 .prose [style*="background-color"],
 [data-rich-text="true"] [style*="background-color"] {
-  color: #09090b;
+  color: #09090b !important;
   font-weight: 600;
 }
 
-/* Any text inside highlight that does NOT have a custom inline color stays dark */
+/* Any text inside highlight that does NOT have a custom colored style stays dark black */
 .rich-text-content mark *:not([style*="color"]),
 .prose mark *:not([style*="color"]),
 [data-rich-text="true"] mark *:not([style*="color"]),
 .rich-text-content [style*="background-color"] *:not([style*="color"]),
 .prose [style*="background-color"] *:not([style*="color"]),
-[data-rich-text="true"] [style*="background-color"] *:not([style*="color"]) {
-  color: #09090b;
-}
-
-/* Accidental black/charcoal inside a highlight also stays dark */
+[data-rich-text="true"] [style*="background-color"] *:not([style*="color"]),
 .rich-text-content [style*="background-color"] [style*="color: rgb(0, 0, 0)"],
 .rich-text-content [style*="background-color"] [style*="color: #000000"],
 .rich-text-content [style*="background-color"] [style*="color: #111827"],
+.rich-text-content [style*="background-color"] [style*="color: black"],
 .rich-text-content mark [style*="color: rgb(0, 0, 0)"],
 .rich-text-content mark [style*="color: #000000"],
-.rich-text-content mark [style*="color: #111827"] {
+.rich-text-content mark [style*="color: #111827"],
+.rich-text-content mark [style*="color: black"] {
   color: #09090b !important;
+}
+
+/* If user explicitly set WHITE text inside highlight: render WHITE */
+.rich-text-content [style*="background-color"][style*="color: #ffffff"],
+.rich-text-content [style*="background-color"][style*="color: rgb(255, 255, 255)"],
+.rich-text-content [style*="background-color"][style*="color: rgb(255,255,255)"],
+.rich-text-content [style*="background-color"][style*="color: white"],
+.rich-text-content [style*="background-color"] [style*="color: #ffffff"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(255, 255, 255)"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(255,255,255)"],
+.rich-text-content [style*="background-color"] [style*="color: white"],
+.rich-text-content mark[style*="color: #ffffff"],
+.rich-text-content mark[style*="color: rgb(255, 255, 255)"],
+.rich-text-content mark[style*="color: white"],
+.rich-text-content mark [style*="color: #ffffff"],
+.rich-text-content mark [style*="color: rgb(255, 255, 255)"],
+.rich-text-content mark [style*="color: white"] {
+  color: #ffffff !important;
+}
+
+/* If user explicitly set RED text inside highlight: render RED */
+.rich-text-content [style*="background-color"][style*="color: rgb(239, 68, 68)"],
+.rich-text-content [style*="background-color"][style*="color: #ef4444"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(239, 68, 68)"],
+.rich-text-content [style*="background-color"] [style*="color: #ef4444"],
+.rich-text-content mark[style*="color: rgb(239, 68, 68)"],
+.rich-text-content mark[style*="color: #ef4444"],
+.rich-text-content mark [style*="color: rgb(239, 68, 68)"],
+.rich-text-content mark [style*="color: #ef4444"] {
+  color: #ef4444 !important;
+}
+
+/* If user explicitly set other custom colors (Gold, Green, Blue, Purple, Orange) inside highlight: preserve them */
+.rich-text-content [style*="background-color"] [style*="color: rgb(212, 175, 55)"],
+.rich-text-content [style*="background-color"] [style*="color: #d4af37"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(16, 185, 129)"],
+.rich-text-content [style*="background-color"] [style*="color: #10b981"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(59, 130, 246)"],
+.rich-text-content [style*="background-color"] [style*="color: #3b82f6"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(249, 115, 22)"],
+.rich-text-content [style*="background-color"] [style*="color: #f97316"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(168, 85, 247)"],
+.rich-text-content [style*="background-color"] [style*="color: #a855f7"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(236, 72, 153)"],
+.rich-text-content [style*="background-color"] [style*="color: #ec4899"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(6, 182, 212)"],
+.rich-text-content [style*="background-color"] [style*="color: #06b6d4"] {
+  color: inherit !important;
 }
 
 .rich-text-content mark,
