@@ -113,7 +113,7 @@ export function About({ isPage = false }: { isPage?: boolean }) {
             {data.description && (
               <motion.div
                 variants={itemVariants}
-                className="text-zinc-400 text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_h1]:text-[#d4af37] [&_h2]:text-[#d4af37] [&_h3]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1.5 [&_mark]:rounded"
+                className="rich-text-content text-zinc-400 text-lg md:text-xl leading-relaxed mb-10 max-w-xl font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_h1]:text-[#d4af37] [&_h2]:text-[#d4af37] [&_h3]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1.5 [&_mark]:rounded"
                 dangerouslySetInnerHTML={{ __html: data.description }}
               />
             )}

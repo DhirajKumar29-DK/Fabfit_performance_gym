@@ -187,7 +187,7 @@ export function ClientTestimonials() {
                 </div>
                 
                 <div
-                  className="text-zinc-300 text-xs md:text-sm leading-relaxed font-medium z-10 pl-2 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                  className="rich-text-content text-zinc-300 text-xs md:text-sm leading-relaxed font-medium z-10 pl-2 [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
                   dangerouslySetInnerHTML={{ __html: review.quote?.includes('<') ? review.quote : `"${review.quote}"` }}
                 />
                 

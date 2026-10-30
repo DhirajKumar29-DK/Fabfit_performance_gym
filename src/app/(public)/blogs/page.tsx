@@ -144,9 +144,22 @@ export default async function BlogsPage({
                         </Link>
                       </h2>
 
-                      {/* Excerpt */}
+                      {/* Excerpt - Clean text without HTML tags */}
                       <p className="text-zinc-400 text-sm leading-relaxed font-medium line-clamp-3 mb-6">
-                        {blog.excerpt || blog.content.substring(0, 120) + "..."}
+                        {(() => {
+                          const raw = blog.excerpt && blog.excerpt.trim() ? blog.excerpt : blog.content;
+                          const clean = (raw || '')
+                            .replace(/<[^>]+>/g, ' ')
+                            .replace(/&nbsp;/gi, ' ')
+                            .replace(/&amp;/gi, '&')
+                            .replace(/&lt;/gi, '<')
+                            .replace(/&gt;/gi, '>')
+                            .replace(/&quot;/gi, '"')
+                            .replace(/&#39;/gi, "'")
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                          return clean.length > 130 ? clean.substring(0, 130) + '...' : clean;
+                        })()}
                       </p>
                     </div>
 

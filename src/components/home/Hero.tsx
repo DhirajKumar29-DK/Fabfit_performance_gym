@@ -131,7 +131,7 @@ export function Hero() {
 
               {/* Description */}
               <div
-                className="text-zinc-300 text-sm sm:text-base md:text-lg mb-8 md:mb-10 leading-relaxed max-w-xl font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                className="rich-text-content text-zinc-300 text-sm sm:text-base md:text-lg mb-8 md:mb-10 leading-relaxed max-w-xl font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
                 dangerouslySetInnerHTML={{ __html: slide.description }}
               />
 

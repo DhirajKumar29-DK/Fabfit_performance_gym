@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { AdminPagination } from '@/components/ui/AdminPagination';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal';
 
 interface BlogPost {
   id: string;
@@ -63,6 +64,10 @@ export default function AdminBlogsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [showSeo, setShowSeo] = useState(false);
+
+  // Delete Confirmation State
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -244,15 +249,23 @@ export default function AdminBlogsPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this blog post?')) return;
+  const handleDelete = (id: string) => {
+    setDeleteTargetId(id);
+    setIsConfirmOpen(true);
+  };
+
+  const executeDelete = async () => {
+    if (!deleteTargetId) return;
     try {
-      const res = await api.delete(`/blogs/${id}`);
+      const res = await api.delete(`/blogs/${deleteTargetId}`);
       if (res.ok) {
         fetchBlogs();
       }
     } catch (e) {
       console.error('Delete error', e);
+    } finally {
+      setDeleteTargetId(null);
+      setIsConfirmOpen(false);
     }
   };
 
@@ -382,7 +395,20 @@ export default function AdminBlogsPage() {
                         {blog.title}
                       </h3>
                       <p className="text-gray-500 text-xs line-clamp-2 mb-4 leading-relaxed">
-                        {blog.excerpt || blog.content.substring(0, 100)}
+                        {(() => {
+                          const raw = blog.excerpt && blog.excerpt.trim() ? blog.excerpt : blog.content;
+                          const clean = (raw || '')
+                            .replace(/<[^>]+>/g, ' ')
+                            .replace(/&nbsp;/gi, ' ')
+                            .replace(/&amp;/gi, '&')
+                            .replace(/&lt;/gi, '<')
+                            .replace(/&gt;/gi, '>')
+                            .replace(/&quot;/gi, '"')
+                            .replace(/&#39;/gi, "'")
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                          return clean.length > 100 ? clean.substring(0, 100) + '...' : clean;
+                        })()}
                       </p>
                     </div>
 
@@ -705,6 +731,17 @@ export default function AdminBlogsPage() {
           </div>
         </div>
       )}
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        isOpen={isConfirmOpen}
+        onClose={() => {
+          setIsConfirmOpen(false);
+          setDeleteTargetId(null);
+        }}
+        onConfirm={executeDelete}
+        title="Confirm Deletion"
+        message="Are you sure you want to delete this item? This action cannot be undone."
+      />
     </div>
   );
 }

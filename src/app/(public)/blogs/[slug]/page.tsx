@@ -64,7 +64,7 @@ export async function generateMetadata({
 // Helper to format blog content safely (handles both Rich HTML and legacy plain text)
 function formatBlogContent(content: string) {
   if (!content) return '';
-  const hasHtml = /<\/?(p|h1|h2|h3|h4|ul|ol|li|blockquote|strong|b|em|i|a|mark|br|hr|div)[^>]*>/i.test(content);
+  const hasHtml = /<\/?(p|h1|h2|h3|h4|ul|ol|li|blockquote|strong|b|em|i|a|mark|br|hr|div|span|font)[^>]*>/i.test(content);
   if (hasHtml) {
     return content;
   }
@@ -204,19 +204,7 @@ export default async function SingleBlogPage({
 
             {/* Full Article Content with Rich HTML Typography */}
             <div
-              className="prose prose-invert max-w-none text-zinc-300 text-base md:text-lg leading-relaxed font-normal
-                prose-headings:text-white prose-headings:font-black prose-headings:tracking-tight
-                prose-h1:text-3xl md:prose-h1:text-4xl prose-h1:text-[#d4af37] prose-h1:mt-8 prose-h1:mb-4
-                prose-h2:text-2xl md:prose-h2:text-3xl prose-h2:text-[#d4af37] prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-white/10 prose-h2:pb-3
-                prose-h3:text-xl md:prose-h3:text-2xl prose-h3:text-white prose-h3:mt-8 prose-h3:mb-3
-                prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:mb-5
-                prose-strong:text-white prose-strong:font-bold
-                prose-a:text-[#d4af37] prose-a:underline hover:prose-a:text-yellow-400 prose-a:font-semibold prose-a:transition-colors
-                prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-2 prose-ul:my-5 prose-li:text-zinc-300
-                prose-ol:list-decimal prose-ol:pl-6 prose-ol:space-y-2 prose-ol:my-5 prose-li:text-zinc-300
-                prose-blockquote:border-l-4 prose-blockquote:border-[#d4af37] prose-blockquote:pl-5 prose-blockquote:py-2 prose-blockquote:my-6 prose-blockquote:bg-zinc-900/60 prose-blockquote:italic prose-blockquote:text-zinc-200 prose-blockquote:rounded-r-xl
-                prose-hr:border-white/10 prose-hr:my-8
-                [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1.5 [&_mark]:py-0.5 [&_mark]:rounded-md [&_mark]:font-semibold"
+              className="rich-text-content prose prose-invert max-w-none text-white text-base md:text-lg leading-relaxed font-normal"
               dangerouslySetInnerHTML={{ __html: formatBlogContent(blog.content) }}
             />
 

@@ -169,7 +169,7 @@ export function Membership({ isPage = false }: { isPage?: boolean }) {
 
           {sectionData.description.includes('<') ? (
             <div
-              className="text-zinc-400 text-sm font-medium max-w-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+              className="rich-text-content text-zinc-400 text-sm font-medium max-w-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
               dangerouslySetInnerHTML={{ __html: sectionData.description }}
             />
           ) : (

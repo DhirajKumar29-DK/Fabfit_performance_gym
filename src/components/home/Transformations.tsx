@@ -145,7 +145,7 @@ export function Transformations({ isPage = false }: { isPage?: boolean }) {
                 
                 {sectionData?.description && (
                   <div
-                    className="text-zinc-200 text-sm md:text-base font-medium max-w-sm mb-12 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                    className="rich-text-content text-zinc-200 text-sm md:text-base font-medium max-w-sm mb-12 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
                     dangerouslySetInnerHTML={{ __html: sectionData.description }}
                   />
                 )}

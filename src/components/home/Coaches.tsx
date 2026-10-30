@@ -157,7 +157,7 @@ export function Coaches({ isPage = false }: { isPage?: boolean }) {
               variants={fadeUpVariants}
               initial="hidden"
               animate={isInView ? "visible" : "hidden"}
-              className="text-zinc-400 text-base md:text-lg font-medium leading-relaxed max-w-xl mb-10 [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+              className="rich-text-content text-zinc-400 text-base md:text-lg font-medium leading-relaxed max-w-xl mb-10 [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
               dangerouslySetInnerHTML={{ __html: expert.description }}
             />
 

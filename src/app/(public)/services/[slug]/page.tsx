@@ -204,11 +204,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               {service.title}
             </h1>
             <div
-              className="text-lg md:text-xl font-medium text-zinc-300 mb-6 max-w-lg leading-snug [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+              className="rich-text-content text-lg md:text-xl font-medium text-zinc-300 mb-6 max-w-lg leading-snug [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
               dangerouslySetInnerHTML={{ __html: service.shortDescription }}
             />
             <div
-              className="text-zinc-400 text-sm mb-10 max-w-md leading-relaxed font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+              className="rich-text-content text-zinc-400 text-sm mb-10 max-w-md leading-relaxed font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
               dangerouslySetInnerHTML={{ __html: service.description }}
             />
             
@@ -292,7 +292,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
                   </div>
                   <h3 className="relative z-10 text-lg font-black text-white mb-3 tracking-wide">{item.title}</h3>
                   <div
-                    className="relative z-10 text-zinc-400 text-sm leading-relaxed font-medium group-hover:text-zinc-300 transition-colors [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                    className="rich-text-content relative z-10 text-zinc-400 text-sm leading-relaxed font-medium group-hover:text-zinc-300 transition-colors [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
                     dangerouslySetInnerHTML={{ __html: item.desc }}
                   />
                 </div>
@@ -325,7 +325,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               
               {service.methodologyDescription && (
                 <div
-                  className="text-zinc-300 text-base leading-relaxed mb-8 font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                  className="rich-text-content text-zinc-300 text-base leading-relaxed mb-8 font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
                   dangerouslySetInnerHTML={{ __html: service.methodologyDescription }}
                 />
               )}

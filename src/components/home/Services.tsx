@@ -103,7 +103,7 @@ export function Services({ isPage = false }: { isPage?: boolean }) {
           )}
 
           <div
-            className="text-zinc-400 max-w-2xl mx-auto font-medium text-base md:text-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+            className="rich-text-content text-zinc-400 max-w-2xl mx-auto font-medium text-base md:text-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
             dangerouslySetInnerHTML={{ __html: services.description }}
           />
         </div>

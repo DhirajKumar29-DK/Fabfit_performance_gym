@@ -231,7 +231,7 @@ export function Programs({ isPage = false }: { isPage?: boolean }) {
           )}
           
           <div
-            className="text-[#8ba3b8] font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+            className="rich-text-content text-[#8ba3b8] font-medium max-w-3xl mx-auto text-base md:text-lg leading-relaxed [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
             dangerouslySetInnerHTML={{ __html: sectionData.description }}
           />
         </motion.div>

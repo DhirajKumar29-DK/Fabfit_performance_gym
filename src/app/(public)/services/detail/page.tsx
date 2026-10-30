@@ -186,11 +186,11 @@ function ServiceDetailContent() {
               {service.title}
             </h1>
             <div
-              className="text-lg md:text-xl font-medium text-white/90 mb-6 max-w-lg leading-snug drop-shadow-md [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+              className="rich-text-content text-lg md:text-xl font-medium text-white/90 mb-6 max-w-lg leading-snug drop-shadow-md [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
               dangerouslySetInnerHTML={{ __html: service.shortDescription }}
             />
             <div
-              className="text-zinc-300 text-sm mb-10 max-w-md leading-relaxed font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+              className="rich-text-content text-zinc-300 text-sm mb-10 max-w-md leading-relaxed font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
               dangerouslySetInnerHTML={{ __html: service.description }}
             />
             
@@ -274,7 +274,7 @@ function ServiceDetailContent() {
                   </div>
                   <h3 className="relative z-10 text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-300 group-hover:from-[#d4af37] group-hover:to-[#f3e5ab] transition-all duration-500 mb-3 tracking-wide">{item.title}</h3>
                   <div
-                    className="relative z-10 text-zinc-400 text-sm leading-relaxed font-medium group-hover:text-zinc-300 transition-colors [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
+                    className="rich-text-content relative z-10 text-zinc-400 text-sm leading-relaxed font-medium group-hover:text-zinc-300 transition-colors [&_a]:text-[#d4af37] [&_strong]:text-white [&_b]:text-white"
                     dangerouslySetInnerHTML={{ __html: item.desc }}
                   />
                 </div>
@@ -307,7 +307,7 @@ function ServiceDetailContent() {
               
               {service.methodologyDescription && (
                 <div
-                  className="text-zinc-300 text-base leading-relaxed mb-8 font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
+                  className="rich-text-content text-zinc-300 text-base leading-relaxed mb-8 font-medium [&_a]:text-[#d4af37] [&_a]:underline [&_strong]:text-white [&_b]:text-white [&_mark]:bg-yellow-400/90 [&_mark]:text-black [&_mark]:px-1"
                   dangerouslySetInnerHTML={{ __html: service.methodologyDescription }}
                 />
               )}
