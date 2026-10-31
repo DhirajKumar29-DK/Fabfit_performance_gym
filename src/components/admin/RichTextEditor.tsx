@@ -168,24 +168,29 @@ export function RichTextEditor({
 
       let block: 'p' | 'h1' | 'h2' | 'h3' = 'p';
       let isBlockquote = false;
+      let detectedFontSize = '';
       const sel = window.getSelection();
       if (sel && sel.rangeCount > 0) {
         let node: Node | null = sel.anchorNode;
         while (node && node !== editorRef.current) {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            const tag = (node as HTMLElement).tagName.toLowerCase();
+            const el = node as HTMLElement;
+            const tag = el.tagName.toLowerCase();
             if (tag === 'blockquote') {
               isBlockquote = true;
             }
             if (tag === 'h1' || tag === 'h2' || tag === 'h3' || tag === 'p') {
               block = tag as any;
-              break;
+            }
+            if (!detectedFontSize && el.style && el.style.fontSize) {
+              detectedFontSize = el.style.fontSize;
             }
           }
           node = node.parentNode;
         }
       }
 
+      setCurrentFontSize(detectedFontSize);
       setCurrentBlock(block);
       setActiveFormats({
         bold,
@@ -426,7 +431,7 @@ export function RichTextEditor({
     onChange(newHtml);
   };
 
-  // Font Size Application
+  // Font Size Application (handles both selected text AND typing at cursor, plus smooth size changes)
   const handleFontSizeChange = (size: string) => {
     setCurrentFontSize(size);
     restoreSelection();
@@ -434,39 +439,175 @@ export function RichTextEditor({
       editorRef.current.focus();
     }
 
-    if (!size) {
-      document.execCommand('styleWithCSS', false, 'true');
-      document.execCommand('fontSize', false, '3');
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0) return;
+
+    const range = sel.getRangeAt(0);
+
+    // CASE 1: Cursor is collapsed (User selects size BEFORE typing)
+    if (sel.isCollapsed) {
+      if (!size) {
+        // Reset to default size: step outside any existing font-size span
+        let node: Node | null = range.startContainer;
+        if (node && node.nodeType === Node.TEXT_NODE) {
+          node = node.parentElement;
+        }
+        const fontSpan = (node as HTMLElement)?.closest('span[style*="font-size"], font[size]');
+        if (fontSpan && editorRef.current?.contains(fontSpan)) {
+          const afterText = document.createTextNode('\u200B');
+          if (fontSpan.nextSibling) {
+            fontSpan.parentNode?.insertBefore(afterText, fontSpan.nextSibling);
+          } else {
+            fontSpan.parentNode?.appendChild(afterText);
+          }
+          const newRange = document.createRange();
+          newRange.setStart(afterText, 1);
+          newRange.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+        }
+        setCurrentFontSize('');
+        handleInput();
+        return;
+      }
+
+      // User chose a font size (e.g. '28px') to type in
+      let node: Node | null = range.startContainer;
+      if (node && node.nodeType === Node.TEXT_NODE) {
+        node = node.parentElement;
+      }
+      const currentSpan = (node as HTMLElement)?.closest('span[style*="font-size"]');
+
+      // If cursor is inside an empty font-size span, simply update its fontSize
+      if (currentSpan && (currentSpan.textContent === '' || currentSpan.textContent === '\u200B')) {
+        (currentSpan as HTMLElement).style.fontSize = size;
+        setCurrentFontSize(size);
+        handleInput();
+        return;
+      }
+
+      // Create a new span with the chosen font size and a zero-width space anchor
+      const newSpan = document.createElement('span');
+      newSpan.style.fontSize = size;
+      const zeroNode = document.createTextNode('\u200B');
+      newSpan.appendChild(zeroNode);
+      range.insertNode(newSpan);
+
+      // Place cursor inside the new span after the zero-width space
+      const newRange = document.createRange();
+      newRange.setStart(zeroNode, 1);
+      newRange.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(newRange);
+
+      setCurrentFontSize(size);
       handleInput();
       return;
     }
 
-    const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
-
-    document.execCommand('styleWithCSS', false, 'true');
-    document.execCommand('fontSize', false, '7');
-
-    if (editorRef.current) {
-      const markers = editorRef.current.querySelectorAll('font[size="7"], span[style*="xxx-large"]');
-      if (markers.length > 0) {
-        markers.forEach((el) => {
-          el.removeAttribute('size');
-          (el as HTMLElement).style.fontSize = size;
+    // CASE 2: Text IS selected (!sel.isCollapsed)
+    if (!size) {
+      // RESET FONT SIZE: remove font-size on selection
+      if (editorRef.current) {
+        const allSpans = editorRef.current.querySelectorAll('span[style*="font-size"], font[size]');
+        allSpans.forEach((el) => {
+          if (sel.containsNode(el, true)) {
+            (el as HTMLElement).style.fontSize = '';
+            el.removeAttribute('size');
+            if (!el.getAttribute('style') && el.attributes.length === 0) {
+              const parent = el.parentNode;
+              while (el.firstChild) {
+                parent?.insertBefore(el.firstChild, el);
+              }
+              el.remove();
+            }
+          }
         });
-      } else {
-        try {
-          const range = sel.getRangeAt(0);
-          const span = document.createElement('span');
-          span.style.fontSize = size;
-          span.appendChild(range.extractContents());
-          range.insertNode(span);
-        } catch {
-          // ignore
-        }
+      }
+      setCurrentFontSize('');
+      handleInput();
+      return;
+    }
+
+    // APPLY SPECIFIC SIZE TO SELECTION:
+    // Check if the entire selection is within an existing font-size span
+    let container: Node | null = range.commonAncestorContainer;
+    if (container && container.nodeType === Node.TEXT_NODE) {
+      container = container.parentElement;
+    }
+    const enclosingFontSpan = (container as HTMLElement)?.closest('span[style*="font-size"]') as HTMLElement | null;
+
+    if (enclosingFontSpan && editorRef.current?.contains(enclosingFontSpan)) {
+      const selectedText = range.toString().trim();
+      const spanText = (enclosingFontSpan.textContent || '').trim();
+      // If the selection encompasses the full text of this span, update directly!
+      if (selectedText === spanText && selectedText.length > 0) {
+        enclosingFontSpan.style.fontSize = size;
+        // Clean any inner spans with conflicting font-size
+        enclosingFontSpan.querySelectorAll('span[style*="font-size"]').forEach((inner) => {
+          (inner as HTMLElement).style.fontSize = '';
+        });
+        const reselectRange = document.createRange();
+        reselectRange.selectNodeContents(enclosingFontSpan);
+        sel.removeAllRanges();
+        sel.addRange(reselectRange);
+
+        setCurrentFontSize(size);
+        handleInput();
+        return;
       }
     }
 
+    // Clean old font-size on all spans contained within the selection
+    if (editorRef.current) {
+      const innerSpans = editorRef.current.querySelectorAll('span[style*="font-size"], font[size]');
+      innerSpans.forEach((el) => {
+        if (sel.containsNode(el, true)) {
+          (el as HTMLElement).style.fontSize = '';
+          el.removeAttribute('size');
+        }
+      });
+    }
+
+    // Wrap the selected content cleanly in a new span
+    try {
+      const extracted = range.extractContents();
+      // Strip any leftover font-size in extracted fragment
+      const fragmentSpans = (extracted as DocumentFragment).querySelectorAll?.('span[style*="font-size"], font[size]');
+      if (fragmentSpans) {
+        fragmentSpans.forEach((el) => {
+          (el as HTMLElement).style.fontSize = '';
+          el.removeAttribute('size');
+        });
+      }
+
+      const wrapper = document.createElement('span');
+      wrapper.style.fontSize = size;
+      wrapper.appendChild(extracted);
+      range.insertNode(wrapper);
+
+      // Reselect the wrapped contents so user can see it selected
+      const newRange = document.createRange();
+      newRange.selectNodeContents(wrapper);
+      sel.removeAllRanges();
+      sel.addRange(newRange);
+    } catch {
+      // Fallback
+      document.execCommand('styleWithCSS', false, 'true');
+      document.execCommand('fontSize', false, '7');
+      if (editorRef.current) {
+        const markers = editorRef.current.querySelectorAll('font[size="7"], span[style*="xxx-large"]');
+        markers.forEach((el) => {
+          el.removeAttribute('size');
+          (el as HTMLElement).style.fontSize = size;
+          el.querySelectorAll('span[style*="font-size"]').forEach((child) => {
+            (child as HTMLElement).style.fontSize = '';
+          });
+        });
+      }
+    }
+
+    setCurrentFontSize(size);
     handleInput();
   };
 
@@ -739,8 +880,9 @@ export function RichTextEditor({
           {/* Compact Font Size Selector */}
           <div className="relative">
             <select
-              value={currentFontSize}
+              value={FONT_SIZES.some(s => s.value === currentFontSize) ? currentFontSize : ''}
               onMouseDown={saveSelection}
+              onFocus={saveSelection}
               onChange={(e) => handleFontSizeChange(e.target.value)}
               title="Font Size"
               className="w-[72px] px-2 py-1.5 bg-white border border-gray-300 rounded-lg text-xs font-bold text-gray-800 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer text-center"
