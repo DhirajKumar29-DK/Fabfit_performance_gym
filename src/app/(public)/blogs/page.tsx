@@ -144,7 +144,7 @@ export default async function BlogsPage({
                         </Link>
                       </h2>
 
-                      {/* Excerpt - Clean text without HTML tags */}
+                      {/* Excerpt - Clean text without HTML tags, naturally clamped at 3 lines by CSS */}
                       <p className="text-zinc-400 text-sm leading-relaxed font-medium line-clamp-3 mb-6">
                         {(() => {
                           const raw = blog.excerpt && blog.excerpt.trim() ? blog.excerpt : blog.content;
@@ -158,7 +158,7 @@ export default async function BlogsPage({
                             .replace(/&#39;/gi, "'")
                             .replace(/\s+/g, ' ')
                             .trim();
-                          return clean.length > 130 ? clean.substring(0, 130) + '...' : clean;
+                          return clean;
                         })()}
                       </p>
                     </div>
