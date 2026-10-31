@@ -61,12 +61,125 @@ export async function generateMetadata({
   };
 }
 
+// Helper to identify near-black / dark text colors that would be unreadable on a dark website
+function isDarkTextColor(colorStr: string): boolean {
+  if (!colorStr) return false;
+  const c = colorStr.trim().toLowerCase();
+  if (['black', '#000', '#000000', '#111', '#111111', '#222', '#222020', '#222222', '#1a1a1a', '#2a2a2a', '#333', '#333333', 'rgb(0,0,0)', 'rgb(0, 0, 0)', 'rgb(34, 32, 32)', 'rgb(34,32,32)', 'rgb(17, 24, 39)', 'rgb(31, 41, 55)', 'rgb(55, 65, 81)'].includes(c)) {
+    return true;
+  }
+  const rgbMatch = c.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/);
+  if (rgbMatch) {
+    const r = parseInt(rgbMatch[1], 10);
+    const g = parseInt(rgbMatch[2], 10);
+    const b = parseInt(rgbMatch[3], 10);
+    return r < 75 && g < 75 && b < 75;
+  }
+  const hexMatch = c.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (hexMatch) {
+    let hex = hexMatch[1];
+    if (hex.length === 3) hex = hex.split('').map(ch => ch + ch).join('');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return r < 75 && g < 75 && b < 75;
+  }
+  return false;
+}
+
+// Sanitizes HTML: converts dark/black text outside highlights to default light text, while preserving highlight colors and custom text colors (Red, Gold, etc.)
+function cleanBlogHtml(html: string): string {
+  if (!html) return '';
+  const parts = html.split(/(<[^>]+>)/g);
+  let activeHighlights = 0;
+  const tagStack: Array<{ tagName: string; isHighlight: boolean }> = [];
+
+  const result = parts.map((part) => {
+    if (!part.startsWith('<')) {
+      return part;
+    }
+
+    // Closing tag: </tag>
+    const closeMatch = part.match(/^<\/\s*([a-zA-Z0-9]+)\s*>/);
+    if (closeMatch) {
+      const tagName = closeMatch[1].toLowerCase();
+      for (let i = tagStack.length - 1; i >= 0; i--) {
+        if (tagStack[i].tagName === tagName) {
+          if (tagStack[i].isHighlight) {
+            activeHighlights = Math.max(0, activeHighlights - 1);
+          }
+          tagStack.splice(i, 1);
+          break;
+        }
+      }
+      return part;
+    }
+
+    // Opening or self-closing tag: <tag attrs>
+    const openMatch = part.match(/^<([a-zA-Z0-9]+)([^>]*)>/);
+    if (!openMatch) {
+      return part;
+    }
+
+    const tagName = openMatch[1].toLowerCase();
+    const attrs = openMatch[2];
+    const isSelfClosing = attrs.trim().endsWith('/') || ['img', 'br', 'hr', 'input'].includes(tagName);
+
+    const isHighlight = tagName === 'mark' || /background-color/i.test(attrs);
+
+    if (!isSelfClosing) {
+      if (isHighlight) {
+        activeHighlights++;
+      }
+      tagStack.push({ tagName, isHighlight });
+    }
+
+    // If NOT inside an active highlight:
+    // Strip dark/black font colors so they become crisp white on dark website theme
+    if (activeHighlights === 0) {
+      let cleanedPart = part;
+
+      // Clean style="...color: ...;"
+      cleanedPart = cleanedPart.replace(/style\s*=\s*(["'])(.*?)\1/gi, (styleAttr, quote, styleContent) => {
+        if (/background-color/i.test(styleContent)) {
+          return styleAttr;
+        }
+        const cleanedStyle = styleContent.replace(/(^|;)\s*color\s*:\s*([^;]+)(;?)/gi, (colorDecl, pre, colorVal) => {
+          if (isDarkTextColor(colorVal)) {
+            return pre ? ';' : '';
+          }
+          return colorDecl;
+        }).replace(/^;+|;+$/g, '').trim();
+
+        if (!cleanedStyle) {
+          return '';
+        }
+        return `style=${quote}${cleanedStyle}${quote}`;
+      });
+
+      // Clean <font color="...">
+      cleanedPart = cleanedPart.replace(/color\s*=\s*(["'])(.*?)\1/gi, (colorAttr, quote, colorVal) => {
+        if (isDarkTextColor(colorVal)) {
+          return '';
+        }
+        return colorAttr;
+      });
+
+      return cleanedPart;
+    }
+
+    return part;
+  });
+
+  return result.join('');
+}
+
 // Helper to format blog content safely (handles both Rich HTML and legacy plain text)
 function formatBlogContent(content: string) {
   if (!content) return '';
   const hasHtml = /<\/?(p|h1|h2|h3|h4|ul|ol|li|blockquote|strong|b|em|i|a|mark|br|hr|div|span|font)[^>]*>/i.test(content);
   if (hasHtml) {
-    return content;
+    return cleanBlogHtml(content);
   }
   // Fallback for legacy plain text: convert double newlines to paragraphs
   return content

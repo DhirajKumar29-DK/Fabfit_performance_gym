@@ -366,9 +366,22 @@ html {
 .rich-text-content [style*="color: #1f2937"],
 .rich-text-content [style*="color: rgb(55, 65, 81)"],
 .rich-text-content [style*="color: #374151"],
+.rich-text-content [style*="color: rgb(34, 32, 32)"],
+.rich-text-content [style*="color: rgb(34,32,32)"],
+.rich-text-content [style*="color: #222020"],
+.rich-text-content [style*="color: #222"],
+.rich-text-content [style*="color: #1a1a1a"],
+.rich-text-content [style*="color: #2a2a2a"],
+.rich-text-content [style*="color: #333333"],
+.rich-text-content [style*="color: #333"],
+.rich-text-content [style*="color: rgb(26, 26, 26)"],
+.rich-text-content [style*="color: rgb(42, 42, 42)"],
+.rich-text-content [style*="color: rgb(51, 51, 51)"],
 .rich-text-content font[color="#000000"],
 .rich-text-content font[color="#000"],
 .rich-text-content font[color="black"],
+.rich-text-content font[color="#222020"],
+.rich-text-content font[color="#111827"],
 .prose [style*="color: rgb(0, 0, 0)"],
 .prose [style*="color: rgb(0,0,0)"],
 .prose [style*="color: #000000"],
@@ -376,8 +389,12 @@ html {
 .prose [style*="color: black"],
 .prose [style*="color: rgb(17, 24, 39)"],
 .prose [style*="color: #111827"],
+.prose [style*="color: rgb(34, 32, 32)"],
+.prose [style*="color: #222020"],
 [data-rich-text="true"] [style*="color: rgb(0, 0, 0)"],
-[data-rich-text="true"] [style*="color: #000000"] {
+[data-rich-text="true"] [style*="color: #000000"],
+[data-rich-text="true"] [style*="color: rgb(34, 32, 32)"],
+[data-rich-text="true"] [style*="color: #222020"] {
   color: #ffffff !important;
 }
 
@@ -403,10 +420,14 @@ html {
 .rich-text-content [style*="background-color"] [style*="color: #000000"],
 .rich-text-content [style*="background-color"] [style*="color: #111827"],
 .rich-text-content [style*="background-color"] [style*="color: black"],
+.rich-text-content [style*="background-color"] [style*="color: rgb(34, 32, 32)"],
+.rich-text-content [style*="background-color"] [style*="color: #222020"],
 .rich-text-content mark [style*="color: rgb(0, 0, 0)"],
 .rich-text-content mark [style*="color: #000000"],
 .rich-text-content mark [style*="color: #111827"],
-.rich-text-content mark [style*="color: black"] {
+.rich-text-content mark [style*="color: black"],
+.rich-text-content mark [style*="color: rgb(34, 32, 32)"],
+.rich-text-content mark [style*="color: #222020"] {
   color: #09090b !important;
 }
 

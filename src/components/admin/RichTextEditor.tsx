@@ -33,7 +33,7 @@ interface RichTextEditorProps {
 }
 
 const TEXT_COLOR_PRESETS = [
-  { name: 'Default Text (Auto)', hex: 'inherit' },
+  { name: 'Normal / Black (Default)', hex: 'inherit' },
   { name: 'Gold (FabFit Signature)', hex: '#d4af37' },
   { name: 'Yellow', hex: '#eab308' },
   { name: 'Red', hex: '#ef4444' },
@@ -477,23 +477,60 @@ export function RichTextEditor({
     setShowColorPicker(prev => !prev);
   };
 
+  const isNearBlack = (color: string) => {
+    if (!color) return false;
+    const c = color.trim().toLowerCase();
+    if (['inherit', 'default', 'black', '#000', '#000000', '#111', '#111111', '#222', '#222020', '#222222', '#1a1a1a', '#2a2a2a', '#333', '#333333'].includes(c)) return true;
+    const hex = c.replace('#', '');
+    if (hex.length === 6) {
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      return r < 60 && g < 60 && b < 60;
+    }
+    return false;
+  };
+
   const resetTextColor = () => {
     restoreSelection();
     if (editorRef.current) {
       editorRef.current.focus();
     }
     const sel = window.getSelection();
-    if (sel && sel.rangeCount > 0 && !sel.isCollapsed) {
+    if (sel && sel.rangeCount > 0) {
       document.execCommand('styleWithCSS', false, 'true');
       document.execCommand('foreColor', false, 'inherit');
-      if (editorRef.current) {
-        const spans = editorRef.current.querySelectorAll('span[style*="color"], font[color]');
-        spans.forEach((el) => {
-          if (sel.containsNode(el, true)) {
-            (el as HTMLElement).style.color = '';
-            el.removeAttribute('color');
+      if (!sel.isCollapsed) {
+        if (editorRef.current) {
+          const spans = editorRef.current.querySelectorAll('span[style*="color"], font[color]');
+          spans.forEach((el) => {
+            if (sel.containsNode(el, true)) {
+              (el as HTMLElement).style.color = '';
+              el.removeAttribute('color');
+            }
+          });
+        }
+      } else {
+        // Cursor is collapsed (user wants subsequent typed text to be normal default text)
+        const range = sel.getRangeAt(0);
+        let node: Node | null = range.startContainer;
+        if (node && node.nodeType === Node.TEXT_NODE) {
+          node = node.parentElement;
+        }
+        const coloredSpan = (node as HTMLElement)?.closest('span[style*="color"], font[color]');
+        if (coloredSpan && !coloredSpan.closest('[style*="background-color"], mark')) {
+          const afterText = document.createTextNode('\u200B');
+          if (coloredSpan.nextSibling) {
+            coloredSpan.parentNode?.insertBefore(afterText, coloredSpan.nextSibling);
+          } else {
+            coloredSpan.parentNode?.appendChild(afterText);
           }
-        });
+          const newRange = document.createRange();
+          newRange.setStart(afterText, 1);
+          newRange.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(newRange);
+        }
       }
     }
     handleInput();
@@ -501,7 +538,7 @@ export function RichTextEditor({
   };
 
   const applyTextColor = (color: string, keepOpen = false) => {
-    if (color === 'inherit' || color === 'default' || color === '#000000') {
+    if (isNearBlack(color)) {
       resetTextColor();
       return;
     }
@@ -814,11 +851,11 @@ export function RichTextEditor({
                       onClick={() => applyTextColor(preset.hex, false)}
                       className="w-8 h-8 rounded-lg border border-gray-300 hover:scale-110 hover:border-black transition-transform flex items-center justify-center shadow-xs"
                       style={{
-                        backgroundColor: preset.hex === 'inherit' ? '#f3f4f6' : preset.hex,
+                        backgroundColor: preset.hex === 'inherit' ? '#ffffff' : preset.hex,
                       }}
                     >
                       {preset.hex === 'inherit' ? (
-                        <span className="text-[10px] font-black text-gray-700">Auto</span>
+                        <span className="text-[9px] font-black text-black">Black</span>
                       ) : preset.hex === '#ffffff' ? (
                         <span className="text-[8px] font-bold text-gray-400">White</span>
                       ) : null}
@@ -875,7 +912,7 @@ export function RichTextEditor({
                     onClick={resetTextColor}
                     className="text-[10px] font-bold text-gray-500 hover:text-black hover:underline"
                   >
-                    Reset (Default)
+                    Reset (Black / Default)
                   </button>
                 </div>
               </div>
